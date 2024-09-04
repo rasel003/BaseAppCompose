@@ -18,6 +18,7 @@ package com.rasel.baseappcompose.ui.reply
 
 import android.content.Context
 import android.content.Intent
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -30,10 +31,12 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -46,16 +49,20 @@ import com.rasel.baseappcompose.CupcakeScreen
 import com.rasel.baseappcompose.MovieDetailsScreen
 import com.rasel.baseappcompose.OrderSummaryScreen
 import com.rasel.baseappcompose.OrderViewModel
+import com.rasel.baseappcompose.POST_ID
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.SelectOptionScreen
 import com.rasel.baseappcompose.StartOrderScreen
+import com.rasel.baseappcompose.data.AppContainer
 import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
 import com.rasel.baseappcompose.ui.article.ArticleScreen
 import com.rasel.baseappcompose.ui.home.HomeFeedScreen
+import com.rasel.baseappcompose.ui.home.HomeFeedWithArticleDetailsScreen
 import com.rasel.baseappcompose.ui.home.HomeUiState
+import com.rasel.baseappcompose.ui.home.HomeViewModel
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationActions
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationWrapper
 import com.rasel.baseappcompose.ui.navigation.ReplyRoute
@@ -75,6 +82,7 @@ private fun NavigationSuiteType.toReplyNavType() = when (this) {
 
 @Composable
 fun ReplyApp(
+    appContainer: AppContainer,
     windowSize: WindowSizeClass,
     displayFeatures: List<DisplayFeature>,
     replyHomeUIState: ReplyHomeUIState,
@@ -106,6 +114,7 @@ fun ReplyApp(
         } else {
             ReplyContentType.SINGLE_PANE
         }
+
         WindowWidthSizeClass.Expanded -> ReplyContentType.DUAL_PANE
         else -> ReplyContentType.SINGLE_PANE
     }
@@ -132,6 +141,7 @@ fun ReplyApp(
                 closeDetailScreen = closeDetailScreen,
                 navigateToDetail = navigateToDetail,
                 toggleSelectedEmail = toggleSelectedEmail,
+                appContainer = appContainer
             )
         }
     }
@@ -139,6 +149,7 @@ fun ReplyApp(
 
 @Composable
 private fun ReplyNavHost(
+    appContainer: AppContainer,
     navController: NavHostController,
     contentType: ReplyContentType,
     displayFeatures: List<DisplayFeature>,
@@ -149,6 +160,8 @@ private fun ReplyNavHost(
     toggleSelectedEmail: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: OrderViewModel = viewModel(),
+    openDrawer: () -> Unit = {},
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
 
     val postsFeed = runBlocking {
@@ -159,6 +172,8 @@ private fun ReplyNavHost(
     }
     val uiState by viewModel.uiState.collectAsState()
 
+
+    val isExpandedScreen = true
 
     NavHost(
         modifier = modifier,
@@ -208,7 +223,7 @@ private fun ReplyNavHost(
                 ),
                 showTopAppBar = true,
                 onToggleFavorite = {},
-                onSelectPost = {},
+                onSelectPost = { navController.navigate(ReplyRoute.FeedWithArticleDetails) },
                 onRefreshPosts = {},
                 onErrorDismiss = {},
                 openDrawer = {},
@@ -267,6 +282,45 @@ private fun ReplyNavHost(
                     shareOrder(context, subject = subject, summary = summary)
                 },
                 modifier = Modifier.fillMaxHeight()
+            )
+        }
+        composable(route = ReplyRoute.FeedWithArticleDetails) { navBackStackEntry ->
+            val homeViewModel: HomeViewModel = viewModel(
+                factory = HomeViewModel.provideFactory(
+                    postsRepository = appContainer.postsRepository,
+                    preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
+                )
+            )
+
+            val homeUiState by homeViewModel.uiState.collectAsStateWithLifecycle()
+
+            // Construct the lazy list states for the list and the details outside of deciding which one to
+            // show. This allows the associated state to survive beyond that decision, and therefore
+            // we get to preserve the scroll throughout any changes to the content.
+            val homeListLazyListState = rememberLazyListState()
+            val articleDetailLazyListStates = when (homeUiState) {
+                is HomeUiState.HasPosts -> (homeUiState as HomeUiState.HasPosts).postsFeed.allPosts
+                is HomeUiState.NoPosts -> emptyList()
+            }.associate { post ->
+                key(post.id) {
+                    post.id to rememberLazyListState()
+                }
+            }
+
+            HomeFeedWithArticleDetailsScreen(
+                uiState = homeUiState,
+                showTopAppBar = !isExpandedScreen,
+                onToggleFavorite = { homeViewModel.toggleFavourite(it) },
+                onSelectPost = { homeViewModel.selectArticle(it) },
+                onRefreshPosts = { homeViewModel.refreshPosts() },
+                onErrorDismiss = { homeViewModel.errorShown(it) },
+                onInteractWithList = { homeViewModel.interactedWithFeed() },
+                onInteractWithDetail = { homeViewModel.interactedWithArticleDetails(it) },
+                openDrawer = openDrawer,
+                homeListLazyListState = homeListLazyListState,
+                articleDetailLazyListStates = articleDetailLazyListStates,
+                snackbarHostState = snackbarHostState,
+                onSearchInputChanged = { homeViewModel.onSearchInputChanged(it) },
             )
         }
     }

@@ -33,6 +33,9 @@ object ReplyRoute {
     const val GROUPS = "Groups"
     const val JET_NEWS = "jet_news"
     const val CUP_CAKE = "cup_cake"
+    const val FeedWithArticleDetails = "feed_with_article_details"
+    const val Feed = "feed"
+    const val ArticleDetails = "ArticleDetails"
 }
 
 data class ReplyTopLevelDestination(

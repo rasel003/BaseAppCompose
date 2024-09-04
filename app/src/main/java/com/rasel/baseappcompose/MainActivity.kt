@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.adaptive.calculateDisplayFeatures
+import com.rasel.baseappcompose.ui.JetnewsApplication
 import com.rasel.baseappcompose.ui.reply.ReplyApp
 import com.rasel.baseappcompose.ui.reply.ReplyHomeViewModel
 import com.rasel.baseappcompose.ui.theme.BaseAppComposeTheme
@@ -27,6 +28,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val appContainer = (application as JetnewsApplication).container
+
+
         setContent {
             BaseAppComposeTheme {
                 /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -56,7 +61,8 @@ class MainActivity : ComponentActivity() {
                     },
                     toggleSelectedEmail = { emailId ->
                         viewModel.toggleSelectedEmail(emailId)
-                    }
+                    },
+                    appContainer = appContainer
                 )
             }
         }
