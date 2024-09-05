@@ -36,6 +36,8 @@ object ReplyRoute {
     const val FeedWithArticleDetails = "feed_with_article_details"
     const val Feed = "feed"
     const val ArticleDetails = "ArticleDetails"
+    const val HOME_ROUTE = "home"
+    const val INTERESTS_ROUTE = "interests"
 }
 
 data class ReplyTopLevelDestination(

@@ -43,9 +43,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navDeepLink
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
+import com.example.jetnews.ui.interests.InterestsViewModel
 import com.rasel.baseappcompose.CupcakeScreen
+import com.rasel.baseappcompose.JetnewsDestinations
 import com.rasel.baseappcompose.MovieDetailsScreen
 import com.rasel.baseappcompose.OrderSummaryScreen
 import com.rasel.baseappcompose.OrderViewModel
@@ -58,11 +61,14 @@ import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
+import com.rasel.baseappcompose.ui.JetnewsApplication.Companion.JETNEWS_APP_URI
 import com.rasel.baseappcompose.ui.article.ArticleScreen
 import com.rasel.baseappcompose.ui.home.HomeFeedScreen
 import com.rasel.baseappcompose.ui.home.HomeFeedWithArticleDetailsScreen
+import com.rasel.baseappcompose.ui.home.HomeRoute
 import com.rasel.baseappcompose.ui.home.HomeUiState
 import com.rasel.baseappcompose.ui.home.HomeViewModel
+import com.rasel.baseappcompose.ui.interests.InterestsRoute
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationActions
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationWrapper
 import com.rasel.baseappcompose.ui.navigation.ReplyRoute
@@ -173,7 +179,7 @@ private fun ReplyNavHost(
     val uiState by viewModel.uiState.collectAsState()
 
 
-    val isExpandedScreen = true
+    val isExpandedScreen = false
 
     NavHost(
         modifier = modifier,
@@ -208,29 +214,6 @@ private fun ReplyNavHost(
         }
         composable(ReplyRoute.ARTICLES) {
             ArticleScreen(post, true, {}, false, {})
-        }
-        composable(route = ReplyRoute.JET_NEWS) {
-            val context = LocalContext.current
-            HomeFeedScreen(
-                uiState = HomeUiState.HasPosts(
-                    postsFeed = postsFeed,
-                    selectedPost = postsFeed.highlightedPost,
-                    isArticleOpen = false,
-                    favorites = emptySet(),
-                    isLoading = false,
-                    errorMessages = emptyList(),
-                    searchInput = ""
-                ),
-                showTopAppBar = true,
-                onToggleFavorite = {},
-                onSelectPost = { navController.navigate(ReplyRoute.FeedWithArticleDetails) },
-                onRefreshPosts = {},
-                onErrorDismiss = {},
-                openDrawer = {},
-                homeListLazyListState = rememberLazyListState(),
-                snackbarHostState = SnackbarHostState(),
-                onSearchInputChanged = {}
-            )
         }
 
         composable(route = CupcakeScreen.Flavor.name) {
@@ -284,43 +267,35 @@ private fun ReplyNavHost(
                 modifier = Modifier.fillMaxHeight()
             )
         }
-        composable(route = ReplyRoute.FeedWithArticleDetails) { navBackStackEntry ->
+        composable(
+            route = ReplyRoute.JET_NEWS,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern =
+                        "$JETNEWS_APP_URI/${JetnewsDestinations.HOME_ROUTE}?$POST_ID={$POST_ID}"
+                }
+            )
+        ) { navBackStackEntry ->
             val homeViewModel: HomeViewModel = viewModel(
                 factory = HomeViewModel.provideFactory(
                     postsRepository = appContainer.postsRepository,
                     preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
                 )
             )
-
-            val homeUiState by homeViewModel.uiState.collectAsStateWithLifecycle()
-
-            // Construct the lazy list states for the list and the details outside of deciding which one to
-            // show. This allows the associated state to survive beyond that decision, and therefore
-            // we get to preserve the scroll throughout any changes to the content.
-            val homeListLazyListState = rememberLazyListState()
-            val articleDetailLazyListStates = when (homeUiState) {
-                is HomeUiState.HasPosts -> (homeUiState as HomeUiState.HasPosts).postsFeed.allPosts
-                is HomeUiState.NoPosts -> emptyList()
-            }.associate { post ->
-                key(post.id) {
-                    post.id to rememberLazyListState()
-                }
-            }
-
-            HomeFeedWithArticleDetailsScreen(
-                uiState = homeUiState,
-                showTopAppBar = !isExpandedScreen,
-                onToggleFavorite = { homeViewModel.toggleFavourite(it) },
-                onSelectPost = { homeViewModel.selectArticle(it) },
-                onRefreshPosts = { homeViewModel.refreshPosts() },
-                onErrorDismiss = { homeViewModel.errorShown(it) },
-                onInteractWithList = { homeViewModel.interactedWithFeed() },
-                onInteractWithDetail = { homeViewModel.interactedWithArticleDetails(it) },
-                openDrawer = openDrawer,
-                homeListLazyListState = homeListLazyListState,
-                articleDetailLazyListStates = articleDetailLazyListStates,
-                snackbarHostState = snackbarHostState,
-                onSearchInputChanged = { homeViewModel.onSearchInputChanged(it) },
+            HomeRoute(
+                homeViewModel = homeViewModel,
+                isExpandedScreen = isExpandedScreen,
+                openDrawer = {navController.navigate(JetnewsDestinations.INTERESTS_ROUTE)},
+            )
+        }
+        composable(JetnewsDestinations.INTERESTS_ROUTE) {
+            val interestsViewModel: InterestsViewModel = viewModel(
+                factory = InterestsViewModel.provideFactory(appContainer.interestsRepository)
+            )
+            InterestsRoute(
+                interestsViewModel = interestsViewModel,
+                isExpandedScreen = isExpandedScreen,
+                openDrawer = openDrawer
             )
         }
     }
