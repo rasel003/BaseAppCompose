@@ -50,7 +50,7 @@ import com.rasel.baseappcompose.ui.components.ReplyDockedSearchBar
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 import com.google.accompanist.adaptive.TwoPane
 import com.rasel.baseappcompose.R
-import com.rasel.baseappcompose.data.Email
+import com.rasel.baseappcompose.data.model.Email
 import com.rasel.baseappcompose.ui.components.ReplyEmailListItem
 import com.rasel.baseappcompose.ui.components.ReplyEmailThreadItem
 import com.rasel.baseappcompose.ui.utils.ReplyContentType

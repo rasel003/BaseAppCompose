@@ -37,7 +37,7 @@ import com.rasel.baseappcompose.ui.home.HomeScreenType.FeedWithArticleDetails
  *
  * @param homeViewModel ViewModel that handles the business logic of this screen
  * @param isExpandedScreen (state) whether the screen is expanded
- * @param openDrawer (event) request opening the app drawer
+ * @param openInterestScreen (event) request opening the app drawer
  * @param snackbarHostState (state) state for the [Scaffold] component on this screen
  */
 @Composable
@@ -45,6 +45,7 @@ fun HomeRoute(
     homeViewModel: HomeViewModel,
     isExpandedScreen: Boolean,
     openDrawer: () -> Unit,
+    openSettingDialog: () -> Unit,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
     // UiState of the HomeScreen
@@ -61,6 +62,7 @@ fun HomeRoute(
         onInteractWithArticleDetails = { homeViewModel.interactedWithArticleDetails(it) },
         onSearchInputChanged = { homeViewModel.onSearchInputChanged(it) },
         openDrawer = openDrawer,
+        openSettingDialog = openSettingDialog,
         snackbarHostState = snackbarHostState,
     )
 }
@@ -94,6 +96,7 @@ fun HomeRoute(
     onInteractWithArticleDetails: (String) -> Unit,
     onSearchInputChanged: (String) -> Unit,
     openDrawer: () -> Unit,
+    openSettingDialog: () -> Unit,
     snackbarHostState: SnackbarHostState
 ) {
     // Construct the lazy list states for the list and the details outside of deciding which one to
@@ -122,6 +125,7 @@ fun HomeRoute(
                 onInteractWithList = onInteractWithFeed,
                 onInteractWithDetail = onInteractWithArticleDetails,
                 openDrawer = openDrawer,
+                openSettingDialog = openSettingDialog,
                 homeListLazyListState = homeListLazyListState,
                 articleDetailLazyListStates = articleDetailLazyListStates,
                 snackbarHostState = snackbarHostState,
@@ -137,6 +141,7 @@ fun HomeRoute(
                 onRefreshPosts = onRefreshPosts,
                 onErrorDismiss = onErrorDismiss,
                 openDrawer = openDrawer,
+                openSettingDialog = openSettingDialog,
                 homeListLazyListState = homeListLazyListState,
                 snackbarHostState = snackbarHostState,
                 onSearchInputChanged = onSearchInputChanged,

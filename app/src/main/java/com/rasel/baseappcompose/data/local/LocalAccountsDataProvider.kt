@@ -16,7 +16,7 @@
 
 package com.rasel.baseappcompose.data.local
 
-import com.example.reply.data.Account
+import com.rasel.baseappcompose.data.model.Account
 import com.rasel.baseappcompose.R
 
 /**

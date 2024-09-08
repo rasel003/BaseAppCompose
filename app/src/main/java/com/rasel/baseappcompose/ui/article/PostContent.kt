@@ -70,12 +70,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.posts.impl.post3
-import com.rasel.baseappcompose.model.Markup
-import com.rasel.baseappcompose.model.MarkupType
-import com.rasel.baseappcompose.model.Metadata
-import com.rasel.baseappcompose.model.Paragraph
-import com.rasel.baseappcompose.model.ParagraphType
-import com.rasel.baseappcompose.model.Post
+import com.rasel.baseappcompose.domain.model.Markup
+import com.rasel.baseappcompose.domain.model.MarkupType
+import com.rasel.baseappcompose.domain.model.Metadata
+import com.rasel.baseappcompose.domain.model.Paragraph
+import com.rasel.baseappcompose.domain.model.ParagraphType
+import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.ui.theme.JetnewsTheme
 
 private val defaultSpacerSize = 16.dp

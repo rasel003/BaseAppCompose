@@ -60,7 +60,7 @@ import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
-import com.rasel.baseappcompose.model.Post
+import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.ui.theme.JetnewsTheme
 import com.rasel.baseappcompose.ui.utils.BookmarkButton
 import com.rasel.baseappcompose.ui.utils.FavoriteButton

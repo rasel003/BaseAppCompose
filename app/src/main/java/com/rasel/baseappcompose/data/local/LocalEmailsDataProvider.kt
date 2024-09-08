@@ -16,10 +16,10 @@
 
 package com.rasel.baseappcompose.data.local
 
-import com.rasel.baseappcompose.data.EmailAttachment
+import com.rasel.baseappcompose.data.model.EmailAttachment
 import com.rasel.baseappcompose.R
-import com.rasel.baseappcompose.data.Email
-import com.rasel.baseappcompose.data.MailboxType
+import com.rasel.baseappcompose.data.model.Email
+import com.rasel.baseappcompose.data.model.MailboxType
 
 /**
  * A static data store of [Email]s.

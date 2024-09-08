@@ -22,7 +22,7 @@ import androidx.lifecycle.viewModelScope
 import com.rasel.baseappcompose.data.posts.PostsRepository
 import com.example.jetnews.model.PostsFeed
 import com.rasel.baseappcompose.R
-import com.rasel.baseappcompose.model.Post
+import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.ui.utils.ErrorMessage
 import kotlinx.coroutines.flow.MutableStateFlow

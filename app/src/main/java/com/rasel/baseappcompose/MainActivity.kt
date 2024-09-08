@@ -18,8 +18,9 @@ import com.rasel.baseappcompose.ui.JetnewsApplication
 import com.rasel.baseappcompose.ui.reply.ReplyApp
 import com.rasel.baseappcompose.ui.reply.ReplyHomeViewModel
 import com.rasel.baseappcompose.ui.theme.BaseAppComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: ReplyHomeViewModel by viewModels()

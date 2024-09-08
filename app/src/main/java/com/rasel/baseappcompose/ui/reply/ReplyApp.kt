@@ -18,25 +18,24 @@ package com.rasel.baseappcompose.ui.reply
 
 import android.content.Context
 import android.content.Intent
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -47,31 +46,31 @@ import androidx.navigation.navDeepLink
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
 import com.example.jetnews.ui.interests.InterestsViewModel
-import com.rasel.baseappcompose.CupcakeScreen
+import com.rasel.baseappcompose.ui.order.CupcakeScreen
 import com.rasel.baseappcompose.JetnewsDestinations
 import com.rasel.baseappcompose.MovieDetailsScreen
-import com.rasel.baseappcompose.OrderSummaryScreen
-import com.rasel.baseappcompose.OrderViewModel
+import com.rasel.baseappcompose.ui.order.OrderSummaryScreen
+import com.rasel.baseappcompose.ui.order.OrderViewModel
 import com.rasel.baseappcompose.POST_ID
 import com.rasel.baseappcompose.R
-import com.rasel.baseappcompose.SelectOptionScreen
-import com.rasel.baseappcompose.StartOrderScreen
+import com.rasel.baseappcompose.ui.order.SelectOptionScreen
+import com.rasel.baseappcompose.ui.order.StartOrderScreen
 import com.rasel.baseappcompose.data.AppContainer
 import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
 import com.rasel.baseappcompose.ui.JetnewsApplication.Companion.JETNEWS_APP_URI
-import com.rasel.baseappcompose.ui.article.ArticleScreen
-import com.rasel.baseappcompose.ui.home.HomeFeedScreen
-import com.rasel.baseappcompose.ui.home.HomeFeedWithArticleDetailsScreen
 import com.rasel.baseappcompose.ui.home.HomeRoute
-import com.rasel.baseappcompose.ui.home.HomeUiState
 import com.rasel.baseappcompose.ui.home.HomeViewModel
 import com.rasel.baseappcompose.ui.interests.InterestsRoute
+import com.rasel.baseappcompose.ui.jet_caster.JetcasterAppState
+import com.rasel.baseappcompose.ui.jet_caster.home.MainScreen
+import com.rasel.baseappcompose.ui.jet_caster.rememberJetcasterAppState
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationActions
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationWrapper
 import com.rasel.baseappcompose.ui.navigation.ReplyRoute
+import com.rasel.baseappcompose.ui.setting.SettingsDialog
 import com.rasel.baseappcompose.ui.utils.DevicePosture
 import com.rasel.baseappcompose.ui.utils.ReplyContentType
 import com.rasel.baseappcompose.ui.utils.ReplyNavigationType
@@ -133,6 +132,9 @@ fun ReplyApp(
     val selectedDestination =
         navBackStackEntry?.destination?.route ?: ReplyRoute.INBOX
 
+    var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
+
+
     Surface {
         ReplyNavigationWrapper(
             selectedDestination = selectedDestination,
@@ -147,7 +149,10 @@ fun ReplyApp(
                 closeDetailScreen = closeDetailScreen,
                 navigateToDetail = navigateToDetail,
                 toggleSelectedEmail = toggleSelectedEmail,
-                appContainer = appContainer
+                appContainer = appContainer,
+                showSettingsDialog = showSettingsDialog,
+                openSettingDialog = { showSettingsDialog = true },
+                onSettingsDismissed = { showSettingsDialog = false }
             )
         }
     }
@@ -167,7 +172,10 @@ private fun ReplyNavHost(
     modifier: Modifier = Modifier,
     viewModel: OrderViewModel = viewModel(),
     openDrawer: () -> Unit = {},
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    appState: JetcasterAppState = rememberJetcasterAppState(),
+    showSettingsDialog: Boolean,
+    openSettingDialog: () -> Unit,
+    onSettingsDismissed: () -> Unit,
 ) {
 
     val postsFeed = runBlocking {
@@ -180,6 +188,16 @@ private fun ReplyNavHost(
 
 
     val isExpandedScreen = false
+
+    val adaptiveInfo = currentWindowAdaptiveInfo()
+
+
+    if (showSettingsDialog) {
+        SettingsDialog(
+            onDismiss = { onSettingsDismissed() },
+        )
+    }
+
 
     NavHost(
         modifier = modifier,
@@ -212,8 +230,13 @@ private fun ReplyNavHost(
                     .padding(dimensionResource(R.dimen.padding_medium))
             )
         }
-        composable(ReplyRoute.ARTICLES) {
-            ArticleScreen(post, true, {}, false, {})
+        composable(ReplyRoute.ARTICLES) { backStackEntry ->
+            MainScreen(
+                windowSizeClass = adaptiveInfo.windowSizeClass,
+                navigateToPlayer = { episode ->
+                    appState.navigateToPlayer(episode.uri, backStackEntry)
+                }
+            )
         }
 
         composable(route = CupcakeScreen.Flavor.name) {
@@ -285,7 +308,8 @@ private fun ReplyNavHost(
             HomeRoute(
                 homeViewModel = homeViewModel,
                 isExpandedScreen = isExpandedScreen,
-                openDrawer = {navController.navigate(JetnewsDestinations.INTERESTS_ROUTE)},
+                openDrawer = { navController.navigate(JetnewsDestinations.INTERESTS_ROUTE) },
+                openSettingDialog = { openSettingDialog() }
             )
         }
         composable(JetnewsDestinations.INTERESTS_ROUTE) {

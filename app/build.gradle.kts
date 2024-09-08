@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.rasel.baseappcompose"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -46,7 +46,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += setOf("/META-INF/{AL2.0,LGPL2.1}", "rome-utils-1.18.0.jar")
         }
     }
 }
@@ -65,7 +65,38 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.androidx.navigation.runtime.ktx)
-    implementation("com.google.accompanist:accompanist-adaptive:0.26.2-beta")
+    implementation(libs.accompanist.adaptive.v0262beta)
+    implementation(libs.kotlinx.collections.immutable)
+
+    implementation(libs.readmore.material3)
+    api(libs.kotlinx.datetime)
+    api(libs.androidx.metrics)
+
+    // Image loading
+    implementation(libs.coil.kt.compose)
+
+    // Dependency injection
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+//    ksp(libs.hilt.compiler)
+
+    // Networking
+    implementation(libs.okhttp3)
+    implementation(libs.okhttp.logging)
+
+
+    // Database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+//    ksp(libs.androidx.room.compiler)
+
+//    implementation(libs.rometools.rome)
+//    implementation(libs.rometools.modules)
+    implementation(libs.androidx.adaptive.layout.android)
+    implementation(libs.androidx.adaptive.navigation.android)
+
+    coreLibraryDesugaring(libs.core.jdk.desugaring)
+
 
     implementation(libs.androidx.glance)
     implementation(libs.accompanist.swiperefresh)

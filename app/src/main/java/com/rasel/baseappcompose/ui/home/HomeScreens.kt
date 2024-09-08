@@ -105,7 +105,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
-import com.rasel.baseappcompose.model.Post
+import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.ui.theme.JetnewsTheme
 import com.rasel.baseappcompose.ui.utils.BookmarkButton
@@ -130,6 +130,7 @@ fun HomeFeedWithArticleDetailsScreen(
     onInteractWithList: () -> Unit,
     onInteractWithDetail: (String) -> Unit,
     openDrawer: () -> Unit,
+    openSettingDialog: () -> Unit,
     homeListLazyListState: LazyListState,
     articleDetailLazyListStates: Map<String, LazyListState>,
     snackbarHostState: SnackbarHostState,
@@ -142,6 +143,7 @@ fun HomeFeedWithArticleDetailsScreen(
         onRefreshPosts = onRefreshPosts,
         onErrorDismiss = onErrorDismiss,
         openDrawer = openDrawer,
+        openSettingDialog = openSettingDialog,
         snackbarHostState = snackbarHostState,
         modifier = modifier,
     ) { hasPostsUiState, contentPadding, contentModifier ->
@@ -234,6 +236,7 @@ fun HomeFeedScreen(
     onRefreshPosts: () -> Unit,
     onErrorDismiss: (Long) -> Unit,
     openDrawer: () -> Unit,
+    openSettingDialog: () -> Unit,
     homeListLazyListState: LazyListState,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
@@ -246,6 +249,7 @@ fun HomeFeedScreen(
         onRefreshPosts = onRefreshPosts,
         onErrorDismiss = onErrorDismiss,
         openDrawer = openDrawer,
+        openSettingDialog = openSettingDialog,
         snackbarHostState = snackbarHostState,
         modifier = modifier
     ) { hasPostsUiState, contentPadding, contentModifier ->
@@ -281,6 +285,7 @@ private fun HomeScreenWithList(
     onRefreshPosts: () -> Unit,
     onErrorDismiss: (Long) -> Unit,
     openDrawer: () -> Unit,
+    openSettingDialog: () -> Unit,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
     hasPostsContent: @Composable (
@@ -297,6 +302,7 @@ private fun HomeScreenWithList(
             if (showTopAppBar) {
                 HomeTopAppBar(
                     openDrawer = openDrawer,
+                    openSettingDialog = openSettingDialog,
                     topAppBarState = topAppBarState
                 )
             }
@@ -673,6 +679,7 @@ private fun PostTopBar(
 @Composable
 private fun HomeTopAppBar(
     openDrawer: () -> Unit,
+    openSettingDialog: () -> Unit,
     modifier: Modifier = Modifier,
     topAppBarState: TopAppBarState = rememberTopAppBarState(),
     scrollBehavior: TopAppBarScrollBehavior? =
@@ -700,11 +707,12 @@ private fun HomeTopAppBar(
         },
         actions = {
             IconButton(onClick = {
-                Toast.makeText(
+               /* Toast.makeText(
                     context,
                     "Search is not yet implemented in this configuration",
                     Toast.LENGTH_LONG
-                ).show()
+                ).show()*/
+                openSettingDialog()
             }) {
                 Icon(
                     imageVector = Icons.Filled.Search,
@@ -742,6 +750,7 @@ fun PreviewHomeListDrawerScreen() {
             onRefreshPosts = {},
             onErrorDismiss = {},
             openDrawer = {},
+            openSettingDialog = {},
             homeListLazyListState = rememberLazyListState(),
             snackbarHostState = SnackbarHostState(),
             onSearchInputChanged = {}
@@ -778,6 +787,7 @@ fun PreviewHomeListNavRailScreen() {
             onRefreshPosts = {},
             onErrorDismiss = {},
             openDrawer = {},
+            openSettingDialog = {},
             homeListLazyListState = rememberLazyListState(),
             snackbarHostState = SnackbarHostState(),
             onSearchInputChanged = {}
@@ -812,6 +822,7 @@ fun PreviewHomeListDetailScreen() {
             onInteractWithList = {},
             onInteractWithDetail = {},
             openDrawer = {},
+            openSettingDialog = {},
             homeListLazyListState = rememberLazyListState(),
             articleDetailLazyListStates = postsFeed.allPosts.associate { post ->
                 key(post.id) {

@@ -16,6 +16,7 @@
 
 package com.rasel.baseappcompose.ui.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +29,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
@@ -37,7 +37,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -51,9 +50,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.R
-import com.rasel.baseappcompose.data.Email
+import com.rasel.baseappcompose.data.model.Email
+import com.rasel.baseappcompose.data.local.LocalEmailsDataProvider
+import com.rasel.baseappcompose.ui.theme.JetnewsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -197,4 +199,28 @@ fun EmailDetailAppBar(
             }
         }
     )
+}
+
+@Preview("Drawer contents")
+@Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewReplyDockedSearchBar() {
+    JetnewsTheme {
+        ReplyDockedSearchBar(
+            emails = LocalEmailsDataProvider.allEmails,
+            onSearchItemSelected = {}
+        )
+    }
+}
+@Preview("Drawer contents")
+@Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewEmailDetailAppBar() {
+    JetnewsTheme {
+        EmailDetailAppBar(
+            email = LocalEmailsDataProvider.allEmails.first(),
+            isFullScreen = true,
+            onBackPressed = {}
+        )
+    }
 }

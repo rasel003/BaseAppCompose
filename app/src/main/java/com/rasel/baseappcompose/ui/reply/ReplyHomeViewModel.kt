@@ -18,9 +18,9 @@ package com.rasel.baseappcompose.ui.reply
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rasel.baseappcompose.data.Email
-import com.rasel.baseappcompose.data.EmailsRepository
-import com.rasel.baseappcompose.data.EmailsRepositoryImpl
+import com.rasel.baseappcompose.data.model.Email
+import com.rasel.baseappcompose.data.repository.EmailsRepository
+import com.rasel.baseappcompose.data.repository.EmailsRepositoryImpl
 import com.rasel.baseappcompose.ui.utils.ReplyContentType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

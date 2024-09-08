@@ -19,14 +19,14 @@ package com.rasel.baseappcompose.data.posts.impl
 
 import com.example.jetnews.model.PostsFeed
 import com.rasel.baseappcompose.R
-import com.rasel.baseappcompose.model.Metadata
-import com.rasel.baseappcompose.model.Markup
-import com.rasel.baseappcompose.model.MarkupType
-import com.rasel.baseappcompose.model.Paragraph
-import com.rasel.baseappcompose.model.ParagraphType
-import com.rasel.baseappcompose.model.Post
-import com.rasel.baseappcompose.model.PostAuthor
-import com.rasel.baseappcompose.model.Publication
+import com.rasel.baseappcompose.domain.model.Metadata
+import com.rasel.baseappcompose.domain.model.Markup
+import com.rasel.baseappcompose.domain.model.MarkupType
+import com.rasel.baseappcompose.domain.model.Paragraph
+import com.rasel.baseappcompose.domain.model.ParagraphType
+import com.rasel.baseappcompose.domain.model.Post
+import com.rasel.baseappcompose.domain.model.PostAuthor
+import com.rasel.baseappcompose.domain.model.Publication
 
 /**
  * Define hardcoded posts to avoid handling any non-ui operations.
@@ -1122,7 +1122,7 @@ val post3 = Post(
     subtitle = "Learn how to get started converting Java Programming Language code to Kotlin, making it more idiomatic and avoid common pitfalls, by…",
     url = "https://medium.com/androiddevelopers/from-java-programming-language-to-kotlin-the-idiomatic-way-ac552dcc1741",
     publication = publication,
-    metadata = com.rasel.baseappcompose.model.Metadata(
+    metadata = Metadata(
         author = florina,
         date = "July 09",
         readTimeMinutes = 1

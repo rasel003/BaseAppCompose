@@ -17,16 +17,28 @@
 package com.rasel.baseappcompose.ui
 
 import android.app.Application
+import coil.ImageLoader
+import coil.ImageLoaderFactory
 import com.rasel.baseappcompose.data.AppContainer
 import com.rasel.baseappcompose.data.AppContainerImpl
+import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
-class JetnewsApplication : Application() {
+@HiltAndroidApp
+class JetnewsApplication : Application(), ImageLoaderFactory {
     companion object {
         const val JETNEWS_APP_URI = "https://developer.android.com/jetnews"
     }
 
     // AppContainer instance used by the rest of classes to obtain dependencies
     lateinit var container: AppContainer
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
+    override fun newImageLoader(): ImageLoader = imageLoader
+
+
 
     override fun onCreate() {
         super.onCreate()

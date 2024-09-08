@@ -45,8 +45,8 @@ import com.rasel.baseappcompose.data.posts.impl.post2
 import com.rasel.baseappcompose.data.posts.impl.post3
 import com.rasel.baseappcompose.data.posts.impl.post4
 import com.rasel.baseappcompose.data.posts.impl.post5
-import com.rasel.baseappcompose.model.Post
-import com.rasel.baseappcompose.model.PostAuthor
+import com.rasel.baseappcompose.domain.model.Post
+import com.rasel.baseappcompose.domain.model.PostAuthor
 import com.rasel.baseappcompose.ui.theme.JetnewsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
