@@ -49,12 +49,12 @@ import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.component.HtmlTextContainer
 import com.rasel.baseappcompose.designsystem.component.PodcastImage
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.domain.PreviewEpisodes
 import com.rasel.baseappcompose.domain.PreviewPodcasts
 import com.rasel.baseappcompose.domain.model.EpisodeInfo
 import com.rasel.baseappcompose.domain.model.PodcastInfo
 import com.rasel.baseappcompose.domain.player.model.PlayerEpisode
-import com.rasel.baseappcompose.ui.theme.JetcasterTheme
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -251,7 +251,7 @@ private fun EpisodeListItemImage(
 )
 @Composable
 private fun EpisodeListItemPreview() {
-    JetcasterTheme {
+    NiaTheme {
         EpisodeListItem(
             episode = PreviewEpisodes[0],
             podcast = PreviewPodcasts[0],

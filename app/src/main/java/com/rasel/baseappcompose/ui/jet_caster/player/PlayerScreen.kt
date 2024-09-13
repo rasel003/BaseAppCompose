@@ -100,8 +100,8 @@ import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.component.HtmlTextContainer
 import com.rasel.baseappcompose.designsystem.component.ImageBackgroundColorScrim
 import com.rasel.baseappcompose.designsystem.component.PodcastImage
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.domain.player.model.PlayerEpisode
-import com.rasel.baseappcompose.ui.theme.JetcasterTheme
 import com.rasel.baseappcompose.ui.utils.DevicePreviews
 import com.rasel.baseappcompose.ui.utils.isBookPosture
 import com.rasel.baseappcompose.ui.utils.isSeparatingPosture
@@ -826,7 +826,7 @@ private fun FullScreenLoading(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun TopAppBarPreview() {
-    JetcasterTheme {
+    NiaTheme {
         TopAppBar(
             onBackPress = {},
             onAddToQueue = {},
@@ -837,7 +837,7 @@ fun TopAppBarPreview() {
 @Preview
 @Composable
 fun PlayerButtonsPreview() {
-    JetcasterTheme {
+    NiaTheme {
         PlayerButtons(
             hasNext = false,
             isPlaying = true,
@@ -854,7 +854,7 @@ fun PlayerButtonsPreview() {
 @DevicePreviews
 @Composable
 fun PlayerScreenPreview() {
-    JetcasterTheme {
+    NiaTheme {
         BoxWithConstraints {
             PlayerScreen(
                 PlayerUiState(

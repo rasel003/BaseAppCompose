@@ -31,7 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import com.rasel.baseappcompose.data.AppContainer
 import com.rasel.baseappcompose.ui.components.AppNavRail
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -39,7 +39,7 @@ fun JetnewsApp(
     appContainer: AppContainer,
     widthSizeClass: WindowWidthSizeClass,
 ) {
-    JetnewsTheme {
+    NiaTheme {
         val navController = rememberNavController()
         val navigationActions = remember(navController) {
             JetnewsNavigationActions(navController)

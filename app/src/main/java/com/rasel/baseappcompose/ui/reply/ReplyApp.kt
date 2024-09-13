@@ -222,7 +222,7 @@ private fun ReplyNavHost(
                     viewModel.setQuantity(it)
                     navController.navigate(CupcakeScreen.Flavor.name)
                 },
-                onNextButtonClicked1 = {
+                onMovieDetailsClicked = {
                     navController.navigate(CupcakeScreen.MOVIE_DETAILS.name)
                 },
                 modifier = Modifier

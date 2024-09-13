@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rasel.baseappcompose.glance.ui
+package com.rasel.baseappcompose.designsystem.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
@@ -25,7 +25,7 @@ import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.unit.ColorProvider
-import com.rasel.baseappcompose.glance.ui.theme.JetnewsGlanceColorScheme
+import com.rasel.baseappcompose.designsystem.theme.JetnewsGlanceColorScheme
 
 /**
  * A thin line that groups content in lists and layouts.

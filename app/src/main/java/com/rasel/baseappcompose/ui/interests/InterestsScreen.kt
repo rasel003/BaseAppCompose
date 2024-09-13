@@ -79,7 +79,7 @@ import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.interests.InterestSection
 import com.rasel.baseappcompose.data.interests.TopicSelection
 import com.rasel.baseappcompose.data.interests.impl.FakeInterestsRepository
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import kotlinx.coroutines.runBlocking
 import kotlin.math.max
 
@@ -505,7 +505,7 @@ private fun InterestsAdaptiveContentLayout(
 @Preview("Interests screen (big font)", "Interests", fontScale = 1.5f)
 @Composable
 fun PreviewInterestsScreenDrawer() {
-    JetnewsTheme {
+    NiaTheme {
         val tabContent = getFakeTabsContent()
         val (currentSection, updateSection) = rememberSaveable {
             mutableStateOf(tabContent.first().section)
@@ -533,7 +533,7 @@ fun PreviewInterestsScreenDrawer() {
 )
 @Composable
 fun PreviewInterestsScreenNavRail() {
-    JetnewsTheme {
+    NiaTheme {
         val tabContent = getFakeTabsContent()
         val (currentSection, updateSection) = rememberSaveable {
             mutableStateOf(tabContent.first().section)
@@ -557,7 +557,7 @@ fun PreviewTopicsTab() {
     val topics = runBlocking {
         (FakeInterestsRepository().getTopics() as Result.Success).data
     }
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             TabWithSections(topics, setOf()) { }
         }
@@ -571,7 +571,7 @@ fun PreviewPeopleTab() {
     val people = runBlocking {
         (FakeInterestsRepository().getPeople() as Result.Success).data
     }
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             TabWithTopics(people, setOf()) { }
         }
@@ -585,7 +585,7 @@ fun PreviewPublicationsTab() {
     val publications = runBlocking {
         (FakeInterestsRepository().getPublications() as Result.Success).data
     }
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             TabWithTopics(publications, setOf()) { }
         }

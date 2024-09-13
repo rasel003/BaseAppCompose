@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import com.rasel.baseappcompose.designsystem.theme.surfaceVariantDark
-import com.rasel.baseappcompose.ui.theme.surfaceVariantLight
+import com.rasel.baseappcompose.designsystem.theme.surfaceVariantLight
 
 @Composable
 internal fun thumbnailPlaceholderDefaultBrush(

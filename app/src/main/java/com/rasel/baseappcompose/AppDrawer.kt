@@ -37,7 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -90,7 +90,7 @@ private fun JetNewsLogo(modifier: Modifier = Modifier) {
 @Preview("Drawer contents (dark)", uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewAppDrawer() {
-    JetnewsTheme {
+    NiaTheme {
         AppDrawer(
             currentRoute = JetnewsDestinations.HOME_ROUTE,
             navigateToHome = {},

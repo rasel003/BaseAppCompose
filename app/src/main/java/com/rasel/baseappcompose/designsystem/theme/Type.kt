@@ -17,115 +17,42 @@
 package com.rasel.baseappcompose.designsystem.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.LineHeightStyle.Alignment
 import androidx.compose.ui.text.style.LineHeightStyle.Trim
 import androidx.compose.ui.unit.sp
+import com.rasel.baseappcompose.R
 
-val JetcasterTypography = Typography(
-    displayLarge = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 57.sp,
-        fontWeight = FontWeight.W400,
-        lineHeight = 64.sp,
-        letterSpacing = (-0.25).sp
-    ),
-    displayMedium = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 45.sp,
-        fontWeight = FontWeight.W400,
-        lineHeight = 52.sp
-    ),
-    displaySmall = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 36.sp,
-        fontWeight = FontWeight.W400,
-        lineHeight = 44.sp
-    ),
-    headlineLarge = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 32.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 40.sp
-    ),
-    headlineMedium = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 28.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 36.sp
-    ),
-    headlineSmall = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 24.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 32.sp
-    ),
-    titleLarge = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 22.sp,
-        fontWeight = FontWeight.W400,
-        lineHeight = 28.sp
-    ),
-    titleMedium = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 24.sp,
-        letterSpacing = 0.15.sp
-    ),
-    titleSmall = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 14.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 20.sp,
-        letterSpacing = 0.1.sp
-    ),
-    labelLarge = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 14.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 20.sp,
-        letterSpacing = 0.1.sp
-    ),
-    labelMedium = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 12.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 11.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    ),
-    bodyLarge = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    ),
-    bodyMedium = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 14.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 20.sp,
-        letterSpacing = 0.25.sp
-    ),
-    bodySmall = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 12.sp,
-        fontWeight = FontWeight.W500,
-        lineHeight = 16.sp,
-        letterSpacing = 0.4.sp
-    ),
+
+
+val Montserrat = FontFamily(
+    Font(R.font.montserrat_light, FontWeight.Light),
+    Font(R.font.montserrat_regular, FontWeight.Normal),
+    Font(R.font.montserrat_medium, FontWeight.Medium),
+    Font(R.font.montserrat_semibold, FontWeight.SemiBold)
 )
 
+@Suppress("DEPRECATION")
+val defaultTextStyle = TextStyle(
+    fontFamily = Montserrat,
+    platformStyle = PlatformTextStyle(
+        includeFontPadding = false
+    ),
+    lineHeightStyle = LineHeightStyle(
+        alignment = LineHeightStyle.Alignment.Center,
+        trim = LineHeightStyle.Trim.None
+    )
+)
+
+object JetnewsGlanceTextStyles {
+    val bodyLarge = androidx.glance.text.TextStyle(fontSize = 16.sp)
+    val bodySmall = androidx.glance.text.TextStyle(fontSize = 12.sp)
+}
 
 
 /**
@@ -138,6 +65,13 @@ internal val NiaTypography = Typography(
         lineHeight = 64.sp,
         letterSpacing = (-0.25).sp,
     ),
+    /*displayLarge = defaultTextStyle.copy(
+        fontWeight = FontWeight.W400,
+        fontSize = 57.sp,
+        lineHeight = 64.sp,
+        letterSpacing = (-0.25).sp,
+        lineBreak = LineBreak.Heading
+    ),*/
     displayMedium = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 45.sp,

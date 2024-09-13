@@ -104,6 +104,7 @@ import androidx.window.core.layout.WindowWidthSizeClass
 import com.rasel.baseappcompose.ui.podcast.PodcastDetailsViewModel
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.component.PodcastImage
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.domain.PreviewCategories
 import com.rasel.baseappcompose.domain.PreviewPodcastEpisodes
 import com.rasel.baseappcompose.domain.PreviewPodcasts
@@ -117,7 +118,6 @@ import com.rasel.baseappcompose.domain.player.model.PlayerEpisode
 import com.rasel.baseappcompose.ui.jet_caster.home.discover.discoverItems
 import com.rasel.baseappcompose.ui.jet_caster.home.library.libraryItems
 import com.rasel.baseappcompose.ui.podcast.PodcastDetailsScreen
-import com.rasel.baseappcompose.ui.theme.JetcasterTheme
 import com.rasel.baseappcompose.ui.utils.DevicePreviews
 import com.rasel.baseappcompose.ui.utils.ToggleFollowPodcastIconButton
 import com.rasel.baseappcompose.ui.utils.fullWidthItem
@@ -288,7 +288,7 @@ private fun HomeScreenError(onRetry: () -> Unit, modifier: Modifier = Modifier) 
 @Preview
 @Composable
 fun HomeScreenErrorPreview() {
-    JetcasterTheme {
+    NiaTheme {
         HomeScreenError(onRetry = {})
     }
 }
@@ -900,7 +900,7 @@ private fun lastUpdated(updated: OffsetDateTime): String {
 @Preview
 @Composable
 private fun HomeAppBarPreview() {
-    JetcasterTheme {
+    NiaTheme {
         HomeAppBar(
             isExpanded = false,
         )
@@ -912,7 +912,7 @@ private val CompactWindowSizeClass = WindowSizeClass.compute(360f, 780f)
 @DevicePreviews
 @Composable
 private fun PreviewHome() {
-    JetcasterTheme {
+    NiaTheme {
         val homeState = HomeState(
             windowSizeClass = CompactWindowSizeClass,
             featuredPodcasts = PreviewPodcasts.toPersistentList(),
@@ -946,7 +946,7 @@ private fun PreviewHome() {
 @Composable
 @Preview
 private fun PreviewPodcastCard() {
-    JetcasterTheme {
+    NiaTheme {
         FollowedPodcastCarouselItem(
             modifier = Modifier.size(128.dp),
             podcastTitle = "",

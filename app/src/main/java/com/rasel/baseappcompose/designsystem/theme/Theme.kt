@@ -16,6 +16,7 @@
 
 package com.rasel.baseappcompose.designsystem.theme
 
+import android.app.Activity
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.VisibleForTesting
@@ -28,9 +29,15 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
+import androidx.glance.color.ColorProvider
+import androidx.glance.material3.ColorProviders
 
 /**
  * Light default theme color scheme
@@ -62,6 +69,10 @@ val LightDefaultColorScheme = lightColorScheme(
     inverseSurface = DarkPurpleGray20,
     inverseOnSurface = DarkPurpleGray95,
     outline = PurpleGray50,
+    inversePrimary = md_theme_light_inversePrimary,
+    surfaceTint = md_theme_light_surfaceTint,
+    outlineVariant = md_theme_light_outlineVariant,
+    scrim = md_theme_light_scrim,
 )
 
 /**
@@ -94,6 +105,10 @@ val DarkDefaultColorScheme = darkColorScheme(
     inverseSurface = DarkPurpleGray90,
     inverseOnSurface = DarkPurpleGray10,
     outline = PurpleGray60,
+    inversePrimary = md_theme_dark_inversePrimary,
+    surfaceTint = md_theme_dark_surfaceTint,
+    outlineVariant = md_theme_dark_outlineVariant,
+    scrim = md_theme_dark_scrim,
 )
 
 /**
@@ -232,6 +247,16 @@ fun NiaTheme(
         !disableDynamicTheming && supportsDynamicTheming() -> TintTheme(colorScheme.primary)
         else -> TintTheme()
     }
+
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = Color.Transparent.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+        }
+    }
+
     // Composition locals
     CompositionLocalProvider(
         LocalGradientColors provides gradientColors,
@@ -240,10 +265,23 @@ fun NiaTheme(
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
+            shapes = JetcasterShapes,
             typography = NiaTypography,
             content = content,
         )
     }
+}
+
+object JetnewsGlanceColorScheme {
+    val colors = ColorProviders(
+        light = LightDefaultColorScheme,
+        dark = DarkDefaultColorScheme
+    )
+
+    val outlineVariant = ColorProvider(
+        day = LightDefaultColorScheme.onSurface.copy(alpha = 0.1f),
+        night = DarkDefaultColorScheme.onSurface.copy(alpha = 0.1f)
+    )
 }
 
 @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)

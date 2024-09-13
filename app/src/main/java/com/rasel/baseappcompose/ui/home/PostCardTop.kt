@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.posts.impl.posts
 import com.rasel.baseappcompose.domain.model.Post
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.utils.CompletePreviews
 
 @Composable
@@ -93,7 +93,7 @@ fun PostCardTop(post: Post, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun PostCardTopPreview() {
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             PostCardTop(posts.highlightedPost)
         }
@@ -109,7 +109,7 @@ fun PostCardTopPreview() {
 @CompletePreviews
 @Composable
 fun PostCardTopPreviews() {
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             PostCardTop(posts.highlightedPost)
         }

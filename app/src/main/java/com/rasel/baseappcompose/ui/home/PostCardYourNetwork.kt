@@ -47,7 +47,7 @@ import com.rasel.baseappcompose.data.posts.impl.post4
 import com.rasel.baseappcompose.data.posts.impl.post5
 import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.domain.model.PostAuthor
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -108,7 +108,7 @@ fun PostCardPopular(
 fun PreviewPostCardPopular(
     @PreviewParameter(PostPreviewParameterProvider::class, limit = 1) post: Post
 ) {
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             PostCardPopular(post, {})
         }
@@ -129,7 +129,7 @@ fun PreviewPostCardPopularLongText(
         facilisis eget magna quis, rhoncus volutpat mi. Phasellus vel sollicitudin quam, eu
         consectetur dolor. Proin lobortis venenatis sem, in vestibulum est. Duis ac nibh interdum,
         """.trimIndent()
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             PostCardPopular(
                 post.copy(

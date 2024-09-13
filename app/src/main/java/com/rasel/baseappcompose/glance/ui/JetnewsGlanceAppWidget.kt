@@ -49,7 +49,8 @@ import androidx.glance.layout.size
 import androidx.glance.layout.width
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.successOr
-import com.rasel.baseappcompose.glance.ui.theme.JetnewsGlanceColorScheme
+import com.rasel.baseappcompose.designsystem.component.Divider
+import com.rasel.baseappcompose.designsystem.theme.JetnewsGlanceColorScheme
 import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.ui.JetnewsApplication
 import kotlinx.coroutines.Dispatchers

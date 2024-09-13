@@ -32,7 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Composable
 fun SelectTopicButton(
@@ -92,7 +92,7 @@ fun SelectTopicButtonPreviewOn() {
 private fun SelectTopicButtonPreviewTemplate(
     selected: Boolean
 ) {
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             SelectTopicButton(
                 modifier = Modifier.padding(32.dp),

@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.data.model.OrderUiState
 import com.rasel.baseappcompose.ui.components.ReadMoreTextCompose
 import com.rasel.baseappcompose.ui.components.ViewCounter
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 /**
  * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
@@ -190,7 +190,7 @@ fun MovieDetailsScreen(
 @Preview
 @Composable
 fun MovieDetailsPreview() {
-    JetnewsTheme {
+    NiaTheme {
         MovieDetailsScreen(
             orderUiState = OrderUiState(0, "Test", "Test", "$300.00"),
             onSendButtonClicked = { subject: String, summary: String -> },

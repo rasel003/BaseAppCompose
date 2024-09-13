@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.jetnews.glance
+package com.rasel.baseappcompose.glance
 
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver

@@ -60,8 +60,8 @@ import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.domain.model.Post
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
 import com.rasel.baseappcompose.ui.utils.BookmarkButton
 import com.rasel.baseappcompose.ui.utils.FavoriteButton
 import com.rasel.baseappcompose.ui.utils.ShareButton
@@ -244,7 +244,7 @@ fun sharePost(post: Post, context: Context) {
 @Preview("Article screen (big font)", fontScale = 1.5f)
 @Composable
 fun PreviewArticleDrawer() {
-    JetnewsTheme {
+    NiaTheme {
         val post = runBlocking {
             (BlockingFakePostsRepository().getPost(post3.id) as Result.Success).data
         }
@@ -261,7 +261,7 @@ fun PreviewArticleDrawer() {
 @Preview("Article screen navrail (big font)", fontScale = 1.5f, device = Devices.PIXEL_C)
 @Composable
 fun PreviewArticleNavRail() {
-    JetnewsTheme {
+    NiaTheme {
         val post = runBlocking {
             (BlockingFakePostsRepository().getPost(post3.id) as Result.Success).data
         }

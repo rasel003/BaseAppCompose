@@ -47,10 +47,10 @@ import com.rasel.baseappcompose.domain.model.PodcastInfo
 import com.rasel.baseappcompose.domain.player.model.PlayerEpisode
 import com.rasel.baseappcompose.designsystem.component.PodcastImage
 import com.rasel.baseappcompose.designsystem.theme.Keyline1
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.domain.PreviewEpisodes
 import com.rasel.baseappcompose.domain.PreviewPodcasts
 import com.rasel.baseappcompose.ui.shared.EpisodeListItem
-import com.rasel.baseappcompose.ui.theme.JetcasterTheme
 import com.rasel.baseappcompose.ui.utils.ToggleFollowPodcastIconButton
 import com.rasel.baseappcompose.ui.utils.fullWidthItem
 
@@ -205,7 +205,7 @@ private fun TopPodcastRowItem(
 @Preview
 @Composable
 fun PreviewEpisodeListItem() {
-    JetcasterTheme {
+    NiaTheme {
         EpisodeListItem(
             episode = PreviewEpisodes[0],
             podcast = PreviewPodcasts[0],

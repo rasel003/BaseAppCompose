@@ -50,7 +50,7 @@ import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 fun StartOrderScreen(
     quantityOptions: List<Pair<Int, Int>>,
     onNextButtonClicked: (Int) -> Unit,
-    onNextButtonClicked1: (Int) -> Unit,
+    onMovieDetailsClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -76,7 +76,7 @@ fun StartOrderScreen(
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
 
             Button(
-                onClick = { onNextButtonClicked1(1) },
+                onClick = { onMovieDetailsClicked(1) },
             ) {
                 Text(stringResource(R.string.movie_details))
             }
@@ -124,7 +124,7 @@ fun StartOrderPreview() {
         StartOrderScreen(
             quantityOptions = DataSource.quantityOptions,
             onNextButtonClicked = {},
-            onNextButtonClicked1 = {},
+            onMovieDetailsClicked = {},
             modifier = Modifier
                 .fillMaxSize()
                 .padding(dimensionResource(R.dimen.padding_medium))

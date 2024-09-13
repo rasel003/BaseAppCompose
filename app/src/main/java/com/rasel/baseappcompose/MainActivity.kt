@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.adaptive.calculateDisplayFeatures
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.JetnewsApplication
 import com.rasel.baseappcompose.ui.reply.ReplyApp
 import com.rasel.baseappcompose.ui.reply.ReplyHomeViewModel
-import com.rasel.baseappcompose.ui.theme.BaseAppComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-            BaseAppComposeTheme {
+            NiaTheme {
                 /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "Android",
@@ -81,7 +81,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    BaseAppComposeTheme {
+    NiaTheme {
        // CupcakeApp(displayFeatures = emptyList())
     }
 }

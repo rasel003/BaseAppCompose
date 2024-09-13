@@ -50,7 +50,7 @@ import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.posts.impl.post3
 import com.rasel.baseappcompose.domain.model.Post
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.utils.BookmarkButton
 
 @Composable
@@ -203,7 +203,7 @@ fun PostCardHistory(post: Post, navigateToArticle: (String) -> Unit) {
 @Preview("Bookmark Button")
 @Composable
 fun BookmarkButtonPreview() {
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             BookmarkButton(isBookmarked = false, onClick = { })
         }
@@ -213,7 +213,7 @@ fun BookmarkButtonPreview() {
 @Preview("Bookmark Button Bookmarked")
 @Composable
 fun BookmarkButtonBookmarkedPreview() {
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             BookmarkButton(isBookmarked = true, onClick = { })
         }
@@ -224,7 +224,7 @@ fun BookmarkButtonBookmarkedPreview() {
 @Preview("Simple post card (dark)", uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun SimplePostPreview() {
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             PostCardSimple(post3, {}, false, {})
         }
@@ -234,7 +234,7 @@ fun SimplePostPreview() {
 @Preview("Post History card")
 @Composable
 fun HistoryPostPreview() {
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             PostCardHistory(post3, {})
         }

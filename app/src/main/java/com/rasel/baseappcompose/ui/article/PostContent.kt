@@ -70,13 +70,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.posts.impl.post3
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.domain.model.Markup
 import com.rasel.baseappcompose.domain.model.MarkupType
 import com.rasel.baseappcompose.domain.model.Metadata
 import com.rasel.baseappcompose.domain.model.Paragraph
 import com.rasel.baseappcompose.domain.model.ParagraphType
 import com.rasel.baseappcompose.domain.model.Post
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
 
 private val defaultSpacerSize = 16.dp
 
@@ -347,7 +347,7 @@ private val ColorScheme.codeBlockBackground: Color
 @Preview("Post content (dark)", uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewPost() {
-    JetnewsTheme {
+    NiaTheme {
         Surface {
             PostContent(post = post3)
         }

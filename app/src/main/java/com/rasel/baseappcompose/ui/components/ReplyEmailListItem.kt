@@ -52,7 +52,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.data.model.Email
 import com.rasel.baseappcompose.data.local.LocalEmailsDataProvider
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -170,7 +170,7 @@ fun SelectedProfileImage(modifier: Modifier = Modifier) {
 @Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewReplyEmailListItem() {
-    JetnewsTheme {
+    NiaTheme {
         ReplyEmailListItem(
             email = LocalEmailsDataProvider.allEmails.first(),
             toggleSelection = {},

@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.JetnewsDestinations
 import com.rasel.baseappcompose.R
-import com.rasel.baseappcompose.ui.theme.JetnewsTheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Composable
 fun ReplyProfileImage(
@@ -48,7 +48,7 @@ fun ReplyProfileImage(
 @Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewReplyProfileImage() {
-    JetnewsTheme {
+    NiaTheme {
         ReplyProfileImage(
             drawableResource = R.drawable.avatar_7,
             description = ""
