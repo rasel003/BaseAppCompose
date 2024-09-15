@@ -17,7 +17,7 @@
 package com.rasel.baseappcompose.data.posts.impl
 
 import com.rasel.baseappcompose.data.posts.PostsRepository
-import com.example.jetnews.model.PostsFeed
+import com.rasel.baseappcompose.domain.model.PostsFeed
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.ui.utils.addOrRemove

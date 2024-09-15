@@ -25,10 +25,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.jetnews.ui.interests.InterestsViewModel
 import com.rasel.baseappcompose.ui.article.ArticleScreen
 import com.rasel.baseappcompose.ui.home.HomeScreenType.ArticleDetails
 import com.rasel.baseappcompose.ui.home.HomeScreenType.Feed
 import com.rasel.baseappcompose.ui.home.HomeScreenType.FeedWithArticleDetails
+import com.rasel.baseappcompose.ui.interests.InterestsRoute
 
 /**
  * Displays the Home route.
@@ -43,8 +45,8 @@ import com.rasel.baseappcompose.ui.home.HomeScreenType.FeedWithArticleDetails
 @Composable
 fun HomeRoute(
     homeViewModel: HomeViewModel,
+    interestsViewModel: InterestsViewModel,
     isExpandedScreen: Boolean,
-    openDrawer: () -> Unit,
     openSettingDialog: () -> Unit,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
@@ -61,9 +63,10 @@ fun HomeRoute(
         onInteractWithFeed = { homeViewModel.interactedWithFeed() },
         onInteractWithArticleDetails = { homeViewModel.interactedWithArticleDetails(it) },
         onSearchInputChanged = { homeViewModel.onSearchInputChanged(it) },
-        openDrawer = openDrawer,
+        openInterestScreen = {homeViewModel.openInterestScreen()},
         openSettingDialog = openSettingDialog,
         snackbarHostState = snackbarHostState,
+        interestsViewModel = interestsViewModel
     )
 }
 
@@ -81,7 +84,7 @@ fun HomeRoute(
  * @param onInteractWithFeed (event) indicate that the feed was interacted with
  * @param onInteractWithArticleDetails (event) indicate that the article details were interacted
  * with
- * @param openDrawer (event) request opening the app drawer
+ * @param openInterestScreen (event) request opening the app drawer
  * @param snackbarHostState (state) state for the [Scaffold] component on this screen
  */
 @Composable
@@ -95,9 +98,10 @@ fun HomeRoute(
     onInteractWithFeed: () -> Unit,
     onInteractWithArticleDetails: (String) -> Unit,
     onSearchInputChanged: (String) -> Unit,
-    openDrawer: () -> Unit,
+    openInterestScreen: () -> Unit,
     openSettingDialog: () -> Unit,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
+    interestsViewModel: InterestsViewModel
 ) {
     // Construct the lazy list states for the list and the details outside of deciding which one to
     // show. This allows the associated state to survive beyond that decision, and therefore
@@ -106,6 +110,7 @@ fun HomeRoute(
     val articleDetailLazyListStates = when (uiState) {
         is HomeUiState.HasPosts -> uiState.postsFeed.allPosts
         is HomeUiState.NoPosts -> emptyList()
+        is HomeUiState.InterestScreen -> emptyList()
     }.associate { post ->
         key(post.id) {
             post.id to rememberLazyListState()
@@ -124,7 +129,7 @@ fun HomeRoute(
                 onErrorDismiss = onErrorDismiss,
                 onInteractWithList = onInteractWithFeed,
                 onInteractWithDetail = onInteractWithArticleDetails,
-                openDrawer = openDrawer,
+                openDrawer = openInterestScreen,
                 openSettingDialog = openSettingDialog,
                 homeListLazyListState = homeListLazyListState,
                 articleDetailLazyListStates = articleDetailLazyListStates,
@@ -140,7 +145,7 @@ fun HomeRoute(
                 onSelectPost = onSelectPost,
                 onRefreshPosts = onRefreshPosts,
                 onErrorDismiss = onErrorDismiss,
-                openDrawer = openDrawer,
+                openDrawer = openInterestScreen,
                 openSettingDialog = openSettingDialog,
                 homeListLazyListState = homeListLazyListState,
                 snackbarHostState = snackbarHostState,
@@ -171,6 +176,13 @@ fun HomeRoute(
                 onInteractWithFeed()
             }
         }
+        HomeScreenType.INTERESTS_SCREEN -> {
+            InterestsRoute(
+                interestsViewModel = interestsViewModel,
+                isExpandedScreen = isExpandedScreen,
+                openDrawer = openInterestScreen
+            )
+        }
     }
 }
 
@@ -185,7 +197,8 @@ fun HomeRoute(
 private enum class HomeScreenType {
     FeedWithArticleDetails,
     Feed,
-    ArticleDetails
+    ArticleDetails,
+    INTERESTS_SCREEN
 }
 
 /**
@@ -207,6 +220,7 @@ private fun getHomeScreenType(
                 }
             }
             is HomeUiState.NoPosts -> HomeScreenType.Feed
+            is HomeUiState.InterestScreen -> HomeScreenType.INTERESTS_SCREEN
         }
     }
     true -> HomeScreenType.FeedWithArticleDetails

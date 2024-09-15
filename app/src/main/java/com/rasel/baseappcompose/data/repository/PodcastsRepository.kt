@@ -21,7 +21,7 @@ import com.example.jetcaster.core.data.repository.CategoryStore
 import com.example.jetcaster.core.data.repository.EpisodeStore
 import com.example.jetcaster.core.data.repository.PodcastStore
 import com.rasel.baseappcompose.data.Dispatcher
-import com.rasel.baseappcompose.data.JetcasterDispatchers
+import com.rasel.baseappcompose.data.NiaDispatchers
 import com.rasel.baseappcompose.data.database.dao.TransactionRunner
 import com.rasel.baseappcompose.data.network.PodcastRssResponse
 import com.rasel.baseappcompose.data.network.PodcastsFetcher
@@ -42,7 +42,7 @@ class PodcastsRepository @Inject constructor(
     private val episodeStore: EpisodeStore,
     private val categoryStore: CategoryStore,
     private val transactionRunner: TransactionRunner,
-    @Dispatcher(JetcasterDispatchers.Main) mainDispatcher: CoroutineDispatcher
+    @Dispatcher(NiaDispatchers.Main) mainDispatcher: CoroutineDispatcher
 ) {
     private var refreshingJob: Job? = null
 

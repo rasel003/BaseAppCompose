@@ -19,7 +19,7 @@ package com.rasel.baseappcompose.data.di
 import android.content.Context
 import androidx.room.Room
 import coil.ImageLoader
-import com.rasel.baseappcompose.data.database.JetcasterDatabase
+import com.rasel.baseappcompose.data.database.AppDatabase
 import com.rasel.baseappcompose.data.database.dao.CategoriesDao
 import com.rasel.baseappcompose.data.database.dao.EpisodesDao
 import com.rasel.baseappcompose.data.database.dao.PodcastCategoryEntryDao
@@ -32,8 +32,6 @@ import com.example.jetcaster.core.data.repository.LocalCategoryStore
 import com.example.jetcaster.core.data.repository.LocalEpisodeStore
 import com.example.jetcaster.core.data.repository.LocalPodcastStore
 import com.example.jetcaster.core.data.repository.PodcastStore
-import com.rasel.baseappcompose.data.Dispatcher
-import com.rasel.baseappcompose.data.JetcasterDispatchers
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,8 +39,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.io.File
 import javax.inject.Singleton
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 
@@ -61,71 +57,45 @@ object DataDiModule {
         }
         .build()
 
-    @Provides
-    @Singleton
-    fun provideDatabase(
-        @ApplicationContext context: Context
-    ): JetcasterDatabase =
-        Room.databaseBuilder(context, JetcasterDatabase::class.java, "data.db")
-            // This is not recommended for normal apps, but the goal of this sample isn't to
-            // showcase all of Room.
-            .fallbackToDestructiveMigration()
-            .build()
 
-    @Provides
-    @Singleton
-    fun provideImageLoader(
-        @ApplicationContext context: Context
-    ): ImageLoader = ImageLoader.Builder(context)
-        // Disable `Cache-Control` header support as some podcast images disable disk caching.
-        .respectCacheHeaders(false)
-        .build()
+
+
 
     @Provides
     @Singleton
     fun provideCategoriesDao(
-        database: JetcasterDatabase
+        database: AppDatabase
     ): CategoriesDao = database.categoriesDao()
 
     @Provides
     @Singleton
     fun providePodcastCategoryEntryDao(
-        database: JetcasterDatabase
+        database: AppDatabase
     ): PodcastCategoryEntryDao = database.podcastCategoryEntryDao()
 
     @Provides
     @Singleton
     fun providePodcastsDao(
-        database: JetcasterDatabase
+        database: AppDatabase
     ): PodcastsDao = database.podcastsDao()
 
     @Provides
     @Singleton
     fun provideEpisodesDao(
-        database: JetcasterDatabase
+        database: AppDatabase
     ): EpisodesDao = database.episodesDao()
 
     @Provides
     @Singleton
     fun providePodcastFollowedEntryDao(
-        database: JetcasterDatabase
+        database: AppDatabase
     ): PodcastFollowedEntryDao = database.podcastFollowedEntryDao()
 
     @Provides
     @Singleton
     fun provideTransactionRunner(
-        database: JetcasterDatabase
+        database: AppDatabase
     ): TransactionRunner = database.transactionRunnerDao()
-
-    @Provides
-    @Dispatcher(JetcasterDispatchers.IO)
-    @Singleton
-    fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
-
-    @Provides
-    @Dispatcher(JetcasterDispatchers.Main)
-    @Singleton
-    fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 
     @Provides
     @Singleton

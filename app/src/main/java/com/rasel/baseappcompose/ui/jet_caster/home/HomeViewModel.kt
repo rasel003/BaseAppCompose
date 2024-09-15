@@ -30,7 +30,7 @@ import com.rasel.baseappcompose.domain.model.PodcastCategoryFilterResult
 import com.rasel.baseappcompose.domain.model.PodcastInfo
 import com.rasel.baseappcompose.domain.model.asExternalModel
 import com.rasel.baseappcompose.domain.model.asPodcastToEpisodeInfo
-import com.example.jetcaster.core.player.EpisodePlayer
+import com.rasel.baseappcompose.domain.player.EpisodePlayer
 import com.rasel.baseappcompose.data.util.combine
 import com.rasel.baseappcompose.domain.player.model.PlayerEpisode
 import com.rasel.baseappcompose.domain.model.CategoryInfo

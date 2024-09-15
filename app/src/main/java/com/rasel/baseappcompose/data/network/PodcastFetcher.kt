@@ -22,7 +22,7 @@ import com.example.jetcaster.core.data.database.model.Episode
 import com.example.jetcaster.core.data.database.model.Podcast
 import com.example.jetcaster.core.data.network.await
 import com.rasel.baseappcompose.data.Dispatcher
-import com.rasel.baseappcompose.data.JetcasterDispatchers
+import com.rasel.baseappcompose.data.NiaDispatchers
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -45,7 +45,7 @@ import javax.inject.Inject
  */
 class PodcastsFetcher @Inject constructor(
     private val okHttpClient: OkHttpClient,
-    @Dispatcher(JetcasterDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
+    @Dispatcher(NiaDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
 ) {
 
     /**

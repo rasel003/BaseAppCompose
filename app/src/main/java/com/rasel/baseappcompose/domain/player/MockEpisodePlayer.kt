@@ -16,6 +16,9 @@
 
 package com.example.jetcaster.core.player
 
+import com.rasel.baseappcompose.domain.player.DefaultPlaybackSpeed
+import com.rasel.baseappcompose.domain.player.EpisodePlayer
+import com.rasel.baseappcompose.domain.player.EpisodePlayerState
 import com.rasel.baseappcompose.domain.player.model.PlayerEpisode
 import java.time.Duration
 import kotlin.reflect.KProperty

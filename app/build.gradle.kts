@@ -2,7 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose)
-
+//    id("kotlin-kapt")
+    id("kotlinx-serialization")
+    id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp") version "2.0.0-1.0.21"
 }
 
 android {
@@ -11,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.rasel.baseappcompose"
-        minSdk = 26
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -19,6 +22,13 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+
+        /**
+         * Set the Room database schema export location for debug build to inspect the database
+         */
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
 
@@ -51,6 +61,11 @@ android {
     }
 }
 
+// Allow references to generated code
+/*kapt {
+    correctErrorTypes = true
+}*/
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -74,21 +89,42 @@ dependencies {
 
     // Image loading
     implementation(libs.coil.kt.compose)
+    implementation(libs.coil.kt)
+    implementation(libs.coil.kt.svg)
+
 
     // Dependency injection
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
+//    kapt(libs.hilt.android.compiler)
 //    ksp(libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
 
     // Networking
     implementation(libs.okhttp3)
     implementation(libs.okhttp.logging)
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.kotlinx.serialization.json)
+
+
+
+
+    implementation(libs.androidx.tracing.ktx)
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.androidx.work.ktx)
+    implementation(libs.hilt.ext.work)
+
+    api(libs.androidx.dataStore)
+    implementation(libs.androidx.browser)
+
 
 
     // Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-//    ksp(libs.androidx.room.compiler)
+    ksp("androidx.room:room-compiler:2.6.1")
 
 //    implementation(libs.rometools.rome)
 //    implementation(libs.rometools.modules)

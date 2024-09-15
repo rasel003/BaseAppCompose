@@ -96,7 +96,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.jetnews.model.PostsFeed
+import com.rasel.baseappcompose.domain.model.PostsFeed
 import com.rasel.baseappcompose.ui.article.postContentItems
 import com.rasel.baseappcompose.ui.article.sharePost
 import com.rasel.baseappcompose.ui.components.JetnewsSnackbarHost
@@ -315,12 +315,14 @@ private fun HomeScreenWithList(
             empty = when (uiState) {
                 is HomeUiState.HasPosts -> false
                 is HomeUiState.NoPosts -> uiState.isLoading
+                is HomeUiState.InterestScreen -> uiState.isLoading
             },
             emptyContent = { FullScreenLoading() },
             loading = uiState.isLoading,
             onRefresh = onRefreshPosts,
             content = {
                 when (uiState) {
+                    is HomeUiState.InterestScreen -> {}
                     is HomeUiState.HasPosts ->
                         hasPostsContent(uiState, innerPadding, contentModifier)
                     is HomeUiState.NoPosts -> {

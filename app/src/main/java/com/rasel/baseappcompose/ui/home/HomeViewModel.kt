@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.rasel.baseappcompose.data.posts.PostsRepository
-import com.example.jetnews.model.PostsFeed
+import com.rasel.baseappcompose.domain.model.PostsFeed
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.data.Result
@@ -71,6 +71,12 @@ sealed interface HomeUiState {
         override val errorMessages: List<ErrorMessage>,
         override val searchInput: String
     ) : HomeUiState
+
+    data class InterestScreen(
+        override val isLoading: Boolean,
+        override val errorMessages: List<ErrorMessage>,
+        override val searchInput: String
+    ) : HomeUiState
 }
 
 /**
@@ -80,6 +86,7 @@ private data class HomeViewModelState(
     val postsFeed: PostsFeed? = null,
     val selectedPostId: String? = null, // TODO back selectedPostId in a SavedStateHandle
     val isArticleOpen: Boolean = false,
+    val openInterestScreen: Boolean = false,
     val favorites: Set<String> = emptySet(),
     val isLoading: Boolean = false,
     val errorMessages: List<ErrorMessage> = emptyList(),
@@ -93,6 +100,12 @@ private data class HomeViewModelState(
     fun toUiState(): HomeUiState =
         if (postsFeed == null) {
             HomeUiState.NoPosts(
+                isLoading = isLoading,
+                errorMessages = errorMessages,
+                searchInput = searchInput
+            )
+        } else if (openInterestScreen) {
+            HomeUiState.InterestScreen(
                 isLoading = isLoading,
                 errorMessages = errorMessages,
                 searchInput = searchInput
@@ -162,6 +175,7 @@ class HomeViewModel(
             val result = postsRepository.getPostsFeed()
             viewModelState.update {
                 when (result) {
+                    is Result.Loading -> { it.copy(isLoading = true) }
                     is Result.Success -> it.copy(postsFeed = result.data, isLoading = false)
                     is Result.Error -> {
                         val errorMessages = it.errorMessages + ErrorMessage(
@@ -208,6 +222,15 @@ class HomeViewModel(
     fun interactedWithFeed() {
         viewModelState.update {
             it.copy(isArticleOpen = false)
+        }
+    }
+
+    /**
+     * Notify that the user interacted with the feed
+     */
+    fun openInterestScreen() {
+        viewModelState.update {
+            it.copy(openInterestScreen = true)
         }
     }
 

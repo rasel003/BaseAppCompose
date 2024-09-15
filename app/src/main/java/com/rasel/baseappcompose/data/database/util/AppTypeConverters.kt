@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.rasel.baseappcompose.data.database
+package com.rasel.baseappcompose.data.database.util
 
 import androidx.room.TypeConverter
+import kotlinx.datetime.Instant
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
@@ -25,7 +26,7 @@ import java.time.format.DateTimeFormatter
 /**
  * Room [TypeConverter] functions for various `java.time.*` classes.
  */
-object DateTimeTypeConverters {
+object AppTypeConverters {
     @TypeConverter
     @JvmStatic
     fun toOffsetDateTime(value: String?): OffsetDateTime? {
@@ -61,4 +62,11 @@ object DateTimeTypeConverters {
     fun fromDuration(value: Duration?): Long? {
         return value?.toMillis()
     }
+    @TypeConverter
+    fun longToInstant(value: Long?): Instant? =
+        value?.let(Instant::fromEpochMilliseconds)
+
+    @TypeConverter
+    fun instantToLong(instant: Instant?): Long? =
+        instant?.toEpochMilliseconds()
 }

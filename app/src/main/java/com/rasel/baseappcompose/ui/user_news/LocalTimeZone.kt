@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package com.rasel.baseappcompose.data
+package com.rasel.baseappcompose.ui.user_news
 
-import javax.inject.Qualifier
+import androidx.compose.runtime.compositionLocalOf
+import kotlinx.datetime.TimeZone
 
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-annotation class Dispatcher(val jetcasterDispatcher: JetcasterDispatchers)
-
-enum class JetcasterDispatchers {
-    Main,
-    IO,
-}
+/**
+ * TimeZone that can be provided with the TimeZoneMonitor.
+ * This way, it's not needed to pass every single composable the time zone to show in UI.
+ */
+val LocalTimeZone = compositionLocalOf { TimeZone.currentSystemDefault() }

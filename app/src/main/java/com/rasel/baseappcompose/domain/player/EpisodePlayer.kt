@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.jetcaster.core.player
+package com.rasel.baseappcompose.domain.player
 
 import com.rasel.baseappcompose.domain.player.model.PlayerEpisode
 import java.time.Duration

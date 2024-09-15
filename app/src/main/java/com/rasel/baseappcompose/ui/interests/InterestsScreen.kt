@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -166,7 +168,9 @@ fun InterestsScreen(
             )
         }
     ) { innerPadding ->
-        val screenModifier = Modifier.padding(innerPadding)
+        val screenModifier = Modifier.padding(
+            top = innerPadding.calculateTopPadding()
+        )
         InterestScreenContent(
             currentSection, isExpandedScreen,
             onTabChange, tabContent, screenModifier

@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.jetnews.model
-
-import com.rasel.baseappcompose.domain.model.Post
+package com.rasel.baseappcompose.domain.model
 
 /**
  * A container of [Post]s, partitioned into different categories.

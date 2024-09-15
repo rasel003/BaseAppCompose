@@ -17,10 +17,13 @@
 package com.rasel.baseappcompose.data.di
 
 import android.app.Activity
+import android.content.Context
 import android.util.Log
 import android.view.Window
 import androidx.metrics.performance.JankStats
 import androidx.metrics.performance.JankStats.OnFrameListener
+import com.rasel.baseappcompose.data.notifications.Notifier
+import com.rasel.baseappcompose.data.notifications.SystemTrayNotifier
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,4 +49,5 @@ object JankStatsModule {
         window: Window,
         frameListener: OnFrameListener,
     ): JankStats = JankStats.createAndTrack(window, frameListener)
+
 }

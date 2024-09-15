@@ -24,8 +24,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jetcaster.core.data.repository.EpisodeStore
-import com.example.jetcaster.core.player.EpisodePlayer
-import com.example.jetcaster.core.player.EpisodePlayerState
+import com.rasel.baseappcompose.domain.player.EpisodePlayer
+import com.rasel.baseappcompose.domain.player.EpisodePlayerState
 import com.rasel.baseappcompose.domain.player.model.toPlayerEpisode
 import com.rasel.baseappcompose.ui.jet_caster.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel

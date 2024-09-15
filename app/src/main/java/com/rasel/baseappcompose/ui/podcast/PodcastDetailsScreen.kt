@@ -67,7 +67,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.jetcaster.ui.shared.Loading
+import com.rasel.baseappcompose.ui.shared.Loading
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.component.PodcastImage
 import com.rasel.baseappcompose.designsystem.theme.Keyline1

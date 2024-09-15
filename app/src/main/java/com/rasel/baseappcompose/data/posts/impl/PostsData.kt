@@ -17,7 +17,7 @@
 @file:Suppress("ktlint:max-line-length") // String constants read better
 package com.rasel.baseappcompose.data.posts.impl
 
-import com.example.jetnews.model.PostsFeed
+import com.rasel.baseappcompose.domain.model.PostsFeed
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.domain.model.Metadata
 import com.rasel.baseappcompose.domain.model.Markup

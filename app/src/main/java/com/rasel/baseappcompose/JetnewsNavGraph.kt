@@ -62,10 +62,13 @@ fun JetnewsNavGraph(
                     preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
                 )
             )
+            val interestsViewModel: InterestsViewModel = viewModel(
+                factory = InterestsViewModel.provideFactory(appContainer.interestsRepository)
+            )
             HomeRoute(
                 homeViewModel = homeViewModel,
+                interestsViewModel = interestsViewModel,
                 isExpandedScreen = isExpandedScreen,
-                openDrawer = openDrawer,
                 openSettingDialog = {}
             )
         }

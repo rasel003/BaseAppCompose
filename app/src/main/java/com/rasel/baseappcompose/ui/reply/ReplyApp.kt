@@ -63,7 +63,6 @@ import com.rasel.baseappcompose.data.posts.impl.post3
 import com.rasel.baseappcompose.ui.JetnewsApplication.Companion.JETNEWS_APP_URI
 import com.rasel.baseappcompose.ui.home.HomeRoute
 import com.rasel.baseappcompose.ui.home.HomeViewModel
-import com.rasel.baseappcompose.ui.interests.InterestsRoute
 import com.rasel.baseappcompose.ui.jet_caster.JetcasterAppState
 import com.rasel.baseappcompose.ui.jet_caster.home.MainScreen
 import com.rasel.baseappcompose.ui.jet_caster.rememberJetcasterAppState
@@ -141,6 +140,7 @@ fun ReplyApp(
             navigateToTopLevelDestination = navigationActions::navigateTo
         ) {
             ReplyNavHost(
+                appContainer = appContainer,
                 navController = navController,
                 contentType = contentType,
                 displayFeatures = displayFeatures,
@@ -149,7 +149,6 @@ fun ReplyApp(
                 closeDetailScreen = closeDetailScreen,
                 navigateToDetail = navigateToDetail,
                 toggleSelectedEmail = toggleSelectedEmail,
-                appContainer = appContainer,
                 showSettingsDialog = showSettingsDialog,
                 openSettingDialog = { showSettingsDialog = true },
                 onSettingsDismissed = { showSettingsDialog = false }
@@ -171,7 +170,6 @@ private fun ReplyNavHost(
     toggleSelectedEmail: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: OrderViewModel = viewModel(),
-    openDrawer: () -> Unit = {},
     appState: JetcasterAppState = rememberJetcasterAppState(),
     showSettingsDialog: Boolean,
     openSettingDialog: () -> Unit,
@@ -305,21 +303,14 @@ private fun ReplyNavHost(
                     preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
                 )
             )
-            HomeRoute(
-                homeViewModel = homeViewModel,
-                isExpandedScreen = isExpandedScreen,
-                openDrawer = { navController.navigate(JetnewsDestinations.INTERESTS_ROUTE) },
-                openSettingDialog = { openSettingDialog() }
-            )
-        }
-        composable(JetnewsDestinations.INTERESTS_ROUTE) {
             val interestsViewModel: InterestsViewModel = viewModel(
                 factory = InterestsViewModel.provideFactory(appContainer.interestsRepository)
             )
-            InterestsRoute(
+            HomeRoute(
+                homeViewModel = homeViewModel,
                 interestsViewModel = interestsViewModel,
                 isExpandedScreen = isExpandedScreen,
-                openDrawer = openDrawer
+                openSettingDialog = { openSettingDialog() }
             )
         }
     }

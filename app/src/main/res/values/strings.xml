@@ -178,4 +178,32 @@
     <string name="feature_settings_dynamic_color_yes">Yes</string>
     <string name="feature_settings_dynamic_color_no">No</string>
     <string name="feature_settings_dismiss_dialog_button_text">OK</string>
+
+    <string name="sync_work_notification_title">Now in Android</string>
+    <string name="sync_work_notification_channel_name">Sync</string>
+    <string name="sync_work_notification_channel_description">Background tasks for Now in Android</string>
+
+    <string name="feature_topic_loading">Loading topic</string>
+    <string name="feature_topic_select_an_interest">Select an Interest</string>
+
+    <string name="core_ui_bookmark">Bookmark</string>
+    <string name="core_ui_unbookmark">Unbookmark</string>
+    <string name="core_ui_back">Back</string>
+
+    <string name="core_ui_unread_resource_dot_content_description">Unread</string>
+
+    <string name="core_ui_card_tap_action">Open Resource Link</string>
+    <string name="core_ui_card_meta_data_text">%1$s • %2$s</string>
+
+    <string name="core_ui_topic_chip_content_description_when_followed">%1$s is followed</string>
+    <string name="core_ui_topic_chip_content_description_when_not_followed">%1$s is not followed</string>
+
+    <string name="core_ui_interests_card_follow_button_content_desc">Follow interest</string>
+    <string name="core_ui_interests_card_unfollow_button_content_desc">Unfollow interest</string>
+
+    <string name="core_notifications_news_notification_channel_name">News updates</string>
+    <string name="core_notifications_news_notification_channel_description">The latest updates on what\'s new in Android</string>
+    <string name="core_notifications_news_notification_group_summary">%1$d news updates</string>
+
+
 </resources>

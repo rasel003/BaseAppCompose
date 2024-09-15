@@ -19,9 +19,7 @@ package com.rasel.baseappcompose
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 
-/**
- * Destinations used in the [JetnewsApp].
- */
+
 object JetnewsDestinations {
     const val HOME_ROUTE = "home"
     const val INTERESTS_ROUTE = "interests"

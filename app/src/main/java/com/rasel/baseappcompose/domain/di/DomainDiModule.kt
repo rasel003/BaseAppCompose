@@ -16,10 +16,10 @@
 
 package com.rasel.baseappcompose.domain.di
 
-import com.example.jetcaster.core.player.EpisodePlayer
+import com.rasel.baseappcompose.domain.player.EpisodePlayer
 import com.example.jetcaster.core.player.MockEpisodePlayer
 import com.rasel.baseappcompose.data.Dispatcher
-import com.rasel.baseappcompose.data.JetcasterDispatchers
+import com.rasel.baseappcompose.data.NiaDispatchers
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,6 +33,6 @@ object DomainDiModule {
     @Provides
     @Singleton
     fun provideEpisodePlayer(
-        @Dispatcher(JetcasterDispatchers.Main) mainDispatcher: CoroutineDispatcher
+        @Dispatcher(NiaDispatchers.Main) mainDispatcher: CoroutineDispatcher
     ): EpisodePlayer = MockEpisodePlayer(mainDispatcher)
 }
