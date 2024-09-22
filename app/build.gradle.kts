@@ -6,6 +6,8 @@ plugins {
     id("kotlinx-serialization")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp") version "2.0.0-1.0.21"
+    alias(libs.plugins.protobuf)
+
 }
 
 android {
@@ -66,6 +68,34 @@ android {
     correctErrorTypes = true
 }*/
 
+// Setup protobuf configuration, generating lite Java and Kotlin classes
+protobuf {
+    protoc {
+//        artifact = libs.protobuf.protoc.get().toString()
+        artifact = "com.google.protobuf:protoc:4.26.1"
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                register("java") {
+                    option("lite")
+                }
+                register("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
+/*androidComponents.beforeVariants {
+    android.sourceSets.register(it.name) {
+        val buildDir = layout.buildDirectory.get().asFile
+        java.srcDir(buildDir.resolve("generated/source/proto/${it.name}/java"))
+        kotlin.srcDir(buildDir.resolve("generated/source/proto/${it.name}/kotlin"))
+    }
+}*/
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -117,6 +147,10 @@ dependencies {
     implementation(libs.hilt.ext.work)
 
     api(libs.androidx.dataStore)
+//    api(projects.core.datastoreProto)
+    api(libs.protobuf.kotlin.lite)
+
+
     implementation(libs.androidx.browser)
 
 
@@ -124,7 +158,7 @@ dependencies {
     // Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    ksp("androidx.room:room-compiler:2.6.1")
+    ksp(libs.room.compiler)
 
 //    implementation(libs.rometools.rome)
 //    implementation(libs.rometools.modules)

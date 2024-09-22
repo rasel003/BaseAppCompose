@@ -29,7 +29,7 @@ import com.google.samples.apps.nowinandroid.sync.workers.delegatedData
 import com.rasel.baseappcompose.core.analytics.AnalyticsHelper
 import com.rasel.baseappcompose.data.Dispatcher
 import com.rasel.baseappcompose.data.NiaDispatchers
-import com.rasel.baseappcompose.data.database.NiaPreferencesDataSource
+import com.rasel.baseappcompose.core.datastore.NiaPreferencesDataSource
 import com.rasel.baseappcompose.data.model.ChangeListVersions
 import com.rasel.baseappcompose.data.repository.NewsRepository
 import com.rasel.baseappcompose.data.repository.SearchContentsRepository
@@ -89,14 +89,13 @@ internal class SyncWorker @AssistedInject constructor(
     }
 
     override suspend fun getChangeListVersions(): ChangeListVersions {
-//        niaPreferences.getChangeListVersions()
-        return ChangeListVersions()
+       return niaPreferences.getChangeListVersions()
     }
 
     override suspend fun updateChangeListVersions(
         update: ChangeListVersions.() -> ChangeListVersions,
     ) {
-//        niaPreferences.updateChangeListVersion(update)
+        niaPreferences.updateChangeListVersion(update)
     }
 
     companion object {

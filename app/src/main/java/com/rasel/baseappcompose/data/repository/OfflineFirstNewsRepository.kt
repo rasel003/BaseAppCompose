@@ -1,20 +1,13 @@
 package com.rasel.baseappcompose.data.repository
 
 import com.google.samples.apps.nowinandroid.core.database.dao.TopicDao
-import com.rasel.baseappcompose.data.database.NiaPreferencesDataSource
+import com.rasel.baseappcompose.core.datastore.NiaPreferencesDataSource
 import com.rasel.baseappcompose.data.database.dao.NewsResourceDao
 import com.rasel.baseappcompose.data.database.model.PopulatedNewsResource
-import com.rasel.baseappcompose.data.database.model.TopicEntity
 import com.rasel.baseappcompose.data.database.model.asExternalModel
 import com.rasel.baseappcompose.data.model.ChangeListVersions
 import com.rasel.baseappcompose.data.model.NetworkChangeList
-import com.rasel.baseappcompose.data.model.NetworkNewsResource
 import com.rasel.baseappcompose.data.model.NewsResource
-import com.rasel.baseappcompose.data.model.asEntity
-import com.rasel.baseappcompose.data.model.topicCrossReferences
-import com.rasel.baseappcompose.data.model.topicEntityShells
-import com.rasel.baseappcompose.data.network.NiaNetworkDataSource
-import com.rasel.baseappcompose.data.notifications.Notifier
 import com.rasel.baseappcompose.data.util.Synchronizer
 import com.rasel.baseappcompose.data.util.changeListSync
 import kotlinx.coroutines.flow.Flow

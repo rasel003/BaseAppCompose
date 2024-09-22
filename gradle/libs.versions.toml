@@ -144,9 +144,14 @@ retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "re
 
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
 
 readmore-material3 = { group = "com.webtoonscorp.android", name = "readmore-material3", version.ref = "readMoreVersion" }
+
 androidx-dataStore = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
+protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
+
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "androidxBrowser" }
 
 
@@ -166,7 +171,14 @@ kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime",
 androidx-adaptive-layout-android = { group = "androidx.compose.material3.adaptive", name = "adaptive-layout-android", version.ref = "adaptiveLayoutAndroid" }
 androidx-adaptive-navigation-android = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation-android", version.ref = "adaptiveNavigationAndroid" }
 
+
+
+
 [plugins]
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
+
+
+# Plugins defined by this project
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
