@@ -50,6 +50,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
@@ -717,7 +718,7 @@ private fun HomeTopAppBar(
                 openSettingDialog()
             }) {
                 Icon(
-                    imageVector = Icons.Filled.Search,
+                    imageVector = Icons.Filled.Settings,
                     contentDescription = stringResource(R.string.cd_search)
                 )
             }

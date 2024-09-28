@@ -152,6 +152,8 @@ dependencies {
 
 
     implementation(libs.androidx.browser)
+    implementation(libs.kotlinx.coroutines.core)
+
 
 
 

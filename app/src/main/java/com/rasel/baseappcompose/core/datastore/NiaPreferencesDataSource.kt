@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStore
 import androidx.datastore.dataStoreFile
 import com.rasel.baseappcompose.data.Dispatcher
 import com.rasel.baseappcompose.data.NiaDispatchers
@@ -20,6 +21,14 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
+private const val DATA_STORE_FILE_NAME = "user_preferences.pb"
+
+private val Context.userPreferencesMe: DataStore<UserPreferences> by dataStore(
+    serializer = UserPreferencesSerializer(),
+    fileName = DATA_STORE_FILE_NAME
+)
+
+
 class NiaPreferencesDataSource @Inject constructor(
 //    private val userPreferences: DataStore<UserPreferences>,
     @ApplicationContext context: Context,
@@ -27,18 +36,7 @@ class NiaPreferencesDataSource @Inject constructor(
     @ApplicationScope scope: CoroutineScope,
     userPreferencesSerializer: UserPreferencesSerializer,
 ) {
-
-    private var  userPreferences : DataStore<UserPreferences> = DataStoreFactory.create(
-               serializer = userPreferencesSerializer,
-//            produceFile = { context.dataStoreFile(DATA_STORE_FILE_NAME) },
-               scope = CoroutineScope(scope.coroutineContext + ioDispatcher),
-               migrations = listOf(
-                   IntToStringIdsMigration,
-               ),
-           ) {
-               context.dataStoreFile("user_preferences.pb")
-           }
-
+    private val userPreferences = context.userPreferencesMe
     /*val userData = listOf(
         UserData(
             bookmarkedNewsResources = setOf("1", "4"),
