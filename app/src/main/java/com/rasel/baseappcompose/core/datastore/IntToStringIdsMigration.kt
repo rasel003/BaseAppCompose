@@ -16,9 +16,7 @@
 
 package com.rasel.baseappcompose.core.datastore
 
-import UserPreferences
 import androidx.datastore.core.DataMigration
-import copy
 
 /**
  * Migrates saved ids from [Int] to [String] types

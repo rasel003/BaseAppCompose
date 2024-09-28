@@ -147,7 +147,7 @@ dependencies {
     implementation(libs.hilt.ext.work)
 
     api(libs.androidx.dataStore)
-//    api(projects.core.datastoreProto)
+    api(libs.androidx.dataStore.core)
     api(libs.protobuf.kotlin.lite)
 
 

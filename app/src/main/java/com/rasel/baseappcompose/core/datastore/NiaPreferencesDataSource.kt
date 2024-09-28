@@ -1,19 +1,43 @@
 package com.rasel.baseappcompose.core.datastore
 
+import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStoreFile
+import com.rasel.baseappcompose.data.Dispatcher
+import com.rasel.baseappcompose.data.NiaDispatchers
+import com.rasel.baseappcompose.data.di.ApplicationScope
 import com.rasel.baseappcompose.data.model.ChangeListVersions
 import com.rasel.baseappcompose.data.model.DarkThemeConfig
 import com.rasel.baseappcompose.data.model.ThemeBrand
 import com.rasel.baseappcompose.data.model.UserData
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
 class NiaPreferencesDataSource @Inject constructor(
-    private val userPreferences: DataStore<UserPreferences>,
+//    private val userPreferences: DataStore<UserPreferences>,
+    @ApplicationContext context: Context,
+    @Dispatcher(NiaDispatchers.IO) ioDispatcher: CoroutineDispatcher,
+    @ApplicationScope scope: CoroutineScope,
+    userPreferencesSerializer: UserPreferencesSerializer,
 ) {
+
+    private var  userPreferences : DataStore<UserPreferences> = DataStoreFactory.create(
+               serializer = userPreferencesSerializer,
+//            produceFile = { context.dataStoreFile(DATA_STORE_FILE_NAME) },
+               scope = CoroutineScope(scope.coroutineContext + ioDispatcher),
+               migrations = listOf(
+                   IntToStringIdsMigration,
+               ),
+           ) {
+               context.dataStoreFile("user_preferences.pb")
+           }
 
     /*val userData = listOf(
         UserData(

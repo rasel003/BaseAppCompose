@@ -38,7 +38,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
 
-    @Provides
+    /*@Provides
     @Singleton
     internal fun providesUserPreferencesDataStore(
         @ApplicationContext context: Context,
@@ -48,11 +48,12 @@ object DataStoreModule {
     ): DataStore<UserPreferences> =
         DataStoreFactory.create(
             serializer = userPreferencesSerializer,
+//            produceFile = { context.dataStoreFile(DATA_STORE_FILE_NAME) },
             scope = CoroutineScope(scope.coroutineContext + ioDispatcher),
             migrations = listOf(
                 IntToStringIdsMigration,
             ),
         ) {
             context.dataStoreFile("user_preferences.pb")
-        }
+        }*/
 }

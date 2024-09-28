@@ -150,6 +150,8 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 readmore-material3 = { group = "com.webtoonscorp.android", name = "readmore-material3", version.ref = "readMoreVersion" }
 
 androidx-dataStore = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
+androidx-dataStore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "androidxDataStore" }
+
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "androidxBrowser" }
