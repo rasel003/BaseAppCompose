@@ -18,7 +18,6 @@
 
 package com.rasel.baseappcompose.designsystem.component
 
-import android.R
 import androidx.annotation.StringRes
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,6 +33,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.icon.NiaIcons
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
@@ -81,7 +81,7 @@ fun NiaTopAppBar(
 private fun NiaTopAppBarPreview() {
     NiaTheme {
         NiaTopAppBar(
-            titleRes = R.string.untitled,
+            titleRes = R.string.app_name,
             navigationIcon = NiaIcons.Search,
             navigationIconContentDescription = "Navigation icon",
             actionIcon = NiaIcons.MoreVert,

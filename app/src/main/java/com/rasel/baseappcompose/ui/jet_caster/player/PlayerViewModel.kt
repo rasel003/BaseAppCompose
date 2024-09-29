@@ -23,7 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.jetcaster.core.data.repository.EpisodeStore
+import com.rasel.baseappcompose.data.repository.EpisodeStore
 import com.rasel.baseappcompose.domain.player.EpisodePlayer
 import com.rasel.baseappcompose.domain.player.EpisodePlayerState
 import com.rasel.baseappcompose.domain.player.model.toPlayerEpisode

@@ -17,8 +17,6 @@
 package com.rasel.baseappcompose.data.di
 
 import android.content.Context
-import androidx.room.Room
-import coil.ImageLoader
 import com.rasel.baseappcompose.data.database.AppDatabase
 import com.rasel.baseappcompose.data.database.dao.CategoriesDao
 import com.rasel.baseappcompose.data.database.dao.EpisodesDao
@@ -27,11 +25,12 @@ import com.rasel.baseappcompose.data.database.dao.PodcastFollowedEntryDao
 import com.rasel.baseappcompose.data.database.dao.PodcastsDao
 import com.rasel.baseappcompose.data.database.dao.TransactionRunner
 import com.example.jetcaster.core.data.repository.CategoryStore
-import com.example.jetcaster.core.data.repository.EpisodeStore
+import com.rasel.baseappcompose.data.repository.EpisodeStore
 import com.example.jetcaster.core.data.repository.LocalCategoryStore
-import com.example.jetcaster.core.data.repository.LocalEpisodeStore
+import com.rasel.baseappcompose.data.repository.LocalEpisodeStore
 import com.example.jetcaster.core.data.repository.LocalPodcastStore
 import com.example.jetcaster.core.data.repository.PodcastStore
+import com.rometools.rome.io.SyndFeedInput
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -114,6 +113,10 @@ object DataDiModule {
         podcastFollowedEntryDao = podcastFollowedEntryDao,
         transactionRunner = transactionRunner
     )
+
+    @Provides
+    @Singleton
+    fun provideSyndFeedInput() = SyndFeedInput()
 
     @Provides
     @Singleton

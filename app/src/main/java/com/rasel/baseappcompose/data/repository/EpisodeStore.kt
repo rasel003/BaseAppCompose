@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.jetcaster.core.data.repository
+package com.rasel.baseappcompose.data.repository
 
 import com.rasel.baseappcompose.data.database.dao.EpisodesDao
 import com.example.jetcaster.core.data.database.model.Episode

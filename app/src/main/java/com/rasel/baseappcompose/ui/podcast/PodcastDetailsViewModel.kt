@@ -19,7 +19,7 @@ package com.rasel.baseappcompose.ui.podcast
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.jetcaster.core.data.repository.EpisodeStore
+import com.rasel.baseappcompose.data.repository.EpisodeStore
 import com.example.jetcaster.core.data.repository.PodcastStore
 import com.rasel.baseappcompose.domain.player.EpisodePlayer
 import com.rasel.baseappcompose.domain.model.EpisodeInfo
@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 sealed interface PodcastUiState {
     data object Loading : PodcastUiState

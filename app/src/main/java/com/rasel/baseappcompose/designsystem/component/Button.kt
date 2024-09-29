@@ -16,27 +16,43 @@
 
 package com.rasel.baseappcompose.designsystem.component
 
+import android.content.res.Configuration
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaBackground
 import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
+import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.icon.NiaIcons
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.components.ViewCounter
 
 /**
  * Now in Android filled button with generic content slot. Wraps Material 3 [Button].
@@ -312,4 +328,62 @@ object NiaButtonDefaults {
     // TODO: File bug
     // OutlinedButton default border width isn't exposed via ButtonDefaults
     val OutlinedButtonBorderWidth = 1.dp
+}
+
+
+@Composable
+fun ToggleFollowPodcastIconButton(
+    isFollowed: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val clickLabel = stringResource(if (isFollowed) R.string.cd_unfollow else R.string.cd_follow)
+    IconButton(
+        onClick = onClick,
+        modifier = modifier.semantics {
+            onClick(label = clickLabel, action = null)
+        }
+    ) {
+        Icon(
+            // TODO: think about animating these icons
+            imageVector = when {
+                isFollowed -> Icons.Default.Check
+                else -> Icons.Default.Add
+            },
+            contentDescription = when {
+                isFollowed -> stringResource(R.string.cd_following)
+                else -> stringResource(R.string.cd_not_following)
+            },
+            tint = animateColorAsState(
+                when {
+                    isFollowed -> MaterialTheme.colorScheme.onPrimary
+                    else -> MaterialTheme.colorScheme.primary
+                }
+            ).value,
+            modifier = Modifier
+                .shadow(
+                    elevation = animateDpAsState(if (isFollowed) 0.dp else 1.dp).value,
+                    shape = MaterialTheme.shapes.small
+                )
+                .background(
+                    color = animateColorAsState(
+                        when {
+                            isFollowed -> MaterialTheme.colorScheme.primary
+                            else -> MaterialTheme.colorScheme.surfaceContainerHighest
+                        }
+                    ).value,
+                    shape = CircleShape
+                )
+                .padding(4.dp)
+        )
+    }
+}
+
+@Preview("Drawer contents")
+@Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun ToggleFollowPodcastIconButtonPreview(){
+    NiaTheme {
+        ToggleFollowPodcastIconButton(isFollowed = true, onClick = { })
+    }
 }

@@ -20,7 +20,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jetcaster.core.data.database.model.EpisodeToPodcast
-import com.example.jetcaster.core.data.repository.EpisodeStore
+import com.rasel.baseappcompose.data.repository.EpisodeStore
 import com.example.jetcaster.core.data.repository.PodcastStore
 import com.rasel.baseappcompose.data.repository.PodcastsRepository
 import com.rasel.baseappcompose.domain.usecase.PodcastCategoryFilterUseCase

@@ -16,9 +16,8 @@
 
 package com.rasel.baseappcompose.data.repository
 
-import com.example.jetcaster.core.data.network.SampleFeeds
+import com.rasel.baseappcompose.data.network.SampleFeeds
 import com.example.jetcaster.core.data.repository.CategoryStore
-import com.example.jetcaster.core.data.repository.EpisodeStore
 import com.example.jetcaster.core.data.repository.PodcastStore
 import com.rasel.baseappcompose.data.Dispatcher
 import com.rasel.baseappcompose.data.NiaDispatchers

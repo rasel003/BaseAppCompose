@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.jetcaster.core.data.network
+package com.rasel.baseappcompose.data.network
 
 /**
  * A hand selected list of feeds URLs used for the purposes of displaying real information

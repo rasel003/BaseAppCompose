@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-
+    <!-- Uses ACCESS_NETWORK_STATE to check if the device is connected to internet or not -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Uses INTERNET to fetch RSS feed + images -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:name=".ui.JetnewsApplication"

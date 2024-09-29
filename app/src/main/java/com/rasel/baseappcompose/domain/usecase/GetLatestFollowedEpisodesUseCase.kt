@@ -17,7 +17,7 @@
 package com.rasel.baseappcompose.domain.usecase
 
 import com.example.jetcaster.core.data.database.model.EpisodeToPodcast
-import com.example.jetcaster.core.data.repository.EpisodeStore
+import com.rasel.baseappcompose.data.repository.EpisodeStore
 import com.example.jetcaster.core.data.repository.PodcastStore
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi

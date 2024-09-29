@@ -198,7 +198,7 @@ fun HomeFeedWithArticleDetailsScreen(
                             onToggleFavorite = { onToggleFavorite(detailPost.id) },
                             onSharePost = { sharePost(detailPost, context) },
                             modifier = Modifier
-                                .windowInsetsPadding(WindowInsets.safeDrawing)
+//                                .windowInsetsPadding(WindowInsets.safeDrawing)
                                 .fillMaxWidth()
                                 .wrapContentWidth(Alignment.End)
                         )

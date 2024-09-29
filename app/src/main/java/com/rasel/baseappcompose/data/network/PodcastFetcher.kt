@@ -16,13 +16,19 @@
 
 package com.rasel.baseappcompose.data.network
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import coil.network.HttpException
 import com.example.jetcaster.core.data.database.model.Category
 import com.example.jetcaster.core.data.database.model.Episode
 import com.example.jetcaster.core.data.database.model.Podcast
-import com.example.jetcaster.core.data.network.await
 import com.rasel.baseappcompose.data.Dispatcher
 import com.rasel.baseappcompose.data.NiaDispatchers
+import com.rometools.modules.itunes.EntryInformation
+import com.rometools.modules.itunes.FeedInformation
+import com.rometools.rome.feed.synd.SyndEntry
+import com.rometools.rome.feed.synd.SyndFeed
+import com.rometools.rome.io.SyndFeedInput
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -32,6 +38,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
+import java.time.Duration
+import java.time.Instant
+import java.time.ZoneOffset
 import okhttp3.Request
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -45,6 +54,7 @@ import javax.inject.Inject
  */
 class PodcastsFetcher @Inject constructor(
     private val okHttpClient: OkHttpClient,
+    private val syndFeedInput: SyndFeedInput,
     @Dispatcher(NiaDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
 ) {
 
@@ -63,14 +73,13 @@ class PodcastsFetcher @Inject constructor(
      * The feeds are fetched concurrently, meaning that the resulting emission order may not
      * match the order of [feedUrls].
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     operator fun invoke(feedUrls: List<String>): Flow<PodcastRssResponse> {
         // We use flatMapMerge here to achieve concurrent fetching/parsing of the feeds.
         return feedUrls.asFlow()
             .flatMapMerge { feedUrl ->
                 flow {
-                    val response = PodcastRssResponse.Error(NoClassDefFoundError())
-                    emit(response)
-//                    emit(fetchPodcast(feedUrl))
+                    emit(fetchPodcast(feedUrl))
                 }.catch { e ->
                     // If an exception was caught while fetching the podcast, wrap it in
                     // an Error instance.
@@ -79,7 +88,8 @@ class PodcastsFetcher @Inject constructor(
             }
     }
 
-    private suspend fun fetchPodcast(url: String) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private suspend fun fetchPodcast(url: String) : PodcastRssResponse {
         val request = Request.Builder()
             .url(url)
             .cacheControl(cacheControl)
@@ -95,7 +105,7 @@ class PodcastsFetcher @Inject constructor(
         // from a stream.
         return withContext(ioDispatcher) {
             response.body!!.use { body ->
-//                syndFeedInput.build(body.charStream()).toPodcastResponse(url)
+                syndFeedInput.build(body.charStream()).toPodcastResponse(url)
             }
         }
     }
@@ -116,7 +126,8 @@ sealed class PodcastRssResponse {
 /**
  * Map a Rome [SyndFeed] instance to our own [Podcast] data class.
  */
-/*private fun SyndFeed.toPodcastResponse(feedUrl: String): PodcastRssResponse {
+@RequiresApi(Build.VERSION_CODES.O)
+private fun SyndFeed.toPodcastResponse(feedUrl: String): PodcastRssResponse {
     val podcastUri = uri ?: feedUrl
     val episodes = entries.map { it.toEpisode(podcastUri) }
 
@@ -135,12 +146,13 @@ sealed class PodcastRssResponse {
         ?.toSet() ?: emptySet()
 
     return PodcastRssResponse.Success(podcast, episodes, categories)
-}*/
+}
 
 /**
  * Map a Rome [SyndEntry] instance to our own [Episode] data class.
  */
-/*private fun SyndEntry.toEpisode(podcastUri: String): Episode {
+@RequiresApi(Build.VERSION_CODES.O)
+private fun SyndEntry.toEpisode(podcastUri: String): Episode {
     val entryInformation = getModule(PodcastModuleDtd) as? EntryInformation
     return Episode(
         uri = uri,
@@ -152,7 +164,7 @@ sealed class PodcastRssResponse {
         published = Instant.ofEpochMilli(publishedDate.time).atOffset(ZoneOffset.UTC),
         duration = entryInformation?.duration?.milliseconds?.let { Duration.ofMillis(it) }
     )
-}*/
+}
 
 /**
  * Most feeds use the following DTD to include extra information related to

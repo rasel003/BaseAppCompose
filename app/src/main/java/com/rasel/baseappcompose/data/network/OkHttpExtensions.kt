@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.jetcaster.core.data.network
+package com.rasel.baseappcompose.data.network
 
 import java.io.IOException
 import kotlin.coroutines.resumeWithException

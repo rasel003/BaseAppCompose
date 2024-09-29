@@ -18,7 +18,9 @@
 
 package com.rasel.baseappcompose.ui.jet_caster.home
 
+import android.os.Build
 import androidx.activity.compose.BackHandler
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -96,6 +98,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -103,6 +106,7 @@ import androidx.window.core.layout.WindowSizeClass
 import androidx.window.core.layout.WindowWidthSizeClass
 import com.rasel.baseappcompose.ui.podcast.PodcastDetailsViewModel
 import com.rasel.baseappcompose.R
+import com.rasel.baseappcompose.designsystem.component.HomeAppBar
 import com.rasel.baseappcompose.designsystem.component.PodcastImage
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.domain.PreviewCategories
@@ -224,7 +228,6 @@ fun calculateScaffoldDirective(
 /**
  * Copied from `getExcludedVerticalBounds()` in [PaneScaffoldDirective] since it is private.
  */
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 private fun getExcludedVerticalBounds(posture: Posture, hingePolicy: HingePolicy): List<Rect> {
     return when (hingePolicy) {
         HingePolicy.AvoidSeparating -> posture.separatingVerticalHingeBounds
@@ -334,7 +337,7 @@ private fun HomeScreenReady(
         if (podcastUri.isNullOrEmpty()) {
             HomeScreen(
                 homeState = homeState,
-                showGrid = showGrid,
+                showGrid = false,
                 modifier = Modifier.fillMaxSize()
             )
         } else {
@@ -372,44 +375,7 @@ private fun HomeScreenReady(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun HomeAppBar(
-    isExpanded: Boolean,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        horizontalArrangement = Arrangement.End,
-        modifier = modifier
-            .fillMaxWidth()
-            .background(Color.Transparent)
-            .padding(end = 16.dp, top = 8.dp, bottom = 8.dp)
-    ) {
-        SearchBar(
-            query = "",
-            onQueryChange = {},
-            placeholder = {
-                Text(stringResource(id = R.string.search_for_a_podcast))
-            },
-            onSearch = {},
-            active = false,
-            onActiveChange = {},
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = null
-                )
-            },
-            trailingIcon = {
-                Icon(
-                    imageVector = Icons.Default.AccountCircle,
-                    contentDescription = stringResource(R.string.cd_account)
-                )
-            },
-            modifier = if (isExpanded) Modifier else Modifier.fillMaxWidth()
-        ) { }
-    }
-}
+
 
 @Composable
 private fun HomeScreenBackground(
@@ -445,7 +411,8 @@ private fun HomeScreen(
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     HomeScreenBackground(
-        modifier = modifier.windowInsetsPadding(WindowInsets.navigationBars)
+//        modifier = modifier.windowInsetsPadding(WindowInsets.navigationBars)
+        modifier = modifier.background(Color.Blue)
     ) {
         Scaffold(
             topBar = {
@@ -470,7 +437,11 @@ private fun HomeScreen(
                 filterableCategoriesModel = homeState.filterableCategoriesModel,
                 podcastCategoryFilterResult = homeState.podcastCategoryFilterResult,
                 library = homeState.library,
-                modifier = Modifier.padding(contentPadding),
+                modifier = Modifier.padding(
+                    start = contentPadding.calculateLeftPadding(LayoutDirection.Ltr),
+                    end = contentPadding.calculateRightPadding(LayoutDirection.Ltr),
+                    top = contentPadding.calculateTopPadding()
+                ),
                 onPodcastUnfollowed = homeState.onPodcastUnfollowed,
                 onHomeCategorySelected = homeState.onHomeCategorySelected,
                 onCategorySelected = homeState.onCategorySelected,
@@ -708,6 +679,7 @@ private fun HomeContentGrid(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun FollowedPodcastItem(
     pagerState: PagerState,
@@ -794,6 +766,7 @@ private fun HomeCategoryTabIndicator(
 
 private val FEATURED_PODCAST_IMAGE_SIZE_DP = 160.dp
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun FollowedPodcasts(
     pagerState: PagerState,
@@ -879,6 +852,7 @@ private fun FollowedPodcastCarouselItem(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun lastUpdated(updated: OffsetDateTime): String {
     val duration = Duration.between(updated.toLocalDateTime(), LocalDateTime.now())
@@ -896,16 +870,7 @@ private fun lastUpdated(updated: OffsetDateTime): String {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
-@Composable
-private fun HomeAppBarPreview() {
-    NiaTheme {
-        HomeAppBar(
-            isExpanded = false,
-        )
-    }
-}
+
 
 private val CompactWindowSizeClass = WindowSizeClass.compute(360f, 780f)
 

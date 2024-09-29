@@ -16,6 +16,8 @@
 
 package com.rasel.baseappcompose.ui.jet_caster.player
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -673,6 +675,7 @@ fun Duration.formatString(): String {
     return "$minutes:$secondsLeft"
 }
 
+@RequiresApi(Build.VERSION_CODES.S)
 @Composable
 private fun PlayerSlider(
     timeElapsed: Duration,

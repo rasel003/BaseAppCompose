@@ -18,12 +18,20 @@ package com.rasel.baseappcompose.ui.reply
 
 import android.content.Context
 import android.content.Intent
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -31,11 +39,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -46,8 +56,10 @@ import androidx.navigation.navDeepLink
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
 import com.example.jetnews.ui.interests.InterestsViewModel
+import com.rasel.baseappcompose.AppDrawer
 import com.rasel.baseappcompose.ui.order.CupcakeScreen
 import com.rasel.baseappcompose.JetnewsDestinations
+import com.rasel.baseappcompose.JetnewsNavigationActions
 import com.rasel.baseappcompose.MovieDetailsScreen
 import com.rasel.baseappcompose.ui.order.OrderSummaryScreen
 import com.rasel.baseappcompose.ui.order.OrderViewModel
@@ -64,7 +76,9 @@ import com.rasel.baseappcompose.ui.JetnewsApplication.Companion.JETNEWS_APP_URI
 import com.rasel.baseappcompose.ui.home.HomeRoute
 import com.rasel.baseappcompose.ui.home.HomeViewModel
 import com.rasel.baseappcompose.ui.jet_caster.JetcasterAppState
+import com.rasel.baseappcompose.ui.jet_caster.Screen
 import com.rasel.baseappcompose.ui.jet_caster.home.MainScreen
+import com.rasel.baseappcompose.ui.jet_caster.player.PlayerScreen
 import com.rasel.baseappcompose.ui.jet_caster.rememberJetcasterAppState
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationActions
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationWrapper
@@ -75,6 +89,7 @@ import com.rasel.baseappcompose.ui.utils.ReplyContentType
 import com.rasel.baseappcompose.ui.utils.ReplyNavigationType
 import com.rasel.baseappcompose.ui.utils.isBookPosture
 import com.rasel.baseappcompose.ui.utils.isSeparating
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 private fun NavigationSuiteType.toReplyNavType() = when (this) {
@@ -92,7 +107,8 @@ fun ReplyApp(
     replyHomeUIState: ReplyHomeUIState,
     closeDetailScreen: () -> Unit = {},
     navigateToDetail: (Long, ReplyContentType) -> Unit = { _, _ -> },
-    toggleSelectedEmail: (Long) -> Unit = { }
+    toggleSelectedEmail: (Long) -> Unit = { },
+    context: Context = LocalContext.current
 ) {
     /**
      * We are using display's folding features to map the device postures a fold is in.
@@ -125,7 +141,7 @@ fun ReplyApp(
 
     val navController = rememberNavController()
     val navigationActions = remember(navController) {
-        ReplyNavigationActions(navController)
+        ReplyNavigationActions(navController, context)
     }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val selectedDestination =
@@ -133,26 +149,53 @@ fun ReplyApp(
 
     var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
 
+    val coroutineScope = rememberCoroutineScope()
 
-    Surface {
-        ReplyNavigationWrapper(
-            selectedDestination = selectedDestination,
-            navigateToTopLevelDestination = navigationActions::navigateTo
-        ) {
-            ReplyNavHost(
-                appContainer = appContainer,
-                navController = navController,
-                contentType = contentType,
-                displayFeatures = displayFeatures,
-                replyHomeUIState = replyHomeUIState,
-                navigationType = navSuiteType.toReplyNavType(),
-                closeDetailScreen = closeDetailScreen,
-                navigateToDetail = navigateToDetail,
-                toggleSelectedEmail = toggleSelectedEmail,
-                showSettingsDialog = showSettingsDialog,
-                openSettingDialog = { showSettingsDialog = true },
-                onSettingsDismissed = { showSettingsDialog = false }
+    val currentRoute = navBackStackEntry?.destination?.route ?: JetnewsDestinations.HOME_ROUTE
+
+    val isExpandedScreen = windowSize.widthSizeClass == WindowWidthSizeClass.Expanded
+    val sizeAwareDrawerState = rememberSizeAwareDrawerState(isExpandedScreen)
+
+    BackHandler(sizeAwareDrawerState.isOpen) {
+        coroutineScope.launch {
+            sizeAwareDrawerState.close()
+        }
+    }
+
+
+    ModalNavigationDrawer(
+        drawerContent = {
+            AppDrawer(
+                currentRoute = currentRoute,
+                navigateToHome = { /*navigationActions.navigateToHome*/ },
+                navigateToInterests = { /*navigationActions.navigateToInterests*/ },
+                closeDrawer = { coroutineScope.launch { sizeAwareDrawerState.close() } }
             )
+        },
+        drawerState = sizeAwareDrawerState,
+        // Only enable opening the drawer via gestures if the screen is not expanded
+        gesturesEnabled = !isExpandedScreen
+    ) {
+        Surface {
+            ReplyNavigationWrapper(
+                selectedDestination = selectedDestination,
+                navigateToTopLevelDestination = navigationActions::navigateTo
+            ) {
+                ReplyNavHost(
+                    appContainer = appContainer,
+                    navController = navController,
+                    contentType = contentType,
+                    displayFeatures = displayFeatures,
+                    replyHomeUIState = replyHomeUIState,
+                    navigationType = navSuiteType.toReplyNavType(),
+                    closeDetailScreen = closeDetailScreen,
+                    navigateToDetail = navigateToDetail,
+                    toggleSelectedEmail = toggleSelectedEmail,
+                    showSettingsDialog = showSettingsDialog,
+                    openSettingDialog = { showSettingsDialog = true },
+                    onSettingsDismissed = { showSettingsDialog = false }
+                )
+            }
         }
     }
 }
@@ -196,124 +239,149 @@ private fun ReplyNavHost(
         )
     }
 
-
-    NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = ReplyRoute.INBOX,
-    ) {
-        composable(ReplyRoute.INBOX) {
-            ReplyInboxScreen(
-                contentType = contentType,
-                replyHomeUIState = replyHomeUIState,
-                navigationType = navigationType,
-                displayFeatures = displayFeatures,
-                closeDetailScreen = closeDetailScreen,
-                navigateToDetail = navigateToDetail,
-                toggleSelectedEmail = toggleSelectedEmail
-            )
-        }
-        composable(ReplyRoute.CUP_CAKE) {
-            StartOrderScreen(
-                quantityOptions = DataSource.quantityOptions,
-                onNextButtonClicked = {
-                    viewModel.setQuantity(it)
-                    navController.navigate(CupcakeScreen.Flavor.name)
-                },
-                onMovieDetailsClicked = {
-                    navController.navigate(CupcakeScreen.MOVIE_DETAILS.name)
-                },
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(dimensionResource(R.dimen.padding_medium))
-            )
-        }
-        composable(ReplyRoute.ARTICLES) { backStackEntry ->
-            MainScreen(
-                windowSizeClass = adaptiveInfo.windowSizeClass,
-                navigateToPlayer = { episode ->
-                    appState.navigateToPlayer(episode.uri, backStackEntry)
-                }
-            )
-        }
-
-        composable(route = CupcakeScreen.Flavor.name) {
-            val context = LocalContext.current
-            SelectOptionScreen(
-                subtotal = uiState.price,
-                onNextButtonClicked = { navController.navigate(CupcakeScreen.Pickup.name) },
-                onCancelButtonClicked = {
-                    cancelOrderAndNavigateToStart(viewModel, navController)
-                },
-                options = DataSource.flavors.map { id -> context.resources.getString(id) },
-                onSelectionChanged = { viewModel.setFlavor(it) },
-                modifier = Modifier.fillMaxHeight()
-            )
-        }
-        composable(route = CupcakeScreen.Pickup.name) {
-            SelectOptionScreen(
-                subtotal = uiState.price,
-                onNextButtonClicked = { navController.navigate(CupcakeScreen.Summary.name) },
-                onCancelButtonClicked = {
-                    cancelOrderAndNavigateToStart(viewModel, navController)
-                },
-                options = uiState.pickupOptions,
-                onSelectionChanged = { viewModel.setDate(it) },
-                modifier = Modifier.fillMaxHeight()
-            )
-        }
-        composable(route = CupcakeScreen.Summary.name) {
-            val context = LocalContext.current
-            OrderSummaryScreen(
-                orderUiState = uiState,
-                onCancelButtonClicked = {
-                    cancelOrderAndNavigateToStart(viewModel, navController)
-                },
-                onSendButtonClicked = { subject: String, summary: String ->
-                    shareOrder(context, subject = subject, summary = summary)
-                },
-                modifier = Modifier.fillMaxHeight()
-            )
-        }
-        composable(route = CupcakeScreen.MOVIE_DETAILS.name) {
-            val context = LocalContext.current
-            MovieDetailsScreen(
-                orderUiState = uiState,
-                onCancelButtonClicked = {
-                    cancelOrderAndNavigateToStart(viewModel, navController)
-                },
-                onSendButtonClicked = { subject: String, summary: String ->
-                    shareOrder(context, subject = subject, summary = summary)
-                },
-                modifier = Modifier.fillMaxHeight()
-            )
-        }
-        composable(
-            route = ReplyRoute.JET_NEWS,
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern =
-                        "$JETNEWS_APP_URI/${JetnewsDestinations.HOME_ROUTE}?$POST_ID={$POST_ID}"
-                }
-            )
-        ) { navBackStackEntry ->
-            val homeViewModel: HomeViewModel = viewModel(
-                factory = HomeViewModel.provideFactory(
-                    postsRepository = appContainer.postsRepository,
-                    preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
+    if (appState.isOnline) {
+        NavHost(
+            modifier = modifier,
+            navController = navController,
+            startDestination = ReplyRoute.INBOX,
+        ) {
+            composable(ReplyRoute.INBOX) {
+                ReplyInboxScreen(
+                    contentType = contentType,
+                    replyHomeUIState = replyHomeUIState,
+                    navigationType = navigationType,
+                    displayFeatures = displayFeatures,
+                    closeDetailScreen = closeDetailScreen,
+                    navigateToDetail = navigateToDetail,
+                    toggleSelectedEmail = toggleSelectedEmail
                 )
-            )
-            val interestsViewModel: InterestsViewModel = viewModel(
-                factory = InterestsViewModel.provideFactory(appContainer.interestsRepository)
-            )
-            HomeRoute(
-                homeViewModel = homeViewModel,
-                interestsViewModel = interestsViewModel,
-                isExpandedScreen = isExpandedScreen,
-                openSettingDialog = { openSettingDialog() }
-            )
+            }
+            composable(ReplyRoute.CUP_CAKE) {
+                StartOrderScreen(
+                    quantityOptions = DataSource.quantityOptions,
+                    onNextButtonClicked = {
+                        viewModel.setQuantity(it)
+                        navController.navigate(CupcakeScreen.Flavor.name)
+                    },
+                    onMovieDetailsClicked = {
+                        navController.navigate(CupcakeScreen.MOVIE_DETAILS.name)
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(dimensionResource(R.dimen.padding_medium))
+                )
+            }
+            composable(ReplyRoute.ARTICLES) { backStackEntry ->
+                MainScreen(
+                    windowSizeClass = adaptiveInfo.windowSizeClass,
+                    navigateToPlayer = { episode ->
+                        appState.navigateToPlayer(episode.uri, backStackEntry)
+                    }
+                )
+            }
+            composable(Screen.Player.route) {
+                PlayerScreen(
+                    windowSizeClass = adaptiveInfo.windowSizeClass,
+                    displayFeatures = displayFeatures,
+                    onBackPress = appState::navigateBack
+                )
+            }
+
+            composable(route = CupcakeScreen.Flavor.name) {
+                val context = LocalContext.current
+                SelectOptionScreen(
+                    subtotal = uiState.price,
+                    onNextButtonClicked = { navController.navigate(CupcakeScreen.Pickup.name) },
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(viewModel, navController)
+                    },
+                    options = DataSource.flavors.map { id -> context.resources.getString(id) },
+                    onSelectionChanged = { viewModel.setFlavor(it) },
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = CupcakeScreen.Pickup.name) {
+                SelectOptionScreen(
+                    subtotal = uiState.price,
+                    onNextButtonClicked = { navController.navigate(CupcakeScreen.Summary.name) },
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(viewModel, navController)
+                    },
+                    options = uiState.pickupOptions,
+                    onSelectionChanged = { viewModel.setDate(it) },
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = CupcakeScreen.Summary.name) {
+                val context = LocalContext.current
+                OrderSummaryScreen(
+                    orderUiState = uiState,
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(viewModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String ->
+                        shareOrder(context, subject = subject, summary = summary)
+                    },
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = CupcakeScreen.MOVIE_DETAILS.name) {
+                val context = LocalContext.current
+                MovieDetailsScreen(
+                    orderUiState = uiState,
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(viewModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String ->
+                        shareOrder(context, subject = subject, summary = summary)
+                    },
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(
+                route = ReplyRoute.JET_NEWS,
+                deepLinks = listOf(
+                    navDeepLink {
+                        uriPattern =
+                            "$JETNEWS_APP_URI/${JetnewsDestinations.HOME_ROUTE}?$POST_ID={$POST_ID}"
+                    }
+                )
+            ) { navBackStackEntry ->
+                val homeViewModel: HomeViewModel = viewModel(
+                    factory = HomeViewModel.provideFactory(
+                        postsRepository = appContainer.postsRepository,
+                        preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
+                    )
+                )
+                val interestsViewModel: InterestsViewModel = viewModel(
+                    factory = InterestsViewModel.provideFactory(appContainer.interestsRepository)
+                )
+                HomeRoute(
+                    homeViewModel = homeViewModel,
+                    interestsViewModel = interestsViewModel,
+                    isExpandedScreen = isExpandedScreen,
+                    openSettingDialog = { openSettingDialog() }
+                )
+            }
         }
+
+    } else {
+        OfflineDialog { appState.refreshOnline() }
     }
+}
+
+@Composable
+fun OfflineDialog(onRetry: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = {},
+        title = { Text(text = stringResource(R.string.connection_error_title)) },
+        text = { Text(text = stringResource(R.string.connection_error_message)) },
+        confirmButton = {
+            TextButton(onClick = onRetry) {
+                Text(stringResource(R.string.retry_label))
+            }
+        }
+    )
 }
 
 
@@ -344,4 +412,23 @@ private fun shareOrder(context: Context, subject: String, summary: String) {
             context.getString(R.string.new_cupcake_order)
         )
     )
+}
+
+/**
+ * Determine the drawer state to pass to the modal drawer.
+ */
+@Composable
+private fun rememberSizeAwareDrawerState(isExpandedScreen: Boolean): DrawerState {
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+
+    return if (!isExpandedScreen) {
+        // If we want to allow showing the drawer, we use a real, remembered drawer
+        // state defined above
+        drawerState
+    } else {
+        // If we don't want to allow the drawer to be shown, we provide a drawer state
+        // that is locked closed. This is intentionally not remembered, because we
+        // don't want to keep track of any changes and always keep it closed
+        DrawerState(DrawerValue.Closed)
+    }
 }
