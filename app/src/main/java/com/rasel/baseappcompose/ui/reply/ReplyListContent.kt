@@ -45,14 +45,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.DisplayFeature
-import com.rasel.baseappcompose.ui.components.EmailDetailAppBar
-import com.rasel.baseappcompose.ui.components.ReplyDockedSearchBar
+import com.rasel.baseappcompose.designsystem.component.EmailDetailAppBar
+import com.rasel.baseappcompose.designsystem.component.ReplyDockedSearchBar
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 import com.google.accompanist.adaptive.TwoPane
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.Email
-import com.rasel.baseappcompose.ui.components.ReplyEmailListItem
-import com.rasel.baseappcompose.ui.components.ReplyEmailThreadItem
+import com.rasel.baseappcompose.designsystem.component.ReplyEmailListItem
+import com.rasel.baseappcompose.designsystem.component.ReplyEmailThreadItem
 import com.rasel.baseappcompose.ui.utils.ReplyContentType
 import com.rasel.baseappcompose.ui.utils.ReplyNavigationType
 

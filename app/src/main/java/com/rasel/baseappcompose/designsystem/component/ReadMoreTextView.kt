@@ -1,4 +1,4 @@
-package com.rasel.baseappcompose.ui.components
+package com.rasel.baseappcompose.designsystem.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

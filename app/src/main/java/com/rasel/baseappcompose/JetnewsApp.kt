@@ -30,7 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import com.rasel.baseappcompose.data.AppContainer
-import com.rasel.baseappcompose.ui.components.AppNavRail
+import com.rasel.baseappcompose.designsystem.component.AppNavRail
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import kotlinx.coroutines.launch
 

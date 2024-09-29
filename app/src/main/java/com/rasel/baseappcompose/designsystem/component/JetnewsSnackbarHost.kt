@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rasel.baseappcompose.ui.components
+package com.rasel.baseappcompose.designsystem.component
 
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.widthIn

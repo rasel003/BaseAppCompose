@@ -1,4 +1,4 @@
-package com.rasel.baseappcompose.ui.components
+package com.rasel.baseappcompose.designsystem.component
 
 /*
  * Copyright (C) 2023 The Android Open Source Project

@@ -14,44 +14,63 @@
  * limitations under the License.
  */
 
-package com.rasel.baseappcompose.ui.components
+package com.rasel.baseappcompose.designsystem.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.rasel.baseappcompose.JetnewsDestinations
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Composable
-fun ReplyProfileImage(
+fun ViewCounter(
     drawableResource: Int,
+    title: String,
     description: String,
     modifier: Modifier = Modifier
 ) {
-    Image(
-        modifier = modifier
-            .size(40.dp)
-            .clip(CircleShape),
-        painter = painterResource(id = drawableResource),
-        contentDescription = description,
-    )
+    Row{
+        Image(
+            modifier = modifier
+                .size(14.dp)
+                .clip(CircleShape),
+            painter = painterResource(id = drawableResource),
+            contentDescription = description,
+        )
+        Text(
+            text = title,
+            modifier = Modifier.padding(horizontal = 8.dp),
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.labelSmall
+        )
+        Text(
+            text = description,
+            style = MaterialTheme.typography.labelSmall
+        )
+    }
 }
+
 @Preview("Drawer contents")
 @Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PreviewReplyProfileImage() {
+fun PreviewViewCounter() {
     NiaTheme {
-        ReplyProfileImage(
+        ViewCounter(
             drawableResource = R.drawable.avatar_7,
-            description = ""
+            title = "12M",
+            description = "Followers"
         )
     }
 }

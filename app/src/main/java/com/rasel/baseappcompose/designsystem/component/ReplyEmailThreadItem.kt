@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rasel.baseappcompose.ui.components
+package com.rasel.baseappcompose.designsystem.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background

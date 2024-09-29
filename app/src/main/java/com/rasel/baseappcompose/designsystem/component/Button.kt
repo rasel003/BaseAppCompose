@@ -52,7 +52,6 @@ import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePre
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.icon.NiaIcons
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
-import com.rasel.baseappcompose.ui.components.ViewCounter
 
 /**
  * Now in Android filled button with generic content slot. Wraps Material 3 [Button].

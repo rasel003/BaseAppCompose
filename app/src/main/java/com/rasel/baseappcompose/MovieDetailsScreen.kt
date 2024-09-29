@@ -45,8 +45,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.data.model.OrderUiState
-import com.rasel.baseappcompose.ui.components.ReadMoreTextCompose
-import com.rasel.baseappcompose.ui.components.ViewCounter
+import com.rasel.baseappcompose.designsystem.component.ReadMoreTextCompose
+import com.rasel.baseappcompose.designsystem.component.ViewCounter
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 /**

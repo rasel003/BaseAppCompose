@@ -31,14 +31,11 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -100,7 +97,7 @@ import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.domain.model.PostsFeed
 import com.rasel.baseappcompose.ui.article.postContentItems
 import com.rasel.baseappcompose.ui.article.sharePost
-import com.rasel.baseappcompose.ui.components.JetnewsSnackbarHost
+import com.rasel.baseappcompose.designsystem.component.JetnewsSnackbarHost
 import com.example.jetnews.ui.modifiers.interceptKey
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState

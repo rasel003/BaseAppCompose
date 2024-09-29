@@ -40,7 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
-import com.rasel.baseappcompose.ui.components.FormattedPriceLabel
+import com.rasel.baseappcompose.designsystem.component.FormattedPriceLabel
 
 /**
  * Composable that displays the list of items as [RadioButton] options,
