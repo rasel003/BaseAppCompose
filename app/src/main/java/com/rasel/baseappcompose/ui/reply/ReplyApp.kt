@@ -55,12 +55,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
+import com.example.compose.snippets.animations.AnimationExamplesScreen
 import com.example.jetnews.ui.interests.InterestsViewModel
 import com.rasel.baseappcompose.AppDrawer
 import com.rasel.baseappcompose.ui.order.CupcakeScreen
 import com.rasel.baseappcompose.JetnewsDestinations
-import com.rasel.baseappcompose.JetnewsNavigationActions
-import com.rasel.baseappcompose.MovieDetailsScreen
+import com.rasel.baseappcompose.ui.cup_cake.MovieDetailsScreen
 import com.rasel.baseappcompose.ui.order.OrderSummaryScreen
 import com.rasel.baseappcompose.ui.order.OrderViewModel
 import com.rasel.baseappcompose.POST_ID
@@ -77,9 +77,11 @@ import com.rasel.baseappcompose.ui.home.HomeRoute
 import com.rasel.baseappcompose.ui.home.HomeViewModel
 import com.rasel.baseappcompose.ui.jet_caster.JetcasterAppState
 import com.rasel.baseappcompose.ui.jet_caster.Screen
+import com.rasel.baseappcompose.designsystem.component.*
 import com.rasel.baseappcompose.ui.jet_caster.home.MainScreen
 import com.rasel.baseappcompose.ui.jet_caster.player.PlayerScreen
 import com.rasel.baseappcompose.ui.jet_caster.rememberJetcasterAppState
+import com.rasel.baseappcompose.ui.landing.LandingScreen
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationActions
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationWrapper
 import com.rasel.baseappcompose.ui.navigation.ReplyRoute
@@ -89,6 +91,11 @@ import com.rasel.baseappcompose.ui.utils.ReplyContentType
 import com.rasel.baseappcompose.ui.utils.ReplyNavigationType
 import com.rasel.baseappcompose.ui.utils.isBookPosture
 import com.rasel.baseappcompose.ui.utils.isSeparating
+import com.rasel.baseappcompose.ui.navigation.Destination
+import com.rasel.baseappcompose.ui.navigation.TopComponentsDestination
+import com.rasel.baseappcompose.ui.graphics.*
+import com.rasel.baseappcompose.ui.images.*
+import com.rasel.baseappcompose.animations.sharedelement.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -264,7 +271,8 @@ private fun ReplyNavHost(
                         navController.navigate(CupcakeScreen.Flavor.name)
                     },
                     onMovieDetailsClicked = {
-                        navController.navigate(CupcakeScreen.MOVIE_DETAILS.name)
+//                        navController.navigate(CupcakeScreen.MOVIE_DETAILS.name)
+                        navController.navigate("LandingScreen")
                     },
                     modifier = Modifier
                         .fillMaxSize()
@@ -362,6 +370,52 @@ private fun ReplyNavHost(
                     isExpandedScreen = isExpandedScreen,
                     openSettingDialog = { openSettingDialog() }
                 )
+            }
+
+            composable("LandingScreen") {
+                LandingScreen { navController.navigate(it.route) }
+            }
+            Destination.entries.forEach { destination ->
+                composable(destination.route) {
+                    when (destination) {
+                        Destination.BrushExamples -> BrushExamplesScreen()
+                        Destination.ImageExamples -> ImageExamplesScreen()
+                        Destination.AnimationQuickGuideExamples -> AnimationExamplesScreen()
+                        Destination.ScreenshotExample -> BitmapFromComposableFullSnippet()
+                        Destination.ComponentsExamples -> ComponentsScreen {
+                            navController.navigate(
+                                it.route
+                            )
+                        }
+                        Destination.ShapesExamples -> ApplyPolygonAsClipImage()
+                        Destination.SharedElementExamples -> PlaceholderSizeAnimated_Demo()
+                    }
+                }
+            }
+            TopComponentsDestination.entries.forEach { destination ->
+                composable(destination.route) {
+                    when (destination) {
+                        TopComponentsDestination.CardExamples -> CardExamples()
+                        TopComponentsDestination.SwitchExamples -> SwitchExamples()
+                        TopComponentsDestination.SliderExamples -> SliderExamples()
+                        TopComponentsDestination.DialogExamples -> DialogExamples()
+                        TopComponentsDestination.ChipExamples -> ChipExamples()
+                        TopComponentsDestination.FloatingActionButtonExamples -> FloatingActionButtonExamples()
+                        TopComponentsDestination.ButtonExamples -> ButtonExamples()
+                        TopComponentsDestination.ProgressIndicatorExamples -> ProgressIndicatorExamples()
+                        TopComponentsDestination.ScaffoldExample -> ScaffoldExample()
+                        TopComponentsDestination.AppBarExamples -> AppBarExamples {
+                            navController.popBackStack()
+                        }
+                        TopComponentsDestination.CheckboxExamples -> CheckboxExamples()
+                        TopComponentsDestination.DividerExamples -> DividerExamples()
+                        TopComponentsDestination.BadgeExamples -> BadgeExamples()
+                        TopComponentsDestination.PartialBottomSheet -> PartialBottomSheet()
+                        TopComponentsDestination.TimePickerExamples -> TimePickerExamples()
+                        TopComponentsDestination.DatePickerExamples -> DatePickerExamples()
+                        TopComponentsDestination.CarouselExamples -> CarouselExamples()
+                    }
+                }
             }
         }
 

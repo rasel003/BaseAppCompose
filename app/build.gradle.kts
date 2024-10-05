@@ -120,12 +120,15 @@ dependencies {
     // Image loading
     implementation(libs.coil.kt.compose)
     implementation(libs.coil.kt)
+    implementation(libs.glide.compose)
     implementation(libs.coil.kt.svg)
 
 
     // Dependency injection
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.animation.graphics.android)
+    implementation(libs.androidx.graphics.shapes.android)
 //    kapt(libs.hilt.android.compiler)
 //    ksp(libs.hilt.compiler)
     ksp(libs.hilt.android.compiler)
@@ -142,7 +145,7 @@ dependencies {
 
     implementation(libs.androidx.tracing.ktx)
     implementation(libs.kotlinx.serialization.json)
-
+    implementation(libs.accompanist.permissions)
     implementation(libs.androidx.work.ktx)
     implementation(libs.hilt.ext.work)
 

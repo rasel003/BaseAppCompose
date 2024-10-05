@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background">#FFFFF8F4</color>
     <color name="surface_bright">#FFFFF8F4</color>
+    <color name="default_widget_background">#FFF</color>
+    <color name="outline_color">#FFF</color>
 </resources>

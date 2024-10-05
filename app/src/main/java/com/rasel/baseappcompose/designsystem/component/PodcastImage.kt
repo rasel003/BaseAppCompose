@@ -20,6 +20,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,10 +34,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.rasel.baseappcompose.R
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Composable
 fun PodcastImage(
@@ -78,6 +82,7 @@ fun PodcastImage(
                         .fillMaxSize()
                 )
             }
+
             else -> {
                 Box(
                     modifier = Modifier
@@ -93,6 +98,18 @@ fun PodcastImage(
             contentDescription = contentDescription,
             contentScale = contentScale,
             modifier = modifier,
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PodcastImagePreview() {
+    NiaTheme {
+        PodcastImage(
+            podcastImageUrl = "",
+            contentDescription = "",
+            modifier = Modifier.size(128.dp)
         )
     }
 }
