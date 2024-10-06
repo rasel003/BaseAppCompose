@@ -17,21 +17,29 @@
 package com.rasel.baseappcompose.designsystem.component
 
 import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme.colors
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
@@ -43,13 +51,22 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,6 +75,7 @@ import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaBackg
 import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.icon.NiaIcons
+import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 /**
@@ -464,4 +482,89 @@ fun TextButtonExample(onClick: () -> Unit) {
     }
 }
 // [END android_compose_components_textbutton]
+
+
+
+@Composable
+
+fun JetsnackButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    shape: Shape = ButtonShape,
+    border: BorderStroke? = null,
+    backgroundGradient: List<Color> = JetsnackTheme.colors.interactivePrimary,
+    disabledBackgroundGradient: List<Color> = JetsnackTheme.colors.interactiveSecondary,
+    contentColor: Color = colors.textInteractive,
+    disabledContentColor: Color = JetsnackTheme.colors.textHelp,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    content: @Composable RowScope.() -> Unit
+) {
+    JetsnackSurface(
+        shape = shape,
+        color = Color.Transparent,
+        contentColor = if (enabled) contentColor else disabledContentColor,
+        border = border,
+        modifier = modifier
+            .clip(shape)
+            .background(
+                Brush.horizontalGradient(
+                    colors = if (enabled) backgroundGradient else disabledBackgroundGradient
+                )
+            )
+            .clickable(
+                onClick = onClick,
+                enabled = enabled,
+                role = Role.Button,
+                interactionSource = interactionSource,
+                indication = null
+            )
+    ) {
+        ProvideTextStyle(
+            value = MaterialTheme.typography.labelLarge
+        ) {
+            Row(
+                Modifier
+                    .defaultMinSize(
+                        minWidth = ButtonDefaults.MinWidth,
+                        minHeight = ButtonDefaults.MinHeight
+                    )
+                    .indication(interactionSource, ripple())
+                    .padding(contentPadding),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                content = content
+            )
+        }
+    }
+}
+
+private val ButtonShape = RoundedCornerShape(percent = 50)
+
+@Preview("default", "round")
+@Preview("dark theme", "round", uiMode = UI_MODE_NIGHT_YES)
+@Preview("large font", "round", fontScale = 2f)
+@Composable
+private fun ButtonPreview() {
+    NiaTheme {
+        JetsnackButton(onClick = {}) {
+            Text(text = "Demo")
+        }
+    }
+}
+
+@Preview("default", "rectangle")
+@Preview("dark theme", "rectangle", uiMode = UI_MODE_NIGHT_YES)
+@Preview("large font", "rectangle", fontScale = 2f)
+@Composable
+private fun RectangleButtonPreview() {
+    NiaTheme {
+        JetsnackButton(
+            onClick = {}, shape = RectangleShape
+        ) {
+            Text(text = "Demo")
+        }
+    }
+}
 

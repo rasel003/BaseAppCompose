@@ -16,7 +16,9 @@
 
 package com.rasel.baseappcompose.designsystem.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -24,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,17 +34,20 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceModifier
 import androidx.glance.background
+import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.unit.ColorProvider
 import com.rasel.baseappcompose.designsystem.theme.JetnewsGlanceColorScheme
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 /**
  * A thin line that groups content in lists and layouts.
@@ -119,3 +125,31 @@ fun VerticalDividerExample() {
     }
 }
 // [END android_compose_components_verticaldivider]
+
+
+
+@Composable
+fun JetsnackDivider(
+    modifier: Modifier = Modifier,
+    color: Color = JetsnackTheme.colors.uiBorder.copy(alpha = DividerAlpha),
+    thickness: Dp = 1.dp
+) {
+    HorizontalDivider(
+        modifier = modifier,
+        color = color,
+        thickness = thickness
+    )
+}
+
+private const val DividerAlpha = 0.12f
+
+@Preview("default", showBackground = true)
+@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Composable
+private fun DividerPreview() {
+    NiaTheme {
+        Box(Modifier.size(height = 10.dp, width = 100.dp)) {
+            JetsnackDivider(Modifier.align(Alignment.Center))
+        }
+    }
+}

@@ -129,6 +129,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.animation.graphics.android)
     implementation(libs.androidx.graphics.shapes.android)
+    implementation(libs.androidx.constraintlayout.compose)
 //    kapt(libs.hilt.android.compiler)
 //    ksp(libs.hilt.compiler)
     ksp(libs.hilt.android.compiler)

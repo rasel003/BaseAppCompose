@@ -116,6 +116,35 @@ class ReplyNavigationActions(
             cm?.activeNetworkInfo?.isConnectedOrConnecting == true
         }
     }
+
+    // ----------------------------------------------------------
+    // Navigation state source of truth
+    // ----------------------------------------------------------
+
+    fun upPress() {
+        navController.navigateUp()
+    }
+
+    fun navigateToBottomBarRoute(route: String) {
+        if (route != navController.currentDestination?.route) {
+            navController.navigate(route) {
+                launchSingleTop = true
+                restoreState = true
+                // Pop up backstack to the first destination and save state. This makes going back
+                // to the start destination when pressing back in any other bottom tab.
+                popUpTo(findStartDestination(navController.graph).id) {
+                    saveState = true
+                }
+            }
+        }
+    }
+
+    fun navigateToSnackDetail(snackId: Long, origin: String, from: NavBackStackEntry) {
+        // In order to discard duplicated navigation events, we check the Lifecycle
+        if (from.lifecycleIsResumed()) {
+            navController.navigate("${MainDestinations.SNACK_DETAIL_ROUTE}/$snackId?origin=$origin")
+        }
+    }
 }
 
 val TOP_LEVEL_DESTINATIONS = listOf(

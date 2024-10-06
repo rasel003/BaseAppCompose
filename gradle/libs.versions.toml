@@ -15,6 +15,7 @@ lifecycleRuntimeKtx = "2.8.5"
 activityCompose = "1.9.2"
 androidx-compose-latest = "1.7.1"
 composeBom = "2024.09.01"
+androidx-constraintlayout = "1.1.0-alpha13"
 navigationRuntimeKtx = "2.8.0"
 glance = "1.1.0"
 kotlinxSerializationJson = "1.6.3"
@@ -101,6 +102,7 @@ truth = "1.4.2"
 turbine = "1.1.0"
 animationGraphicsAndroid = "1.7.3"
 graphicsShapesAndroid = "1.0.1"
+constraintlayout = "2.1.4"
 
 
 [libraries]
@@ -184,6 +186,8 @@ androidx-adaptive-layout-android = { group = "androidx.compose.material3.adaptiv
 androidx-adaptive-navigation-android = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation-android", version.ref = "adaptiveNavigationAndroid" }
 androidx-animation-graphics-android = { group = "androidx.compose.animation", name = "animation-graphics-android", version.ref = "animationGraphicsAndroid" }
 androidx-graphics-shapes-android = { group = "androidx.graphics", name = "graphics-shapes-android", version.ref = "graphicsShapesAndroid" }
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "androidx-constraintlayout" }
+
 
 
 

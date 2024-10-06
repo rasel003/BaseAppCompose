@@ -29,7 +29,9 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -175,6 +177,43 @@ val DarkAndroidColorScheme = darkColorScheme(
     outline = GreenGray60,
 )
 
+
+/**
+ * Jetsnack custom Color Palette
+ */
+@Immutable
+data class JetsnackColors(
+    val gradient6_1: List<Color>,
+    val gradient6_2: List<Color>,
+    val gradient3_1: List<Color>,
+    val gradient3_2: List<Color>,
+    val gradient2_1: List<Color>,
+    val gradient2_2: List<Color>,
+    val gradient2_3: List<Color>,
+    val brand: Color,
+    val brandSecondary: Color,
+    val uiBackground: Color,
+    val uiBorder: Color,
+    val uiFloated: Color,
+    val interactivePrimary: List<Color> = gradient2_1,
+    val interactiveSecondary: List<Color> = gradient2_2,
+    val interactiveMask: List<Color> = gradient6_1,
+    val textPrimary: Color = brand,
+    val textSecondary: Color,
+    val textHelp: Color,
+    val textInteractive: Color,
+    val textLink: Color,
+    val tornado1: List<Color>,
+    val iconPrimary: Color = brand,
+    val iconSecondary: Color,
+    val iconInteractive: Color,
+    val iconInteractiveInactive: Color,
+    val error: Color,
+    val notificationBadge: Color = error,
+    val isDark: Boolean
+)
+
+
 /**
  * Light Android gradient colors
  */
@@ -270,6 +309,16 @@ fun NiaTheme(
             content = content,
         )
     }
+}
+
+private val LocalJetsnackColors = staticCompositionLocalOf<JetsnackColors> {
+    error("No JetsnackColorPalette provided")
+}
+
+object JetsnackTheme {
+    val colors: JetsnackColors
+        @Composable
+        get() = LocalJetsnackColors.current
 }
 
 object JetnewsGlanceColorScheme {

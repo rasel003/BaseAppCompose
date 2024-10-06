@@ -374,3 +374,6 @@ val LavenderLight = Color(0xFFDDBEFC)
 
 val RoseDark = Color(0xffaf0060)
 val RoseLight = Color(0xFFFFAFC9)
+const val AlphaNearOpaque = 0.95f
+val Neutral8 = Color(0xff121212)
+

@@ -19,13 +19,21 @@ package com.rasel.baseappcompose.ui.reply
 import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -47,11 +55,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
@@ -96,6 +107,15 @@ import com.rasel.baseappcompose.ui.navigation.TopComponentsDestination
 import com.rasel.baseappcompose.ui.graphics.*
 import com.rasel.baseappcompose.ui.images.*
 import com.rasel.baseappcompose.animations.sharedelement.*
+import com.rasel.baseappcompose.ui.navigation.MainDestinations
+import com.rasel.baseappcompose.ui.navigation.rememberJetsnackNavController
+import com.rasel.baseappcompose.ui.snack_home.HomeSections
+import com.rasel.baseappcompose.ui.snack_home.JetsnackBottomBar
+import com.rasel.baseappcompose.ui.snack_home.addHomeGraph
+import com.rasel.baseappcompose.ui.snack_home.composableWithCompositionLocal
+import com.rasel.baseappcompose.ui.snackdetail.SnackDetail
+import com.rasel.baseappcompose.ui.snackdetail.nonSpatialExpressiveSpring
+import com.rasel.baseappcompose.ui.snackdetail.spatialExpressiveSpring
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -200,7 +220,8 @@ fun ReplyApp(
                     toggleSelectedEmail = toggleSelectedEmail,
                     showSettingsDialog = showSettingsDialog,
                     openSettingDialog = { showSettingsDialog = true },
-                    onSettingsDismissed = { showSettingsDialog = false }
+                    onSettingsDismissed = { showSettingsDialog = false },
+                    navigateToSnackDetail = {}
                 )
             }
         }
@@ -224,6 +245,7 @@ private fun ReplyNavHost(
     showSettingsDialog: Boolean,
     openSettingDialog: () -> Unit,
     onSettingsDismissed: () -> Unit,
+    navigateToSnackDetail: () -> Unit,
 ) {
 
     val postsFeed = runBlocking {
@@ -272,7 +294,8 @@ private fun ReplyNavHost(
                     },
                     onMovieDetailsClicked = {
 //                        navController.navigate(CupcakeScreen.MOVIE_DETAILS.name)
-                        navController.navigate("LandingScreen")
+//                        navController.navigate("LandingScreen")
+                        navController.navigate( MainDestinations.HOME_ROUTE)
                     },
                     modifier = Modifier
                         .fillMaxSize()
@@ -417,10 +440,105 @@ private fun ReplyNavHost(
                     }
                 }
             }
+
+            composableWithCompositionLocal(
+                route = MainDestinations.HOME_ROUTE
+            ) { backStackEntry ->
+                MainContainer(
+                    onSnackSelected = { a, b, c -> }
+                )
+            }
+
+            composableWithCompositionLocal(
+                "${MainDestinations.SNACK_DETAIL_ROUTE}/" +
+                        "{${MainDestinations.SNACK_ID_KEY}}" +
+                        "?origin={${MainDestinations.ORIGIN}}",
+                arguments = listOf(
+                    navArgument(MainDestinations.SNACK_ID_KEY) {
+                        type = NavType.LongType
+                    }
+                ),
+
+                ) { backStackEntry ->
+                val arguments = requireNotNull(backStackEntry.arguments)
+                val snackId = arguments.getLong(MainDestinations.SNACK_ID_KEY)
+                val origin = arguments.getString(MainDestinations.ORIGIN)
+                SnackDetail(
+                    snackId,
+                    origin = origin ?: "",
+                    upPress = {}
+                )
+            }
         }
 
     } else {
         OfflineDialog { appState.refreshOnline() }
+    }
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+fun MainContainer(
+    modifier: Modifier = Modifier,
+    onSnackSelected: (Long, String, NavBackStackEntry) -> Unit
+) {
+    val jetsnackScaffoldState = rememberJetsnackScaffoldState()
+    val nestedNavController = rememberJetsnackNavController()
+    val navBackStackEntry by nestedNavController.navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+        ?: throw IllegalStateException("No SharedElementScope found")
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No SharedElementScope found")
+    JetsnackScaffold(
+        bottomBar = {
+            with(animatedVisibilityScope) {
+                with(sharedTransitionScope) {
+                    JetsnackBottomBar(
+                        tabs = HomeSections.entries.toTypedArray(),
+                        currentRoute = currentRoute ?: HomeSections.FEED.route,
+                        navigateToRoute = nestedNavController::navigateToBottomBarRoute,
+                        modifier = Modifier
+                            .renderInSharedTransitionScopeOverlay(
+                                zIndexInOverlay = 1f,
+                            )
+                            .animateEnterExit(
+                                enter = fadeIn(nonSpatialExpressiveSpring()) + slideInVertically(
+                                    spatialExpressiveSpring()
+                                ) {
+                                    it
+                                },
+                                exit = fadeOut(nonSpatialExpressiveSpring()) + slideOutVertically(
+                                    spatialExpressiveSpring()
+                                ) {
+                                    it
+                                }
+                            )
+                    )
+                }
+            }
+        },
+        modifier = modifier,
+        snackbarHost = {
+            SnackbarHost(
+                hostState = it,
+                modifier = Modifier.systemBarsPadding(),
+                snackbar = { snackbarData -> JetsnackSnackbar(snackbarData) }
+            )
+        },
+        snackBarHostState = jetsnackScaffoldState.snackBarHostState,
+    ) { padding ->
+        NavHost(
+            navController = nestedNavController.navController,
+            startDestination = HomeSections.FEED.route
+        ) {
+            addHomeGraph(
+                onSnackSelected = onSnackSelected,
+                modifier = Modifier
+                    .padding(padding)
+                    .consumeWindowInsets(padding)
+            )
+        }
     }
 }
 
