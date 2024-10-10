@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -43,6 +44,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -228,6 +230,7 @@ fun ReplyApp(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun ReplyNavHost(
     appContainer: AppContainer,
@@ -269,205 +272,213 @@ private fun ReplyNavHost(
     }
 
     if (appState.isOnline) {
-        NavHost(
-            modifier = modifier,
-            navController = navController,
-            startDestination = ReplyRoute.INBOX,
-        ) {
-            composable(ReplyRoute.INBOX) {
-                ReplyInboxScreen(
-                    contentType = contentType,
-                    replyHomeUIState = replyHomeUIState,
-                    navigationType = navigationType,
-                    displayFeatures = displayFeatures,
-                    closeDetailScreen = closeDetailScreen,
-                    navigateToDetail = navigateToDetail,
-                    toggleSelectedEmail = toggleSelectedEmail
-                )
-            }
-            composable(ReplyRoute.CUP_CAKE) {
-                StartOrderScreen(
-                    quantityOptions = DataSource.quantityOptions,
-                    onNextButtonClicked = {
-                        viewModel.setQuantity(it)
-                        navController.navigate(CupcakeScreen.Flavor.name)
-                    },
-                    onMovieDetailsClicked = {
+        SharedTransitionLayout {
+            CompositionLocalProvider(
+                LocalSharedTransitionScope provides this
+            ) {
+                NavHost(
+                    modifier = modifier,
+                    navController = navController,
+                    startDestination = ReplyRoute.INBOX,
+                ) {
+                    composable(ReplyRoute.INBOX) {
+                        ReplyInboxScreen(
+                            contentType = contentType,
+                            replyHomeUIState = replyHomeUIState,
+                            navigationType = navigationType,
+                            displayFeatures = displayFeatures,
+                            closeDetailScreen = closeDetailScreen,
+                            navigateToDetail = navigateToDetail,
+                            toggleSelectedEmail = toggleSelectedEmail
+                        )
+                    }
+                    composable(ReplyRoute.CUP_CAKE) {
+                        StartOrderScreen(
+                            quantityOptions = DataSource.quantityOptions,
+                            onNextButtonClicked = {
+                                viewModel.setQuantity(it)
+                                navController.navigate(CupcakeScreen.Flavor.name)
+                            },
+                            onMovieDetailsClicked = {
 //                        navController.navigate(CupcakeScreen.MOVIE_DETAILS.name)
 //                        navController.navigate("LandingScreen")
-                        navController.navigate( MainDestinations.HOME_ROUTE)
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_medium))
-                )
-            }
-            composable(ReplyRoute.ARTICLES) { backStackEntry ->
-                MainScreen(
-                    windowSizeClass = adaptiveInfo.windowSizeClass,
-                    navigateToPlayer = { episode ->
-                        appState.navigateToPlayer(episode.uri, backStackEntry)
+                                navController.navigate(MainDestinations.HOME_ROUTE)
+                            },
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(dimensionResource(R.dimen.padding_medium))
+                        )
                     }
-                )
-            }
-            composable(Screen.Player.route) {
-                PlayerScreen(
-                    windowSizeClass = adaptiveInfo.windowSizeClass,
-                    displayFeatures = displayFeatures,
-                    onBackPress = appState::navigateBack
-                )
-            }
-
-            composable(route = CupcakeScreen.Flavor.name) {
-                val context = LocalContext.current
-                SelectOptionScreen(
-                    subtotal = uiState.price,
-                    onNextButtonClicked = { navController.navigate(CupcakeScreen.Pickup.name) },
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(viewModel, navController)
-                    },
-                    options = DataSource.flavors.map { id -> context.resources.getString(id) },
-                    onSelectionChanged = { viewModel.setFlavor(it) },
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = CupcakeScreen.Pickup.name) {
-                SelectOptionScreen(
-                    subtotal = uiState.price,
-                    onNextButtonClicked = { navController.navigate(CupcakeScreen.Summary.name) },
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(viewModel, navController)
-                    },
-                    options = uiState.pickupOptions,
-                    onSelectionChanged = { viewModel.setDate(it) },
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = CupcakeScreen.Summary.name) {
-                val context = LocalContext.current
-                OrderSummaryScreen(
-                    orderUiState = uiState,
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(viewModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String ->
-                        shareOrder(context, subject = subject, summary = summary)
-                    },
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = CupcakeScreen.MOVIE_DETAILS.name) {
-                val context = LocalContext.current
-                MovieDetailsScreen(
-                    orderUiState = uiState,
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(viewModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String ->
-                        shareOrder(context, subject = subject, summary = summary)
-                    },
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(
-                route = ReplyRoute.JET_NEWS,
-                deepLinks = listOf(
-                    navDeepLink {
-                        uriPattern =
-                            "$JETNEWS_APP_URI/${JetnewsDestinations.HOME_ROUTE}?$POST_ID={$POST_ID}"
+                    composable(ReplyRoute.ARTICLES) { backStackEntry ->
+                        MainScreen(
+                            windowSizeClass = adaptiveInfo.windowSizeClass,
+                            navigateToPlayer = { episode ->
+                                appState.navigateToPlayer(episode.uri, backStackEntry)
+                            }
+                        )
                     }
-                )
-            ) { navBackStackEntry ->
-                val homeViewModel: HomeViewModel = viewModel(
-                    factory = HomeViewModel.provideFactory(
-                        postsRepository = appContainer.postsRepository,
-                        preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
-                    )
-                )
-                val interestsViewModel: InterestsViewModel = viewModel(
-                    factory = InterestsViewModel.provideFactory(appContainer.interestsRepository)
-                )
-                HomeRoute(
-                    homeViewModel = homeViewModel,
-                    interestsViewModel = interestsViewModel,
-                    isExpandedScreen = isExpandedScreen,
-                    openSettingDialog = { openSettingDialog() }
-                )
-            }
+                    composable(Screen.Player.route) {
+                        PlayerScreen(
+                            windowSizeClass = adaptiveInfo.windowSizeClass,
+                            displayFeatures = displayFeatures,
+                            onBackPress = appState::navigateBack
+                        )
+                    }
 
-            composable("LandingScreen") {
-                LandingScreen { navController.navigate(it.route) }
-            }
-            Destination.entries.forEach { destination ->
-                composable(destination.route) {
-                    when (destination) {
-                        Destination.BrushExamples -> BrushExamplesScreen()
-                        Destination.ImageExamples -> ImageExamplesScreen()
-                        Destination.AnimationQuickGuideExamples -> AnimationExamplesScreen()
-                        Destination.ScreenshotExample -> BitmapFromComposableFullSnippet()
-                        Destination.ComponentsExamples -> ComponentsScreen {
-                            navController.navigate(
-                                it.route
+                    composable(route = CupcakeScreen.Flavor.name) {
+                        val context = LocalContext.current
+                        SelectOptionScreen(
+                            subtotal = uiState.price,
+                            onNextButtonClicked = { navController.navigate(CupcakeScreen.Pickup.name) },
+                            onCancelButtonClicked = {
+                                cancelOrderAndNavigateToStart(viewModel, navController)
+                            },
+                            options = DataSource.flavors.map { id -> context.resources.getString(id) },
+                            onSelectionChanged = { viewModel.setFlavor(it) },
+                            modifier = Modifier.fillMaxHeight()
+                        )
+                    }
+                    composable(route = CupcakeScreen.Pickup.name) {
+                        SelectOptionScreen(
+                            subtotal = uiState.price,
+                            onNextButtonClicked = { navController.navigate(CupcakeScreen.Summary.name) },
+                            onCancelButtonClicked = {
+                                cancelOrderAndNavigateToStart(viewModel, navController)
+                            },
+                            options = uiState.pickupOptions,
+                            onSelectionChanged = { viewModel.setDate(it) },
+                            modifier = Modifier.fillMaxHeight()
+                        )
+                    }
+                    composable(route = CupcakeScreen.Summary.name) {
+                        val context = LocalContext.current
+                        OrderSummaryScreen(
+                            orderUiState = uiState,
+                            onCancelButtonClicked = {
+                                cancelOrderAndNavigateToStart(viewModel, navController)
+                            },
+                            onSendButtonClicked = { subject: String, summary: String ->
+                                shareOrder(context, subject = subject, summary = summary)
+                            },
+                            modifier = Modifier.fillMaxHeight()
+                        )
+                    }
+                    composable(route = CupcakeScreen.MOVIE_DETAILS.name) {
+                        val context = LocalContext.current
+                        MovieDetailsScreen(
+                            orderUiState = uiState,
+                            onCancelButtonClicked = {
+                                cancelOrderAndNavigateToStart(viewModel, navController)
+                            },
+                            onSendButtonClicked = { subject: String, summary: String ->
+                                shareOrder(context, subject = subject, summary = summary)
+                            },
+                            modifier = Modifier.fillMaxHeight()
+                        )
+                    }
+                    composable(
+                        route = ReplyRoute.JET_NEWS,
+                        deepLinks = listOf(
+                            navDeepLink {
+                                uriPattern =
+                                    "$JETNEWS_APP_URI/${JetnewsDestinations.HOME_ROUTE}?$POST_ID={$POST_ID}"
+                            }
+                        )
+                    ) { navBackStackEntry ->
+                        val homeViewModel: HomeViewModel = viewModel(
+                            factory = HomeViewModel.provideFactory(
+                                postsRepository = appContainer.postsRepository,
+                                preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
                             )
+                        )
+                        val interestsViewModel: InterestsViewModel = viewModel(
+                            factory = InterestsViewModel.provideFactory(appContainer.interestsRepository)
+                        )
+                        HomeRoute(
+                            homeViewModel = homeViewModel,
+                            interestsViewModel = interestsViewModel,
+                            isExpandedScreen = isExpandedScreen,
+                            openSettingDialog = { openSettingDialog() }
+                        )
+                    }
+
+                    composable("LandingScreen") {
+                        LandingScreen { navController.navigate(it.route) }
+                    }
+                    Destination.entries.forEach { destination ->
+                        composable(destination.route) {
+                            when (destination) {
+                                Destination.BrushExamples -> BrushExamplesScreen()
+                                Destination.ImageExamples -> ImageExamplesScreen()
+                                Destination.AnimationQuickGuideExamples -> AnimationExamplesScreen()
+                                Destination.ScreenshotExample -> BitmapFromComposableFullSnippet()
+                                Destination.ComponentsExamples -> ComponentsScreen {
+                                    navController.navigate(
+                                        it.route
+                                    )
+                                }
+
+                                Destination.ShapesExamples -> ApplyPolygonAsClipImage()
+                                Destination.SharedElementExamples -> PlaceholderSizeAnimated_Demo()
+                            }
                         }
-                        Destination.ShapesExamples -> ApplyPolygonAsClipImage()
-                        Destination.SharedElementExamples -> PlaceholderSizeAnimated_Demo()
+                    }
+                    TopComponentsDestination.entries.forEach { destination ->
+                        composable(destination.route) {
+                            when (destination) {
+                                TopComponentsDestination.CardExamples -> CardExamples()
+                                TopComponentsDestination.SwitchExamples -> SwitchExamples()
+                                TopComponentsDestination.SliderExamples -> SliderExamples()
+                                TopComponentsDestination.DialogExamples -> DialogExamples()
+                                TopComponentsDestination.ChipExamples -> ChipExamples()
+                                TopComponentsDestination.FloatingActionButtonExamples -> FloatingActionButtonExamples()
+                                TopComponentsDestination.ButtonExamples -> ButtonExamples()
+                                TopComponentsDestination.ProgressIndicatorExamples -> ProgressIndicatorExamples()
+                                TopComponentsDestination.ScaffoldExample -> ScaffoldExample()
+                                TopComponentsDestination.AppBarExamples -> AppBarExamples {
+                                    navController.popBackStack()
+                                }
+
+                                TopComponentsDestination.CheckboxExamples -> CheckboxExamples()
+                                TopComponentsDestination.DividerExamples -> DividerExamples()
+                                TopComponentsDestination.BadgeExamples -> BadgeExamples()
+                                TopComponentsDestination.PartialBottomSheet -> PartialBottomSheet()
+                                TopComponentsDestination.TimePickerExamples -> TimePickerExamples()
+                                TopComponentsDestination.DatePickerExamples -> DatePickerExamples()
+                                TopComponentsDestination.CarouselExamples -> CarouselExamples()
+                            }
+                        }
+                    }
+
+                    composableWithCompositionLocal(
+                        route = MainDestinations.HOME_ROUTE
+                    ) { backStackEntry ->
+                        MainContainer(
+                            onSnackSelected = { a, b, c -> }
+                        )
+                    }
+
+                    composableWithCompositionLocal(
+                        "${MainDestinations.SNACK_DETAIL_ROUTE}/" +
+                                "{${MainDestinations.SNACK_ID_KEY}}" +
+                                "?origin={${MainDestinations.ORIGIN}}",
+                        arguments = listOf(
+                            navArgument(MainDestinations.SNACK_ID_KEY) {
+                                type = NavType.LongType
+                            }
+                        ),
+
+                        ) { backStackEntry ->
+                        val arguments = requireNotNull(backStackEntry.arguments)
+                        val snackId = arguments.getLong(MainDestinations.SNACK_ID_KEY)
+                        val origin = arguments.getString(MainDestinations.ORIGIN)
+                        SnackDetail(
+                            snackId,
+                            origin = origin ?: "",
+                            upPress = {}
+                        )
                     }
                 }
-            }
-            TopComponentsDestination.entries.forEach { destination ->
-                composable(destination.route) {
-                    when (destination) {
-                        TopComponentsDestination.CardExamples -> CardExamples()
-                        TopComponentsDestination.SwitchExamples -> SwitchExamples()
-                        TopComponentsDestination.SliderExamples -> SliderExamples()
-                        TopComponentsDestination.DialogExamples -> DialogExamples()
-                        TopComponentsDestination.ChipExamples -> ChipExamples()
-                        TopComponentsDestination.FloatingActionButtonExamples -> FloatingActionButtonExamples()
-                        TopComponentsDestination.ButtonExamples -> ButtonExamples()
-                        TopComponentsDestination.ProgressIndicatorExamples -> ProgressIndicatorExamples()
-                        TopComponentsDestination.ScaffoldExample -> ScaffoldExample()
-                        TopComponentsDestination.AppBarExamples -> AppBarExamples {
-                            navController.popBackStack()
-                        }
-                        TopComponentsDestination.CheckboxExamples -> CheckboxExamples()
-                        TopComponentsDestination.DividerExamples -> DividerExamples()
-                        TopComponentsDestination.BadgeExamples -> BadgeExamples()
-                        TopComponentsDestination.PartialBottomSheet -> PartialBottomSheet()
-                        TopComponentsDestination.TimePickerExamples -> TimePickerExamples()
-                        TopComponentsDestination.DatePickerExamples -> DatePickerExamples()
-                        TopComponentsDestination.CarouselExamples -> CarouselExamples()
-                    }
-                }
-            }
-
-            composableWithCompositionLocal(
-                route = MainDestinations.HOME_ROUTE
-            ) { backStackEntry ->
-                MainContainer(
-                    onSnackSelected = { a, b, c -> }
-                )
-            }
-
-            composableWithCompositionLocal(
-                "${MainDestinations.SNACK_DETAIL_ROUTE}/" +
-                        "{${MainDestinations.SNACK_ID_KEY}}" +
-                        "?origin={${MainDestinations.ORIGIN}}",
-                arguments = listOf(
-                    navArgument(MainDestinations.SNACK_ID_KEY) {
-                        type = NavType.LongType
-                    }
-                ),
-
-                ) { backStackEntry ->
-                val arguments = requireNotNull(backStackEntry.arguments)
-                val snackId = arguments.getLong(MainDestinations.SNACK_ID_KEY)
-                val origin = arguments.getString(MainDestinations.ORIGIN)
-                SnackDetail(
-                    snackId,
-                    origin = origin ?: "",
-                    upPress = {}
-                )
             }
         }
 

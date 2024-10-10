@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -75,6 +74,13 @@ val LightDefaultColorScheme = lightColorScheme(
     surfaceTint = md_theme_light_surfaceTint,
     outlineVariant = md_theme_light_outlineVariant,
     scrim = md_theme_light_scrim,
+    /*surfaceBright = md_theme_light_scrim,
+    surfaceDim = md_theme_light_scrim,
+    surfaceContainer = md_theme_light_scrim,
+    surfaceContainerHigh = md_theme_light_scrim,
+    surfaceContainerHighest = md_theme_light_scrim,
+    surfaceContainerLow = md_theme_light_scrim,
+    surfaceContainerLowest = md_theme_light_scrim,*/
 )
 
 /**
@@ -111,6 +117,13 @@ val DarkDefaultColorScheme = darkColorScheme(
     surfaceTint = md_theme_dark_surfaceTint,
     outlineVariant = md_theme_dark_outlineVariant,
     scrim = md_theme_dark_scrim,
+    surfaceBright = md_theme_light_scrim,
+    surfaceDim = md_theme_light_scrim,
+    surfaceContainer = md_theme_light_scrim,
+    surfaceContainerHigh = md_theme_light_scrim,
+    surfaceContainerHighest = md_theme_light_scrim,
+    surfaceContainerLow = md_theme_light_scrim,
+    surfaceContainerLowest = md_theme_light_scrim
 )
 
 /**
@@ -143,6 +156,17 @@ val LightAndroidColorScheme = lightColorScheme(
     inverseSurface = DarkGreenGray20,
     inverseOnSurface = DarkGreenGray95,
     outline = GreenGray50,
+    inversePrimary = md_theme_dark_inversePrimary,
+    surfaceTint = md_theme_dark_surfaceTint,
+    outlineVariant = md_theme_dark_outlineVariant,
+    scrim = md_theme_dark_scrim,
+    surfaceBright = md_theme_light_scrim,
+    surfaceDim = md_theme_light_scrim,
+    surfaceContainer = md_theme_light_scrim,
+    surfaceContainerHigh = md_theme_light_scrim,
+    surfaceContainerHighest = md_theme_light_scrim,
+    surfaceContainerLow = md_theme_light_scrim,
+    surfaceContainerLowest = md_theme_light_scrim
 )
 
 /**
@@ -175,6 +199,17 @@ val DarkAndroidColorScheme = darkColorScheme(
     inverseSurface = DarkGreenGray90,
     inverseOnSurface = DarkGreenGray10,
     outline = GreenGray60,
+    inversePrimary = md_theme_dark_inversePrimary,
+    surfaceTint = md_theme_dark_surfaceTint,
+    outlineVariant = md_theme_dark_outlineVariant,
+    scrim = md_theme_dark_scrim,
+    surfaceBright = md_theme_light_scrim,
+    surfaceDim = md_theme_light_scrim,
+    surfaceContainer = md_theme_light_scrim,
+    surfaceContainerHigh = md_theme_light_scrim,
+    surfaceContainerHighest = md_theme_light_scrim,
+    surfaceContainerLow = md_theme_light_scrim,
+    surfaceContainerLowest = md_theme_light_scrim
 )
 
 
@@ -309,16 +344,6 @@ fun NiaTheme(
             content = content,
         )
     }
-}
-
-private val LocalJetsnackColors = staticCompositionLocalOf<JetsnackColors> {
-    error("No JetsnackColorPalette provided")
-}
-
-object JetsnackTheme {
-    val colors: JetsnackColors
-        @Composable
-        get() = LocalJetsnackColors.current
 }
 
 object JetnewsGlanceColorScheme {

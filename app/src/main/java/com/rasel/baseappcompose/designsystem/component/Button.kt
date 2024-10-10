@@ -36,7 +36,6 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme.colors
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -75,8 +74,9 @@ import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaBackg
 import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.icon.NiaIcons
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.designsystem.theme.RoseLight
 
 /**
  * Now in Android filled button with generic content slot. Wraps Material 3 [Button].
@@ -494,10 +494,10 @@ fun JetsnackButton(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = ButtonShape,
     border: BorderStroke? = null,
-    backgroundGradient: List<Color> = JetsnackTheme.colors.interactivePrimary,
-    disabledBackgroundGradient: List<Color> = JetsnackTheme.colors.interactiveSecondary,
-    contentColor: Color = colors.textInteractive,
-    disabledContentColor: Color = JetsnackTheme.colors.textHelp,
+    backgroundGradient: List<Color> = listOf(MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.primaryContainer),
+    disabledBackgroundGradient: List<Color> = listOf(RoseLight, RoseLight),
+    contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
+    disabledContentColor: Color = MaterialTheme.colorScheme.outline,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     content: @Composable RowScope.() -> Unit
 ) {

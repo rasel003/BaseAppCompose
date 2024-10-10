@@ -81,6 +81,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
@@ -108,7 +109,8 @@ import com.rasel.baseappcompose.designsystem.component.JetsnackSurface
 import com.rasel.baseappcompose.designsystem.component.QuantitySelector
 import com.rasel.baseappcompose.designsystem.component.SnackCollection
 import com.rasel.baseappcompose.designsystem.component.SnackImage
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
+import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import com.rasel.baseappcompose.designsystem.theme.Neutral8
 import com.rasel.baseappcompose.ui.utils.SnackSharedElementKey
 import com.rasel.baseappcompose.ui.utils.SnackSharedElementType
@@ -181,7 +183,7 @@ fun SnackDetail(
                     enter = fadeIn(nonSpatialExpressiveSpring()),
                 )
                 .fillMaxSize()
-                .background(color = JetsnackTheme.colors.uiBackground)
+                .background(color = LocalBackgroundTheme.current.color)
         ) {
             val scroll = rememberScrollState(0)
             Header(snack.id, origin = origin)
@@ -202,7 +204,7 @@ private fun Header(snackId: Long, origin: String) {
         ?: throw IllegalArgumentException("No Scope found")
 
     with(sharedTransitionScope) {
-        val brushColors = JetsnackTheme.colors.tornado1
+        val brushColors = listOf(Color.Green, Color.Yellow)
 
         val infiniteTransition = rememberInfiniteTransition(label = "background")
         val targetOffset = with(LocalDensity.current) {
@@ -275,7 +277,7 @@ private fun SharedTransitionScope.Up(upPress: () -> Unit) {
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                tint = JetsnackTheme.colors.iconInteractive,
+                tint = Color.Black,
                 contentDescription = stringResource(R.string.label_back),
             )
         }
@@ -313,7 +315,7 @@ private fun Body(
                         Text(
                             text = stringResource(R.string.detail_header),
                             style = MaterialTheme.typography.labelSmall,
-                            color = JetsnackTheme.colors.textHelp,
+                            color = Color.Blue,
                             modifier = HzPadding
                         )
                         Spacer(Modifier.height(16.dp))
@@ -322,7 +324,7 @@ private fun Body(
                             Text(
                                 text = stringResource(R.string.detail_placeholder),
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = JetsnackTheme.colors.textHelp,
+                                color = Color.Blue,
                                 maxLines = if (seeMore) 5 else Int.MAX_VALUE,
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = HzPadding.skipToLookaheadSize()
@@ -339,7 +341,7 @@ private fun Body(
                             text = textButton,
                             style = MaterialTheme.typography.labelLarge,
                             textAlign = TextAlign.Center,
-                            color = JetsnackTheme.colors.textLink,
+                            color = MaterialTheme.colorScheme.outline,
                             modifier = Modifier
                                 .heightIn(20.dp)
                                 .fillMaxWidth()
@@ -354,14 +356,14 @@ private fun Body(
                         Text(
                             text = stringResource(R.string.ingredients),
                             style = MaterialTheme.typography.labelSmall,
-                            color = JetsnackTheme.colors.textHelp,
+                            color = Color.Blue,
                             modifier = HzPadding
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = stringResource(R.string.ingredients_list),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = JetsnackTheme.colors.textHelp,
+                            color = Color.Blue,
                             modifier = HzPadding
                         )
 
@@ -412,14 +414,14 @@ private fun Title(snack: Snack, origin: String, scrollProvider: () -> Int) {
                     val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
                     IntOffset(x = 0, y = offset.toInt())
                 }
-                .background(JetsnackTheme.colors.uiBackground)
+                .background(LocalBackgroundTheme.current.color)
         ) {
             Spacer(Modifier.height(16.dp))
             Text(
                 text = snack.name,
                 fontStyle = FontStyle.Italic,
                 style = MaterialTheme.typography.headlineMedium,
-                color = JetsnackTheme.colors.textSecondary,
+                color =  Color.Magenta,
                 modifier = HzPadding
                     .sharedBounds(
                         rememberSharedContentState(
@@ -439,7 +441,7 @@ private fun Title(snack: Snack, origin: String, scrollProvider: () -> Int) {
                 fontStyle = FontStyle.Italic,
                 style = MaterialTheme.typography.titleSmall,
                 fontSize = 20.sp,
-                color = JetsnackTheme.colors.textHelp,
+                color = Color.Blue,
                 modifier = HzPadding
                     .sharedBounds(
                         rememberSharedContentState(
@@ -459,7 +461,7 @@ private fun Title(snack: Snack, origin: String, scrollProvider: () -> Int) {
                 Text(
                     text = formatPrice(snack.price),
                     style = MaterialTheme.typography.titleLarge,
-                    color = JetsnackTheme.colors.textPrimary,
+                    color =  Color.Magenta,
                     modifier = HzPadding
                         .animateEnterExit(
                             enter = fadeIn() + slideInVertically { -it / 3 },

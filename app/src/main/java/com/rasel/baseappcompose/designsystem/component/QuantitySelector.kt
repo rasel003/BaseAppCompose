@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,7 +40,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rasel.baseappcompose.R
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Composable
@@ -53,7 +54,7 @@ fun QuantitySelector(
         Text(
             text = stringResource(R.string.quantity),
             style = MaterialTheme.typography.titleMedium,
-            color = JetsnackTheme.colors.textSecondary,
+            color =  MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Normal,
             modifier = Modifier
                 .padding(end = 18.dp)
@@ -74,7 +75,7 @@ fun QuantitySelector(
                 text = "$it",
                 style = MaterialTheme.typography.titleSmall,
                 fontSize = 18.sp,
-                color = JetsnackTheme.colors.textPrimary,
+                color =  MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.widthIn(min = 24.dp)
             )

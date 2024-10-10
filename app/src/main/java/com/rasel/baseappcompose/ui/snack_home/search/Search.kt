@@ -49,6 +49,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,7 +63,7 @@ import com.rasel.baseappcompose.data.model.Snack
 import com.rasel.baseappcompose.data.model.SnackRepo
 import com.rasel.baseappcompose.designsystem.component.JetsnackDivider
 import com.rasel.baseappcompose.designsystem.component.JetsnackSurface
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Composable
@@ -173,8 +174,8 @@ private fun SearchBar(
     modifier: Modifier = Modifier
 ) {
     JetsnackSurface(
-        color = JetsnackTheme.colors.uiFloated,
-        contentColor = JetsnackTheme.colors.textSecondary,
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor =  MaterialTheme.colorScheme.onSecondaryContainer,
         shape = MaterialTheme.shapes.small,
         modifier = modifier
             .fillMaxWidth()
@@ -195,7 +196,7 @@ private fun SearchBar(
                     IconButton(onClick = onClearQuery) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                            tint = JetsnackTheme.colors.iconPrimary,
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
                             contentDescription = stringResource(R.string.label_back)
                         )
                     }
@@ -211,7 +212,7 @@ private fun SearchBar(
                 )
                 if (searching) {
                     CircularProgressIndicator(
-                        color = JetsnackTheme.colors.iconPrimary,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
                         modifier = Modifier
                             .padding(horizontal = 6.dp)
                             .size(36.dp)
@@ -236,13 +237,13 @@ private fun SearchHint() {
     ) {
         Icon(
             imageVector = Icons.Outlined.Search,
-            tint = JetsnackTheme.colors.textHelp,
+            tint = MaterialTheme.colorScheme.onSecondaryContainer,
             contentDescription = stringResource(R.string.label_search)
         )
         Spacer(Modifier.width(8.dp))
         Text(
             text = stringResource(R.string.search_jetsnack),
-            color = JetsnackTheme.colors.textHelp
+            color = MaterialTheme.colorScheme.onSecondaryContainer
         )
     }
 }

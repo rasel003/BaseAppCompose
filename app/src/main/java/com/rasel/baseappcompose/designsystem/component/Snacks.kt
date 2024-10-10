@@ -73,19 +73,18 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.rasel.baseappcompose.data.model.CollectionType
-import com.rasel.baseappcompose.data.model.SnackCollection
-import com.rasel.baseappcompose.data.model.snacks
-import com.rasel.baseappcompose.ui.utils.SnackSharedElementKey
-import com.rasel.baseappcompose.ui.utils.SnackSharedElementType
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.animations.sharedelement.LocalNavAnimatedVisibilityScope
 import com.rasel.baseappcompose.animations.sharedelement.LocalSharedTransitionScope
+import com.rasel.baseappcompose.data.model.CollectionType
 import com.rasel.baseappcompose.data.model.Snack
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+import com.rasel.baseappcompose.data.model.SnackCollection
+import com.rasel.baseappcompose.data.model.snacks
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.snackdetail.nonSpatialExpressiveSpring
 import com.rasel.baseappcompose.ui.snackdetail.snackDetailBoundsTransform
+import com.rasel.baseappcompose.ui.utils.SnackSharedElementKey
+import com.rasel.baseappcompose.ui.utils.SnackSharedElementType
 
 private val HighlightCardWidth = 170.dp
 private val HighlightCardPadding = 16.dp
@@ -110,7 +109,7 @@ fun SnackCollection(
             Text(
                 text = snackCollection.name,
                 style = MaterialTheme.typography.titleLarge,
-                color = JetsnackTheme.colors.brand,
+                color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
@@ -123,7 +122,7 @@ fun SnackCollection(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                    tint = JetsnackTheme.colors.brand,
+                    tint = Color.Green,
                     contentDescription = null
                 )
             }
@@ -154,8 +153,8 @@ private fun HighlightedSnacks(
     }
 
     val gradient = when ((index / 2) % 2) {
-        0 -> JetsnackTheme.colors.gradient6_1
-        else -> JetsnackTheme.colors.gradient6_2
+        0 -> listOf(Color.Green, Color.Yellow)
+        else -> listOf(Color.Green, Color.Yellow)
     }
 
     LazyRow(
@@ -245,7 +244,7 @@ fun SnackItem(
                 Text(
                     text = snack.name,
                     style = MaterialTheme.typography.titleMedium,
-                    color = JetsnackTheme.colors.textSecondary,
+                    color =  Color.Magenta,
                     modifier = Modifier
                         .padding(top = 8.dp)
                         .wrapContentWidth()
@@ -322,7 +321,7 @@ private fun HighlightSnackItem(
                 )
                 .border(
                     1.dp,
-                    JetsnackTheme.colors.uiBorder.copy(alpha = 0.12f),
+                    Color.Black.copy(alpha = 0.12f),
                     RoundedCornerShape(roundedCornerAnimation)
                 )
 
@@ -404,7 +403,7 @@ private fun HighlightSnackItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.titleLarge,
-                    color = JetsnackTheme.colors.textSecondary,
+                    color =  MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .sharedBounds(
@@ -428,7 +427,7 @@ private fun HighlightSnackItem(
                 Text(
                     text = snack.tagline,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = JetsnackTheme.colors.textHelp,
+                    color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .sharedBounds(
@@ -499,7 +498,7 @@ fun SnackCardPreview() {
             snack = snack,
             onSnackClick = { _, _ -> },
             index = 0,
-            gradient = JetsnackTheme.colors.gradient6_1,
+            gradient = listOf(Color.Green, Color.Yellow),
             scrollProvider = { 0f }
         )
     }

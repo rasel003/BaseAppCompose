@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceModifier
 import androidx.glance.background
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
@@ -131,7 +131,7 @@ fun VerticalDividerExample() {
 @Composable
 fun JetsnackDivider(
     modifier: Modifier = Modifier,
-    color: Color = JetsnackTheme.colors.uiBorder.copy(alpha = DividerAlpha),
+    color: Color = Color.Black.copy(alpha = DividerAlpha),
     thickness: Dp = 1.dp
 ) {
     HorizontalDivider(

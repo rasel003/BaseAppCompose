@@ -56,6 +56,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.LastBaseline
@@ -84,7 +85,8 @@ import com.rasel.baseappcompose.designsystem.component.QuantitySelector
 import com.rasel.baseappcompose.designsystem.component.SnackCollection
 import com.rasel.baseappcompose.designsystem.component.SnackImage
 import com.rasel.baseappcompose.designsystem.theme.AlphaNearOpaque
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
+import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.snackdetail.nonSpatialExpressiveSpring
 import com.rasel.baseappcompose.ui.snackdetail.spatialExpressiveSpring
@@ -166,7 +168,7 @@ private fun CartContent(
             Text(
                 text = stringResource(R.string.cart_order_header, snackCountFormattedString),
                 style = MaterialTheme.typography.titleLarge,
-                color = JetsnackTheme.colors.brand,
+                color = Color.Green,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
@@ -226,7 +228,7 @@ private fun CartContent(
 private fun SwipeDismissItemBackground(progress: Float) {
     Column(
         modifier = Modifier
-            .background(JetsnackTheme.colors.uiBackground)
+            .background(LocalBackgroundTheme.current.color)
             .fillMaxWidth()
             .fillMaxHeight(),
         horizontalAlignment = Alignment.End,
@@ -247,7 +249,7 @@ private fun SwipeDismissItemBackground(progress: Float) {
                     .height(maxWidth)
                     .align(Alignment.Center),
                 shape = RoundedCornerShape(percent = ((1 - progress) * 100).roundToInt()),
-                color = JetsnackTheme.colors.error
+                color = Color.Green
             ) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -265,7 +267,7 @@ private fun SwipeDismissItemBackground(progress: Float) {
                             modifier = Modifier
                                 .size(32.dp)
                                 .graphicsLayer(alpha = iconAlpha),
-                            tint = JetsnackTheme.colors.uiBackground,
+                            tint = LocalBackgroundTheme.current.color,
                             contentDescription = null,
                         )
                     }
@@ -278,7 +280,7 @@ private fun SwipeDismissItemBackground(progress: Float) {
                         Text(
                             text = stringResource(id = R.string.remove_item),
                             style = MaterialTheme.typography.titleMedium,
-                            color = JetsnackTheme.colors.uiBackground,
+                            color = LocalBackgroundTheme.current.color,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .graphicsLayer(
@@ -306,7 +308,7 @@ fun CartItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable { onSnackClick(snack.id, "cart") }
-            .background(JetsnackTheme.colors.uiBackground)
+            .background(LocalBackgroundTheme.current.color)
             .padding(horizontal = 24.dp)
 
     ) {
@@ -326,7 +328,7 @@ fun CartItem(
         Text(
             text = snack.name,
             style = MaterialTheme.typography.titleMedium,
-            color = JetsnackTheme.colors.textSecondary,
+            color =  Color.Magenta,
             modifier = Modifier.constrainAs(name) {
                 linkTo(
                     start = image.end,
@@ -348,14 +350,14 @@ fun CartItem(
         ) {
             Icon(
                 imageVector = Icons.Filled.Close,
-                tint = JetsnackTheme.colors.iconSecondary,
+                tint =  Color.Magenta,
                 contentDescription = stringResource(R.string.label_remove)
             )
         }
         Text(
             text = snack.tagline,
             style = MaterialTheme.typography.bodyLarge,
-            color = JetsnackTheme.colors.textHelp,
+            color = Color.Blue,
             modifier = Modifier.constrainAs(tag) {
                 linkTo(
                     start = image.end,
@@ -376,7 +378,7 @@ fun CartItem(
         Text(
             text = formatPrice(snack.price),
             style = MaterialTheme.typography.titleMedium,
-            color = JetsnackTheme.colors.textPrimary,
+            color =  Color.Magenta,
             modifier = Modifier.constrainAs(price) {
                 linkTo(
                     start = image.end,
@@ -415,7 +417,7 @@ fun SummaryItem(
         Text(
             text = stringResource(R.string.cart_summary_header),
             style = MaterialTheme.typography.titleLarge,
-            color = JetsnackTheme.colors.brand,
+            color = Color.Green,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
@@ -479,7 +481,7 @@ fun SummaryItem(
 private fun CheckoutBar(modifier: Modifier = Modifier) {
     Column(
         modifier.background(
-            JetsnackTheme.colors.uiBackground.copy(alpha = AlphaNearOpaque)
+            LocalBackgroundTheme.current.color.copy(alpha = AlphaNearOpaque)
         )
     ) {
 

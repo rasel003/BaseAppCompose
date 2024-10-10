@@ -16,6 +16,7 @@
 
 package com.rasel.baseappcompose.ui.reply
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -38,11 +39,13 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.DisplayFeature
 import com.rasel.baseappcompose.designsystem.component.EmailDetailAppBar
@@ -50,9 +53,12 @@ import com.rasel.baseappcompose.designsystem.component.ReplyDockedSearchBar
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 import com.google.accompanist.adaptive.TwoPane
 import com.rasel.baseappcompose.R
+import com.rasel.baseappcompose.data.local.LocalEmailsDataProvider
 import com.rasel.baseappcompose.data.model.Email
+import com.rasel.baseappcompose.designsystem.component.JetsnackButton
 import com.rasel.baseappcompose.designsystem.component.ReplyEmailListItem
 import com.rasel.baseappcompose.designsystem.component.ReplyEmailThreadItem
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.utils.ReplyContentType
 import com.rasel.baseappcompose.ui.utils.ReplyNavigationType
 
@@ -229,5 +235,29 @@ fun ReplyEmailDetail(
         item {
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
         }
+    }
+}
+
+@Preview("default", "round")
+@Preview("dark theme", "round", uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun ButtonPreview2() {
+    NiaTheme {
+        ReplyEmailList(
+            emails = LocalEmailsDataProvider.allEmails,
+            openedEmail = null,
+            selectedEmailIds = setOf(),
+            toggleEmailSelection = {},
+            emailLazyListState = LazyListState(),
+            navigateToDetail = { _, _ -> },
+        )
+    }
+}
+@Preview("default", "round")
+@Preview("dark theme", "round", uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun ButtonPreview() {
+    NiaTheme {
+        ReplyEmailDetail(email = LocalEmailsDataProvider.allEmails.first(), isFullScreen = false, onBackPressed = {})
     }
 }

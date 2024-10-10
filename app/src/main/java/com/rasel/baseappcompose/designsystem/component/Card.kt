@@ -40,7 +40,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
+
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Composable
@@ -154,8 +155,8 @@ fun OutlinedCardExample() {
 fun JetsnackCard(
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.medium,
-    color: Color = JetsnackTheme.colors.uiBackground,
-    contentColor: Color = JetsnackTheme.colors.textPrimary,
+    color: Color = LocalBackgroundTheme.current.color,
+    contentColor: Color =  MaterialTheme.colorScheme.primary,
     border: BorderStroke? = null,
     elevation: Dp = 4.dp,
     content: @Composable () -> Unit

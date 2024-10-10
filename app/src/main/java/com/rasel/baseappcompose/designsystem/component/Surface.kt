@@ -33,7 +33,8 @@ import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
+import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import kotlin.math.ln
 
 /**
@@ -44,8 +45,8 @@ import kotlin.math.ln
 fun JetsnackSurface(
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
-    color: Color = JetsnackTheme.colors.uiBackground,
-    contentColor: Color = JetsnackTheme.colors.textSecondary,
+    color: Color = LocalBackgroundTheme.current.color,
+    contentColor: Color =  Color.Magenta,
     border: BorderStroke? = null,
     elevation: Dp = 0.dp,
     content: @Composable () -> Unit
@@ -69,7 +70,7 @@ fun JetsnackSurface(
 private fun getBackgroundColorForElevation(color: Color, elevation: Dp): Color {
     return if (elevation > 0.dp // && https://issuetracker.google.com/issues/161429530
         // JetsnackTheme.colors.isDark //&&
-        // color == JetsnackTheme.colors.uiBackground
+        // color == LocalBackgroundTheme.current.color
     ) {
         color.withElevation(elevation)
     } else {

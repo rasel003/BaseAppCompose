@@ -23,7 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
+import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 
 /**
  * An alternative to [androidx.compose.material3.Snackbar] utilizing
@@ -35,9 +36,9 @@ fun JetsnackSnackbar(
     modifier: Modifier = Modifier,
     actionOnNewLine: Boolean = false,
     shape: Shape = MaterialTheme.shapes.small,
-    backgroundColor: Color = JetsnackTheme.colors.uiBackground,
-    contentColor: Color = JetsnackTheme.colors.textSecondary,
-    actionColor: Color = JetsnackTheme.colors.brand
+    backgroundColor: Color = LocalBackgroundTheme.current.color,
+    contentColor: Color =  Color.Magenta,
+    actionColor: Color = Color.Green
 ) {
     Snackbar(
         snackbarData = snackbarData,

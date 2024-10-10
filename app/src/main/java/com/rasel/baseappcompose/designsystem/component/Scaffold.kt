@@ -52,7 +52,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.data.model.SnackbarManager
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -127,8 +127,8 @@ fun JetsnackScaffold(
     snackbarHost: @Composable (SnackbarHostState) -> Unit = { SnackbarHost(it) },
     floatingActionButton: @Composable (() -> Unit) = {},
     floatingActionButtonPosition: FabPosition = FabPosition.End,
-    backgroundColor: Color = JetsnackTheme.colors.uiBackground,
-    contentColor: Color = JetsnackTheme.colors.textSecondary,
+    backgroundColor: Color = LocalBackgroundTheme.current.color,
+    contentColor: Color =  Color.Magenta,
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(

@@ -39,6 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -53,7 +54,7 @@ import com.rasel.baseappcompose.designsystem.component.JetsnackButton
 import com.rasel.baseappcompose.designsystem.component.JetsnackDivider
 import com.rasel.baseappcompose.designsystem.component.JetsnackSurface
 import com.rasel.baseappcompose.designsystem.component.SnackImage
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.utils.formatPrice
 
@@ -66,7 +67,7 @@ fun SearchResults(
         Text(
             text = stringResource(R.string.search_count, searchResults.size),
             style = MaterialTheme.typography.titleLarge,
-            color = JetsnackTheme.colors.textPrimary,
+            color =  Color.Magenta,
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp)
         )
         LazyColumn {
@@ -118,7 +119,7 @@ private fun SearchResult(
         Text(
             text = snack.name,
             style = MaterialTheme.typography.titleMedium,
-            color = JetsnackTheme.colors.textSecondary,
+            color =  MaterialTheme.colorScheme.onSecondaryContainer,
             modifier = Modifier.constrainAs(name) {
                 linkTo(
                     start = image.end,
@@ -132,7 +133,7 @@ private fun SearchResult(
         Text(
             text = snack.tagline,
             style = MaterialTheme.typography.bodyLarge,
-            color = JetsnackTheme.colors.textHelp,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
             modifier = Modifier.constrainAs(tag) {
                 linkTo(
                     start = image.end,
@@ -153,7 +154,7 @@ private fun SearchResult(
         Text(
             text = formatPrice(snack.price),
             style = MaterialTheme.typography.titleMedium,
-            color = JetsnackTheme.colors.textPrimary,
+            color =  MaterialTheme.colorScheme.primary,
             modifier = Modifier.constrainAs(price) {
                 linkTo(
                     start = image.end,

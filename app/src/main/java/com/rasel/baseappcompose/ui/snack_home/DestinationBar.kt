@@ -37,6 +37,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,7 +48,8 @@ import com.rasel.baseappcompose.animations.sharedelement.LocalSharedTransitionSc
 import com.rasel.baseappcompose.designsystem.component.JetsnackDivider
 import com.rasel.baseappcompose.designsystem.component.JetsnackPreviewWrapper
 import com.rasel.baseappcompose.designsystem.theme.AlphaNearOpaque
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
+
 import com.rasel.baseappcompose.ui.snackdetail.spatialExpressiveSpring
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,7 +76,7 @@ fun DestinationBar(modifier: Modifier = Modifier) {
                             Text(
                                 text = "Delivery to 1600 Amphitheater Way",
                                 style = MaterialTheme.typography.titleMedium,
-                                color = JetsnackTheme.colors.textSecondary,
+                                color =  Color.Magenta,
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
@@ -88,7 +90,7 @@ fun DestinationBar(modifier: Modifier = Modifier) {
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.ExpandMore,
-                                    tint = JetsnackTheme.colors.brand,
+                                    tint = Color.Green,
                                     contentDescription =
                                     stringResource(R.string.label_select_delivery)
                                 )
@@ -96,9 +98,9 @@ fun DestinationBar(modifier: Modifier = Modifier) {
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors().copy(
-                        containerColor = JetsnackTheme.colors.uiBackground
+                        containerColor = LocalBackgroundTheme.current.color
                             .copy(alpha = AlphaNearOpaque),
-                        titleContentColor = JetsnackTheme.colors.textSecondary
+                        titleContentColor =  Color.Magenta
                     ),
                 )
                 JetsnackDivider()

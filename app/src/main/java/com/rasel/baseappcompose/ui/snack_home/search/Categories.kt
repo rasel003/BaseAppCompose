@@ -47,7 +47,6 @@ import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.SearchCategory
 import com.rasel.baseappcompose.data.model.SearchCategoryCollection
 import com.rasel.baseappcompose.designsystem.component.SnackImage
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import kotlin.math.max
 
@@ -73,7 +72,7 @@ private fun SearchCategoryCollection(
         Text(
             text = collection.name,
             style = MaterialTheme.typography.titleLarge,
-            color = JetsnackTheme.colors.textPrimary,
+            color =  MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .heightIn(min = 56.dp)
                 .padding(horizontal = 24.dp, vertical = 4.dp)
@@ -81,8 +80,8 @@ private fun SearchCategoryCollection(
         )
         VerticalGrid(Modifier.padding(horizontal = 16.dp)) {
             val gradient = when (index % 2) {
-                0 -> JetsnackTheme.colors.gradient2_2
-                else -> JetsnackTheme.colors.gradient2_3
+                0 -> listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.primaryContainer)
+                else -> listOf(MaterialTheme.colorScheme.surface, MaterialTheme.colorScheme.secondaryContainer)
             }
             collection.categories.forEach { category ->
                 SearchCategory(
@@ -117,7 +116,7 @@ private fun SearchCategory(
             Text(
                 text = category.name,
                 style = MaterialTheme.typography.titleMedium,
-                color = JetsnackTheme.colors.textSecondary,
+                color =  MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .padding(4.dp)
                     .padding(start = 8.dp)
@@ -165,7 +164,7 @@ private fun SearchCategoryPreview() {
                 name = "Desserts",
                 imageRes = R.drawable.desserts
             ),
-            gradient = JetsnackTheme.colors.gradient3_2
+            gradient = listOf(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.surface)
         )
     }
 }

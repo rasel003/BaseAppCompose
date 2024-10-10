@@ -76,13 +76,12 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.rasel.baseappcompose.ui.snack_home.cart.Cart
-import com.rasel.baseappcompose.ui.snack_home.search.Search
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.animations.sharedelement.LocalNavAnimatedVisibilityScope
 import com.rasel.baseappcompose.designsystem.component.JetsnackSurface
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.snack_home.cart.Cart
+import com.rasel.baseappcompose.ui.snack_home.search.Search
 import com.rasel.baseappcompose.ui.snackdetail.nonSpatialExpressiveSpring
 import com.rasel.baseappcompose.ui.snackdetail.spatialExpressiveSpring
 import java.util.Locale
@@ -176,8 +175,8 @@ fun JetsnackBottomBar(
     currentRoute: String,
     navigateToRoute: (String) -> Unit,
     modifier: Modifier = Modifier,
-    color: Color = JetsnackTheme.colors.iconPrimary,
-    contentColor: Color = JetsnackTheme.colors.iconInteractive
+    color: Color = MaterialTheme.colorScheme.secondaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
 ) {
     val routes = remember { tabs.map { it.route } }
     val currentSection = tabs.first { it.route == currentRoute }
@@ -203,9 +202,9 @@ fun JetsnackBottomBar(
                 val selected = section == currentSection
                 val tint by animateColorAsState(
                     if (selected) {
-                        JetsnackTheme.colors.iconInteractive
+                        MaterialTheme.colorScheme.primary
                     } else {
-                        JetsnackTheme.colors.iconInteractiveInactive
+                        MaterialTheme.colorScheme.onSecondary
                     },
                     label = "tint"
                 )
@@ -409,7 +408,7 @@ private fun MeasureScope.placeTextAndIcon(
 @Composable
 private fun JetsnackBottomNavIndicator(
     strokeWidth: Dp = 2.dp,
-    color: Color = JetsnackTheme.colors.iconInteractive,
+    color: Color = Color.Black,
     shape: Shape = BottomNavIndicatorShape
 ) {
     Spacer(

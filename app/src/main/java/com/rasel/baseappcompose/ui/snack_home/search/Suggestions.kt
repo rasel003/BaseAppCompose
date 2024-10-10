@@ -31,12 +31,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.data.model.SearchRepo
 import com.rasel.baseappcompose.data.model.SearchSuggestionGroup
 import com.rasel.baseappcompose.designsystem.component.JetsnackSurface
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Composable
@@ -71,7 +72,7 @@ private fun SuggestionHeader(
     Text(
         text = name,
         style = MaterialTheme.typography.titleLarge,
-        color = JetsnackTheme.colors.textPrimary,
+        color =  MaterialTheme.colorScheme.onSurface,
         modifier = modifier
             .heightIn(min = 56.dp)
             .padding(horizontal = 24.dp, vertical = 4.dp)
@@ -88,6 +89,7 @@ private fun Suggestion(
     Text(
         text = suggestion,
         style = MaterialTheme.typography.titleMedium,
+        color =  MaterialTheme.colorScheme.onSecondaryContainer,
         modifier = modifier
             .heightIn(min = 48.dp)
             .clickable { onSuggestionSelect(suggestion) }

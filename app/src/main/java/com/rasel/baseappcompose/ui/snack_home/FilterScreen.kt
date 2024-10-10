@@ -73,7 +73,8 @@ import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.Filter
 import com.rasel.baseappcompose.data.model.SnackRepo
 import com.rasel.baseappcompose.designsystem.component.FilterChip
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+
+import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Composable
@@ -129,7 +130,7 @@ fun FilterScreen(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
                     ) { }
-                    .background(JetsnackTheme.colors.uiFloated)
+                    .background(MaterialTheme.colorScheme.secondaryContainer)
                     .padding(horizontal = 24.dp, vertical = 16.dp)
                     .skipToLookaheadSize(),
             ) {
@@ -165,7 +166,7 @@ fun FilterScreen(
                             text = stringResource(id = R.string.reset),
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = fontWeight,
-                            color = JetsnackTheme.colors.uiBackground
+                            color = LocalBackgroundTheme.current.color
                                 .copy(alpha = if (!resetEnabled) 0.38f else 1f)
                         )
                     }
@@ -257,7 +258,7 @@ fun MaxCalories(sliderPosition: Float, onValueChanged: (Float) -> Unit) {
         Text(
             text = stringResource(id = R.string.per_serving),
             style = MaterialTheme.typography.bodyMedium,
-            color = JetsnackTheme.colors.brand,
+            color = Color.Green,
             modifier = Modifier.padding(top = 5.dp, start = 10.dp)
         )
     }
@@ -271,9 +272,9 @@ fun MaxCalories(sliderPosition: Float, onValueChanged: (Float) -> Unit) {
         modifier = Modifier
             .fillMaxWidth(),
         colors = SliderDefaults.colors(
-            thumbColor = JetsnackTheme.colors.brand,
-            activeTrackColor = JetsnackTheme.colors.brand,
-            inactiveTrackColor = JetsnackTheme.colors.iconInteractive
+            thumbColor = Color.Green,
+            activeTrackColor = Color.Green,
+            inactiveTrackColor = Color.Black
         )
     )
 }
@@ -283,7 +284,7 @@ fun FilterTitle(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.titleLarge,
-        color = JetsnackTheme.colors.brand,
+        color = MaterialTheme.colorScheme.onPrimaryContainer,
         modifier = Modifier.padding(bottom = 8.dp)
     )
 }
@@ -314,7 +315,7 @@ fun SortOption(
             Icon(
                 imageVector = Icons.Filled.Done,
                 contentDescription = null,
-                tint = JetsnackTheme.colors.brand
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
     }

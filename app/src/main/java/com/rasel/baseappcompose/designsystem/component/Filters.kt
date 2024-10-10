@@ -53,7 +53,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.Filter
-import com.rasel.baseappcompose.designsystem.theme.JetsnackTheme
+import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.utils.FilterSharedElementKey
 
@@ -85,10 +85,10 @@ fun FilterBar(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.FilterList,
-                            tint = JetsnackTheme.colors.brand,
+                            tint = Color.Green,
                             contentDescription = stringResource(R.string.label_filters),
                             modifier = Modifier.diagonalGradientBorder(
-                                colors = JetsnackTheme.colors.interactiveSecondary,
+                                colors = listOf(Color.Green, Color.Yellow),
                                 shape = CircleShape
                             )
                         )
@@ -110,16 +110,16 @@ fun FilterChip(
 ) {
     val (selected, setSelected) = filter.enabled
     val backgroundColor by animateColorAsState(
-        if (selected) JetsnackTheme.colors.brandSecondary else JetsnackTheme.colors.uiBackground,
+        if (selected) Color.Green else LocalBackgroundTheme.current.color,
         label = "background color"
     )
     val border = Modifier.fadeInDiagonalGradientBorder(
         showBorder = !selected,
-        colors = JetsnackTheme.colors.interactiveSecondary,
+        colors = listOf(Color.Green, Color.Yellow),
         shape = shape
     )
     val textColor by animateColorAsState(
-        if (selected) Color.Black else JetsnackTheme.colors.textSecondary,
+        if (selected) Color.Black else  Color.Magenta,
         label = "text color"
     )
 
@@ -136,7 +136,7 @@ fun FilterChip(
         val backgroundPressed =
             if (pressed) {
                 Modifier.offsetGradientBackground(
-                    JetsnackTheme.colors.interactiveSecondary,
+                    listOf(Color.Green, Color.Yellow),
                     200f,
                     0f
                 )
