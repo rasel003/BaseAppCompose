@@ -96,9 +96,10 @@ import com.rasel.baseappcompose.ui.jet_caster.rememberJetcasterAppState
 import com.rasel.baseappcompose.ui.landing.LandingScreen
 import com.rasel.baseappcompose.ui.navigation.Destination
 import com.rasel.baseappcompose.ui.navigation.MainDestinations
-import com.rasel.baseappcompose.ui.navigation.ReplyNavigationActions
+import com.rasel.baseappcompose.ui.navigation.AppNavigationActions
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationWrapper
 import com.rasel.baseappcompose.ui.navigation.ReplyRoute
+import com.rasel.baseappcompose.ui.navigation.ReplyTopLevelDestination
 import com.rasel.baseappcompose.ui.navigation.TopComponentsDestination
 import com.rasel.baseappcompose.ui.navigation.rememberJetsnackNavController
 import com.rasel.baseappcompose.ui.order.CupcakeScreen
@@ -170,7 +171,7 @@ fun ReplyApp(
 
     val navController = rememberNavController()
     val navigationActions = remember(navController) {
-        ReplyNavigationActions(navController, context)
+        AppNavigationActions(navController, context)
     }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val selectedDestination =
@@ -223,7 +224,8 @@ fun ReplyApp(
                     showSettingsDialog = showSettingsDialog,
                     openSettingDialog = { showSettingsDialog = true },
                     onSettingsDismissed = { showSettingsDialog = false },
-                    navigateToSnackDetail = {}
+                    navigateTo = { navigationActions.navigateTo(it) },
+                    cancelOrderAndNavigateToStart = { navigationActions.cancelOrderAndNavigateToStart() }
                 )
             }
         }
@@ -248,7 +250,8 @@ private fun ReplyNavHost(
     showSettingsDialog: Boolean,
     openSettingDialog: () -> Unit,
     onSettingsDismissed: () -> Unit,
-    navigateToSnackDetail: () -> Unit,
+    navigateTo: (String) -> Unit,
+    cancelOrderAndNavigateToStart: () -> Unit
 ) {
 
     val postsFeed = runBlocking {
@@ -297,16 +300,16 @@ private fun ReplyNavHost(
                             quantityOptions = DataSource.quantityOptions,
                             onNextButtonClicked = {
                                 viewModel.setQuantity(it)
-                                navController.navigate(CupcakeScreen.Flavor.name)
+                                navigateTo(CupcakeScreen.Flavor.name)
                             },
                             onMovieDetailsClicked = {
-                                navController.navigate(CupcakeScreen.MOVIE_DETAILS.name)
+                                navigateTo(CupcakeScreen.MOVIE_DETAILS.name)
                             },
                             onJetSnakeClicked = {
-                                navController.navigate(MainDestinations.HOME_ROUTE)
+                                navigateTo(MainDestinations.HOME_ROUTE)
                             },
                             onComponentClicked = {
-                                navController.navigate("LandingScreen")
+                                navigateTo("LandingScreen")
                             },
                             modifier = Modifier
                                 .fillMaxSize()
@@ -333,9 +336,10 @@ private fun ReplyNavHost(
                         val context = LocalContext.current
                         SelectOptionScreen(
                             subtotal = uiState.price,
-                            onNextButtonClicked = { navController.navigate(CupcakeScreen.Pickup.name) },
+                            onNextButtonClicked = { navigateTo(CupcakeScreen.Pickup.name) },
                             onCancelButtonClicked = {
-                                cancelOrderAndNavigateToStart(viewModel, navController)
+                                viewModel.resetOrder()
+                                cancelOrderAndNavigateToStart()
                             },
                             options = DataSource.flavors.map { id -> context.resources.getString(id) },
                             onSelectionChanged = { viewModel.setFlavor(it) },
@@ -345,9 +349,9 @@ private fun ReplyNavHost(
                     composable(route = CupcakeScreen.Pickup.name) {
                         SelectOptionScreen(
                             subtotal = uiState.price,
-                            onNextButtonClicked = { navController.navigate(CupcakeScreen.Summary.name) },
+                            onNextButtonClicked = { navigateTo(CupcakeScreen.Summary.name) },
                             onCancelButtonClicked = {
-                                cancelOrderAndNavigateToStart(viewModel, navController)
+                                cancelOrderAndNavigateToStart()
                             },
                             options = uiState.pickupOptions,
                             onSelectionChanged = { viewModel.setDate(it) },
@@ -359,7 +363,7 @@ private fun ReplyNavHost(
                         OrderSummaryScreen(
                             orderUiState = uiState,
                             onCancelButtonClicked = {
-                                cancelOrderAndNavigateToStart(viewModel, navController)
+                                cancelOrderAndNavigateToStart()
                             },
                             onSendButtonClicked = { subject: String, summary: String ->
                                 shareOrder(context, subject = subject, summary = summary)
@@ -372,7 +376,7 @@ private fun ReplyNavHost(
                         MovieDetailsScreen(
                             orderUiState = uiState,
                             onCancelButtonClicked = {
-                                cancelOrderAndNavigateToStart(viewModel, navController)
+                                cancelOrderAndNavigateToStart()
                             },
                             onSendButtonClicked = { subject: String, summary: String ->
                                 shareOrder(context, subject = subject, summary = summary)
@@ -407,7 +411,7 @@ private fun ReplyNavHost(
                     }
 
                     composable("LandingScreen") {
-                        LandingScreen { navController.navigate(it.route) }
+                        LandingScreen { navigateTo(it.route) }
                     }
                     Destination.entries.forEach { destination ->
                         composable(destination.route) {
@@ -417,7 +421,7 @@ private fun ReplyNavHost(
                                 Destination.AnimationQuickGuideExamples -> AnimationExamplesScreen()
                                 Destination.ScreenshotExample -> BitmapFromComposableFullSnippet()
                                 Destination.ComponentsExamples -> ComponentsScreen {
-                                    navController.navigate(
+                                    navigateTo(
                                         it.route
                                     )
                                 }
@@ -458,10 +462,10 @@ private fun ReplyNavHost(
                         route = MainDestinations.HOME_ROUTE
                     ) { backStackEntry ->
                         MainContainer(
-                            onSnackSelected = { snackId : Long, origin: String, from: NavBackStackEntry ->
+                            onSnackSelected = { snackId: Long, origin: String, from: NavBackStackEntry ->
                                 // In order to discard duplicated navigation events, we check the Lifecycle
                                 if (from.lifecycleIsResumed()) {
-                                    navController.navigate("${MainDestinations.SNACK_DETAIL_ROUTE}/$snackId?origin=$origin")
+                                    navigateTo("${MainDestinations.SNACK_DETAIL_ROUTE}/$snackId?origin=$origin")
                                 }
                             }
                         )
@@ -484,7 +488,7 @@ private fun ReplyNavHost(
                         SnackDetail(
                             snackId,
                             origin = origin ?: "",
-                            upPress = {}
+                            upPress = { navController.navigateUp() }
                         )
                     }
                 }
@@ -576,17 +580,6 @@ fun OfflineDialog(onRetry: () -> Unit) {
     )
 }
 
-
-/**
- * Resets the [OrderUiState] and pops up to [CupcakeScreen.Start]
- */
-private fun cancelOrderAndNavigateToStart(
-    viewModel: OrderViewModel,
-    navController: NavHostController
-) {
-    viewModel.resetOrder()
-    navController.popBackStack(CupcakeScreen.Start.name, inclusive = false)
-}
 
 /**
  * Creates an intent to share order details

@@ -26,6 +26,7 @@ import androidx.compose.material.icons.automirrored.filled.Article
 import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -37,6 +38,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.ui.jet_caster.Screen
+import com.rasel.baseappcompose.ui.order.CupcakeScreen
+import com.rasel.baseappcompose.ui.order.OrderViewModel
 
 object ReplyRoute {
     const val INBOX = "Inbox"
@@ -57,7 +60,11 @@ data class ReplyTopLevelDestination(
     val iconTextId: Int
 )
 
-class ReplyNavigationActions(
+/**
+ * Responsible for holding UI Navigation logic.
+ */
+@Stable
+class AppNavigationActions(
     private val navController: NavHostController,
     private val context: Context
 ) {
@@ -76,6 +83,9 @@ class ReplyNavigationActions(
             // Restore state when reselecting a previously selected item
             restoreState = true
         }
+    }
+    fun navigateTo(destination: String) {
+        navController.navigate(destination)
     }
 
     var isOnline by mutableStateOf(checkIfOnline())
@@ -123,6 +133,13 @@ class ReplyNavigationActions(
 
     fun upPress() {
         navController.navigateUp()
+    }
+    /**
+     * Resets the [OrderUiState] and pops up to [CupcakeScreen.Start]
+     */
+    fun cancelOrderAndNavigateToStart(
+    ) {
+        navController.popBackStack(CupcakeScreen.Start.name, inclusive = false)
     }
 
     fun navigateToBottomBarRoute(route: String) {
