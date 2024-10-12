@@ -299,9 +299,13 @@ private fun ReplyNavHost(
                                 navController.navigate(CupcakeScreen.Flavor.name)
                             },
                             onMovieDetailsClicked = {
-//                        navController.navigate(CupcakeScreen.MOVIE_DETAILS.name)
-//                        navController.navigate("LandingScreen")
+                                navController.navigate(CupcakeScreen.MOVIE_DETAILS.name)
+                            },
+                            onJetSnakeClicked = {
                                 navController.navigate(MainDestinations.HOME_ROUTE)
+                            },
+                            onComponentClicked = {
+                                navController.navigate("LandingScreen")
                             },
                             modifier = Modifier
                                 .fillMaxSize()

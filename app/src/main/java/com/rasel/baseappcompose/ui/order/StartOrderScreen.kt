@@ -37,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
@@ -51,6 +52,8 @@ fun StartOrderScreen(
     quantityOptions: List<Pair<Int, Int>>,
     onNextButtonClicked: (Int) -> Unit,
     onMovieDetailsClicked: (Int) -> Unit,
+    onJetSnakeClicked: () -> Unit,
+    onComponentClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -79,6 +82,16 @@ fun StartOrderScreen(
                 onClick = { onMovieDetailsClicked(1) },
             ) {
                 Text(stringResource(R.string.movie_details))
+            }
+            Button(
+                onClick = { onJetSnakeClicked() },
+            ) {
+                Text("Jet Snake")
+            }
+            Button(
+                onClick = { onComponentClicked() },
+            ) {
+                Text("Component")
             }
         }
         Column(
@@ -117,7 +130,7 @@ fun SelectQuantityButton(
     }
 }
 
-@Preview
+@ThemePreviews
 @Composable
 fun StartOrderPreview() {
     NiaTheme {
@@ -127,7 +140,9 @@ fun StartOrderPreview() {
             onMovieDetailsClicked = {},
             modifier = Modifier
                 .fillMaxSize()
-                .padding(dimensionResource(R.dimen.padding_medium))
+                .padding(dimensionResource(R.dimen.padding_medium)),
+            onJetSnakeClicked = {},
+            onComponentClicked = {}
         )
     }
 }
