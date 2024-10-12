@@ -79,6 +79,12 @@ class MainActivity : ComponentActivity() {
                     replyHomeUIState = uiState,
                     windowSize = windowSize
                 )*/
+                /*JetnewsApp(
+                    appContainer = appContainer,
+                    widthSizeClass = windowSize.widthSizeClass
+                )*/
+
+
                 ReplyApp(
                     windowSize = windowSize,
                     displayFeatures = displayFeatures,

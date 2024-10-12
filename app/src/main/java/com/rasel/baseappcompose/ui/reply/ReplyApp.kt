@@ -56,6 +56,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
@@ -457,7 +458,12 @@ private fun ReplyNavHost(
                         route = MainDestinations.HOME_ROUTE
                     ) { backStackEntry ->
                         MainContainer(
-                            onSnackSelected = { a, b, c -> }
+                            onSnackSelected = { snackId : Long, origin: String, from: NavBackStackEntry ->
+                                // In order to discard duplicated navigation events, we check the Lifecycle
+                                if (from.lifecycleIsResumed()) {
+                                    navController.navigate("${MainDestinations.SNACK_DETAIL_ROUTE}/$snackId?origin=$origin")
+                                }
+                            }
                         )
                     }
 
@@ -618,3 +624,11 @@ private fun rememberSizeAwareDrawerState(isExpandedScreen: Boolean): DrawerState
         DrawerState(DrawerValue.Closed)
     }
 }
+
+/**
+ * If the lifecycle is not resumed it means this NavBackStackEntry already processed a nav event.
+ *
+ * This is used to de-duplicate navigation events.
+ */
+private fun NavBackStackEntry.lifecycleIsResumed() =
+    this.lifecycle.currentState == Lifecycle.State.RESUMED
