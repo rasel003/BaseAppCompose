@@ -16,6 +16,7 @@
 
 package com.rasel.baseappcompose.ui.landing
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,8 +32,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.rasel.baseappcompose.data.model.SnackRepo
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.navigation.Destination
+import com.rasel.baseappcompose.ui.snack_home.cart.Cart
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,4 +88,36 @@ fun NavigationItem(destination: Destination, onClick: () -> Unit) {
                 onClick()
             }
     )
+}
+
+@Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
+@Preview("default")
+@Composable
+private fun CartPreview2() {
+    NiaTheme {
+        NavigationItems(
+            navigate = {}
+        )
+    }
+}@Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
+@Preview("default")
+@Composable
+private fun CartPreview4() {
+    NiaTheme {
+        LandingScreen(
+            navigate = {}
+        )
+    }
+}
+
+@Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
+@Preview("default")
+@Composable
+private fun CartPreview3() {
+    NiaTheme {
+        NavigationItem(
+            destination = Destination.entries[0],
+            onClick = {}
+        )
+    }
 }

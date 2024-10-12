@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
@@ -51,9 +52,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -126,44 +129,43 @@ fun TimePickerExamples() {
                     showDialExample = false
                     showMenu = true
                 },
-                onConfirm = {
-                    time ->
+                onConfirm = { time ->
                     selectedTime = time
                     showDialExample = false
                     showMenu = true
                 },
             )
+
             showInputExample -> InputUseStateExample(
                 onDismiss = {
                     showInputExample = false
                     showMenu = true
                 },
-                onConfirm = {
-                    time ->
+                onConfirm = { time ->
                     selectedTime = time
                     showInputExample = false
                     showMenu = true
                 },
             )
+
             showDialWithDialogExample -> DialWithDialogExample(
                 onDismiss = {
                     showDialWithDialogExample = false
                     showMenu = true
                 },
-                onConfirm = {
-                    time ->
+                onConfirm = { time ->
                     selectedTime = time
                     showDialWithDialogExample = false
                     showMenu = true
                 },
             )
+
             showAdvancedExample -> AdvancedTimePickerExample(
                 onDismiss = {
                     showAdvancedExample = false
                     showMenu = true
                 },
-                onConfirm = {
-                    time ->
+                onConfirm = { time ->
                     selectedTime = time
                     showAdvancedExample = false
                     showMenu = true
@@ -438,3 +440,31 @@ fun AdvancedTimePickerDialog(
     }
 }
 // [END android_compose_components_advanced]
+
+@Preview
+@Composable
+fun DialExamplePreview() {
+    NiaTheme {
+        DialExample(
+            onConfirm = { },
+            onDismiss = { }
+        )
+    }
+}
+@Preview
+@Composable
+fun InputExamplePreview() {
+    NiaTheme {
+        InputExample(
+            onConfirm = { },
+            onDismiss = { }
+        )
+    }
+}
+@Preview
+@Composable
+fun TimePickerExamplesPreview() {
+    NiaTheme {
+        TimePickerExamples()
+    }
+}

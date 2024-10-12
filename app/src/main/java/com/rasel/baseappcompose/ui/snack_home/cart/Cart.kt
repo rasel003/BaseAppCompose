@@ -78,6 +78,7 @@ import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.OrderLine
 import com.rasel.baseappcompose.data.model.SnackCollection
 import com.rasel.baseappcompose.data.model.SnackRepo
+import com.rasel.baseappcompose.data.model.snacks
 import com.rasel.baseappcompose.designsystem.component.JetsnackButton
 import com.rasel.baseappcompose.designsystem.component.JetsnackDivider
 import com.rasel.baseappcompose.designsystem.component.JetsnackSurface
@@ -88,6 +89,8 @@ import com.rasel.baseappcompose.designsystem.theme.AlphaNearOpaque
 
 import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.landing.NavigationItem
+import com.rasel.baseappcompose.ui.navigation.Destination
 import com.rasel.baseappcompose.ui.snackdetail.nonSpatialExpressiveSpring
 import com.rasel.baseappcompose.ui.snackdetail.spatialExpressiveSpring
 import com.rasel.baseappcompose.ui.utils.formatPrice
@@ -168,7 +171,7 @@ private fun CartContent(
             Text(
                 text = stringResource(R.string.cart_order_header, snackCountFormattedString),
                 style = MaterialTheme.typography.titleLarge,
-                color = Color.Green,
+                color = MaterialTheme.colorScheme.onBackground,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
@@ -267,7 +270,7 @@ private fun SwipeDismissItemBackground(progress: Float) {
                             modifier = Modifier
                                 .size(32.dp)
                                 .graphicsLayer(alpha = iconAlpha),
-                            tint = LocalBackgroundTheme.current.color,
+                            tint = MaterialTheme.colorScheme.primaryContainer,
                             contentDescription = null,
                         )
                     }
@@ -280,7 +283,7 @@ private fun SwipeDismissItemBackground(progress: Float) {
                         Text(
                             text = stringResource(id = R.string.remove_item),
                             style = MaterialTheme.typography.titleMedium,
-                            color = LocalBackgroundTheme.current.color,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .graphicsLayer(
@@ -328,7 +331,7 @@ fun CartItem(
         Text(
             text = snack.name,
             style = MaterialTheme.typography.titleMedium,
-            color =  Color.Magenta,
+            color =  MaterialTheme.colorScheme.inverseSurface,
             modifier = Modifier.constrainAs(name) {
                 linkTo(
                     start = image.end,
@@ -350,14 +353,14 @@ fun CartItem(
         ) {
             Icon(
                 imageVector = Icons.Filled.Close,
-                tint =  Color.Magenta,
+                tint = Color.Magenta,
                 contentDescription = stringResource(R.string.label_remove)
             )
         }
         Text(
             text = snack.tagline,
             style = MaterialTheme.typography.bodyLarge,
-            color = Color.Blue,
+            color = MaterialTheme.colorScheme.inverseSurface,
             modifier = Modifier.constrainAs(tag) {
                 linkTo(
                     start = image.end,
@@ -378,7 +381,7 @@ fun CartItem(
         Text(
             text = formatPrice(snack.price),
             style = MaterialTheme.typography.titleMedium,
-            color =  Color.Magenta,
+            color = MaterialTheme.colorScheme.inverseSurface,
             modifier = Modifier.constrainAs(price) {
                 linkTo(
                     start = image.end,
@@ -417,7 +420,7 @@ fun SummaryItem(
         Text(
             text = stringResource(R.string.cart_summary_header),
             style = MaterialTheme.typography.titleLarge,
-            color = Color.Green,
+            color = MaterialTheme.colorScheme.inverseSurface,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
@@ -506,12 +509,41 @@ private fun CheckoutBar(modifier: Modifier = Modifier) {
     }
 }
 
+@Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
+@Preview("default")
+@Composable
+private fun CartContentPreview() {
+    NiaTheme {
+        CartContent(
+            orderLines = listOf(
+                OrderLine(snacks[4], 2),
+                OrderLine(snacks[6], 3),
+                OrderLine(snacks[8], 1)
+            ),
+            removeSnack = { },
+            increaseItemCount = {},
+            decreaseItemCount = {},
+            inspiredByCart = SnackRepo.getSnacks().first(),
+            onSnackClick = { _, _ -> }
+        )
+    }
+}
+
+/*@Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
+@Preview("default")
+@Composable
+private fun CheckoutBarPreview() {
+    NiaTheme {
+        CheckoutBar()
+    }
+}*/
+
 @Preview("default")
 @Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
 @Preview("large font", fontScale = 2f)
 @Composable
 private fun CartPreview() {
-    NiaTheme() {
+    NiaTheme {
         Cart(
             orderLines = SnackRepo.getCart(),
             removeSnack = {},

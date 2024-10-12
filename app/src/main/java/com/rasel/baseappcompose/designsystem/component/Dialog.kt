@@ -52,7 +52,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Preview
 // [START android_compose_components_dialogparent]
@@ -295,3 +297,49 @@ fun FullScreenDialog(onDismissRequest: () -> Unit) {
     }
 }
 // [END android_compose_components_fullscreendialog]
+
+@ThemePreviews
+@Composable
+private fun FullScreenDialogPreview2() {
+    NiaTheme {
+        MinimalDialog (
+            onDismissRequest = {}
+        )
+    }
+}
+
+@ThemePreviews
+@Composable
+private fun AlertDialogExamplePreview() {
+    NiaTheme {
+        AlertDialogExample(
+            onConfirmation = {},
+            dialogTitle = "Title",
+            dialogText = "Sub Title",
+            icon = Icons.Default.Info,
+            onDismissRequest = {}
+        )
+    }
+}
+@ThemePreviews
+@Composable
+private fun AlertDialogExamplePreview2() {
+    NiaTheme {
+        DialogWithImage(
+            onDismissRequest = {},
+            onConfirmation = {},
+            painter = painterResource(id = R.drawable.feathertop),
+            imageDescription = stringResource(id = R.string.feathertop_content_description),
+        )
+    }
+}
+
+@ThemePreviews
+@Composable
+private fun FullScreenDialogPreview() {
+    NiaTheme {
+        FullScreenDialog(
+            onDismissRequest = {}
+        )
+    }
+}

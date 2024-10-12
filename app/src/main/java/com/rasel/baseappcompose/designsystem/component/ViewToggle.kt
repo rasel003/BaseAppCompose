@@ -125,7 +125,7 @@ fun ViewTogglePreviewExpanded() {
     }
 }
 
-@Preview
+@ThemePreviews
 @Composable
 fun ViewTogglePreviewCompact() {
     NiaTheme {

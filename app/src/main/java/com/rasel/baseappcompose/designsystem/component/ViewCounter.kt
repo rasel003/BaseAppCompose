@@ -16,7 +16,6 @@
 
 package com.rasel.baseappcompose.designsystem.component
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -29,8 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
@@ -62,8 +61,7 @@ fun ViewCounter(
     }
 }
 
-@Preview("Drawer contents")
-@Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ThemePreviews
 @Composable
 fun PreviewViewCounter() {
     NiaTheme {

@@ -51,12 +51,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
+import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 // [START android_compose_components_datepicker_examples]
 // [START_EXCLUDE]
+@ThemePreviews
 @Composable
 fun DatePickerExamples() {
     var showModal by remember { mutableStateOf(false) }
@@ -205,6 +207,7 @@ fun DatePickerModalInput(
 }
 // [END android_compose_components_datepicker_inputmodal]
 
+@ThemePreviews
 @OptIn(ExperimentalMaterial3Api::class)
 // [START android_compose_components_datepicker_docked]
 @Composable

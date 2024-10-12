@@ -52,6 +52,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.local.LocalEmailsDataProvider
 import com.rasel.baseappcompose.data.model.Email
@@ -201,8 +202,7 @@ fun EmailDetailAppBar(
     )
 }
 
-@Preview("Drawer contents")
-@Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ThemePreviews
 @Composable
 fun PreviewReplyDockedSearchBar() {
     NiaTheme {
@@ -212,8 +212,7 @@ fun PreviewReplyDockedSearchBar() {
         )
     }
 }
-@Preview("Drawer contents")
-@Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ThemePreviews
 @Composable
 fun PreviewEmailDetailAppBar() {
     NiaTheme {
