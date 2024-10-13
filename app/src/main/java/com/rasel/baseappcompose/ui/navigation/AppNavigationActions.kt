@@ -21,44 +21,18 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Article
-import androidx.compose.material.icons.filled.Inbox
-import androidx.compose.material.icons.filled.People
-import androidx.compose.material.icons.outlined.ChatBubbleOutline
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.ui.jet_caster.Screen
-import com.rasel.baseappcompose.ui.order.CupcakeScreen
-import com.rasel.baseappcompose.ui.order.OrderViewModel
-
-object ReplyRoute {
-    const val INBOX = "Inbox"
-    const val ARTICLES = "Articles"
-    const val DM = "DirectMessages"
-    const val GROUPS = "Groups"
-    const val JET_NEWS = "jet_news"
-    const val CUP_CAKE = "cup_cake"
-    const val Feed = "feed"
-    const val ArticleDetails = "ArticleDetails"
-    const val HOME_ROUTE = "home"
-}
-
-data class ReplyTopLevelDestination(
-    val route: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-    val iconTextId: Int
-)
+import com.rasel.baseappcompose.ui.utils.ReplyNavigationType
 
 /**
  * Responsible for holding UI Navigation logic.
@@ -69,7 +43,7 @@ class AppNavigationActions(
     private val context: Context
 ) {
 
-    fun navigateTo(destination: ReplyTopLevelDestination) {
+    fun navigateTo(destination: AppTopLevelDestination) {
         navController.navigate(destination.route) {
             // Pop up to the start destination of the graph to
             // avoid building up a large stack of destinations
@@ -139,7 +113,7 @@ class AppNavigationActions(
      */
     fun cancelOrderAndNavigateToStart(
     ) {
-        navController.popBackStack(CupcakeScreen.Start.name, inclusive = false)
+        navController.popBackStack(AppRoute.START, inclusive = false)
     }
 
     fun navigateToBottomBarRoute(route: String) {
@@ -164,34 +138,6 @@ class AppNavigationActions(
     }
 }
 
-val TOP_LEVEL_DESTINATIONS = listOf(
-    ReplyTopLevelDestination(
-        route = ReplyRoute.INBOX,
-        selectedIcon = Icons.Default.Inbox,
-        unselectedIcon = Icons.Default.Inbox,
-        iconTextId = R.string.tab_inbox
-    ),
-    ReplyTopLevelDestination(
-        route = ReplyRoute.ARTICLES,
-        selectedIcon = Icons.AutoMirrored.Filled.Article,
-        unselectedIcon = Icons.AutoMirrored.Filled.Article,
-        iconTextId = R.string.tab_article
-    ),
-    ReplyTopLevelDestination(
-        route = ReplyRoute.CUP_CAKE,
-        selectedIcon = Icons.Outlined.ChatBubbleOutline,
-        unselectedIcon = Icons.Outlined.ChatBubbleOutline,
-        iconTextId = R.string.tab_inbox
-    ),
-    ReplyTopLevelDestination(
-        route = ReplyRoute.JET_NEWS,
-        selectedIcon = Icons.Default.People,
-        unselectedIcon = Icons.Default.People,
-        iconTextId = R.string.tab_article
-    )
-
-)
-
 /**
  * If the lifecycle is not resumed it means this NavBackStackEntry already processed a nav event.
  *
@@ -199,3 +145,10 @@ val TOP_LEVEL_DESTINATIONS = listOf(
  */
 private fun NavBackStackEntry.lifecycleIsResumed() =
     this.lifecycle.currentState == Lifecycle.State.RESUMED
+
+private fun NavigationSuiteType.toReplyNavType() = when (this) {
+    NavigationSuiteType.NavigationBar -> ReplyNavigationType.BOTTOM_NAVIGATION
+    NavigationSuiteType.NavigationRail -> ReplyNavigationType.NAVIGATION_RAIL
+    NavigationSuiteType.NavigationDrawer -> ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER
+    else -> ReplyNavigationType.BOTTOM_NAVIGATION
+}

@@ -16,6 +16,7 @@ package com.rasel.baseappcompose.ui.order
  * limitations under the License.
  */
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +27,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +42,8 @@ import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.OrderUiState
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.designsystem.component.FormattedPriceLabel
+import com.rasel.baseappcompose.designsystem.component.NiaButton
+import com.rasel.baseappcompose.designsystem.component.NiaOutlinedButton
 
 /**
  * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
@@ -80,7 +84,7 @@ fun OrderSummaryScreen(
     )
 
     Column(
-        modifier = modifier,
+        modifier = modifier.background(color = MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
@@ -104,13 +108,13 @@ fun OrderSummaryScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
             ) {
-                Button(
+                NiaButton(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = { onSendButtonClicked(newOrder, orderSummary) }
                 ) {
                     Text(stringResource(R.string.send))
                 }
-                OutlinedButton(
+                NiaOutlinedButton(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = onCancelButtonClicked
                 ) {

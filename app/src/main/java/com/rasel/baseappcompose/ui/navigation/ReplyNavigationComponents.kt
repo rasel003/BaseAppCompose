@@ -88,7 +88,7 @@ class ReplyNavSuiteScope(
 @Composable
 fun ReplyNavigationWrapper(
     selectedDestination: String,
-    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit,
+    navigateToTopLevelDestination: (AppTopLevelDestination) -> Unit,
     content: @Composable ReplyNavSuiteScope.() -> Unit
 ) {
     val adaptiveInfo = currentWindowAdaptiveInfo()
@@ -174,7 +174,7 @@ fun ReplyNavigationWrapper(
 fun ReplyNavigationRail(
     selectedDestination: String,
     navigationContentPosition: ReplyNavigationContentPosition,
-    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit,
+    navigateToTopLevelDestination: (AppTopLevelDestination) -> Unit,
     onDrawerClicked: () -> Unit = {},
 ) {
     NavigationRail(
@@ -238,7 +238,7 @@ fun ReplyNavigationRail(
 @Composable
 fun ReplyBottomNavigationBar(
     selectedDestination: String,
-    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit
+    navigateToTopLevelDestination: (AppTopLevelDestination) -> Unit
 ) {
     NavigationBar(modifier = Modifier.fillMaxWidth()) {
         TOP_LEVEL_DESTINATIONS.forEach { replyDestination ->
@@ -260,7 +260,7 @@ fun ReplyBottomNavigationBar(
 fun PermanentNavigationDrawerContent(
     selectedDestination: String,
     navigationContentPosition: ReplyNavigationContentPosition,
-    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit,
+    navigateToTopLevelDestination: (AppTopLevelDestination) -> Unit,
 ) {
     PermanentDrawerSheet(
         modifier = Modifier.sizeIn(minWidth = 200.dp, maxWidth = 300.dp),
@@ -345,7 +345,7 @@ fun PermanentNavigationDrawerContent(
 fun ModalNavigationDrawerContent(
     selectedDestination: String,
     navigationContentPosition: ReplyNavigationContentPosition,
-    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit,
+    navigateToTopLevelDestination: (AppTopLevelDestination) -> Unit,
     onDrawerClicked: () -> Unit = {}
 ) {
     ModalDrawerSheet {

@@ -30,6 +30,7 @@ import com.rasel.baseappcompose.R
 fun FormattedPriceLabel(subtotal: String, modifier: Modifier = Modifier) {
     Text(
         text = stringResource(R.string.subtotal_price, subtotal),
+        color =  MaterialTheme.colorScheme.secondary,
         modifier = modifier,
         style = MaterialTheme.typography.headlineSmall
     )

@@ -17,6 +17,7 @@ package com.rasel.baseappcompose.ui.order
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -35,11 +36,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.DataSource
+import com.rasel.baseappcompose.designsystem.component.NiaButton
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 /**
@@ -57,7 +58,7 @@ fun StartOrderScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.background(color = MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
@@ -74,21 +75,22 @@ fun StartOrderScreen(
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
             Text(
                 text = stringResource(R.string.order_cupcakes),
+                color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.headlineSmall
             )
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
 
-            Button(
+            NiaButton(
                 onClick = { onMovieDetailsClicked(1) },
             ) {
                 Text(stringResource(R.string.movie_details))
             }
-            Button(
+            NiaButton(
                 onClick = { onJetSnakeClicked() },
             ) {
                 Text("Jet Snake")
             }
-            Button(
+            NiaButton(
                 onClick = { onComponentClicked() },
             ) {
                 Text("Component")
@@ -122,7 +124,7 @@ fun SelectQuantityButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Button(
+    NiaButton(
         onClick = onClick,
         modifier = modifier.widthIn(min = 250.dp)
     ) {

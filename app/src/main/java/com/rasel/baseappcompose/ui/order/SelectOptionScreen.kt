@@ -16,6 +16,7 @@ package com.rasel.baseappcompose.ui.order
  * limitations under the License.
  */
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -38,9 +41,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.designsystem.component.FormattedPriceLabel
+import com.rasel.baseappcompose.designsystem.component.NiaButton
+import com.rasel.baseappcompose.designsystem.component.NiaOutlinedButton
 
 /**
  * Composable that displays the list of items as [RadioButton] options,
@@ -60,7 +66,7 @@ fun SelectOptionScreen(
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
     Column(
-        modifier = modifier,
+        modifier = modifier.background(color = MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
@@ -82,12 +88,12 @@ fun SelectOptionScreen(
                             onSelectionChanged(item)
                         }
                     )
-                    Text(item)
+                    Text(item, color = MaterialTheme.colorScheme.inverseSurface)
                 }
             }
-            Divider(
-                thickness = dimensionResource(R.dimen.thickness_divider),
-                modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
+            HorizontalDivider(
+                modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium)),
+                thickness = dimensionResource(R.dimen.thickness_divider)
             )
             FormattedPriceLabel(
                 subtotal = subtotal,
@@ -106,13 +112,13 @@ fun SelectOptionScreen(
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
             verticalAlignment = Alignment.Bottom
         ) {
-            OutlinedButton(
+            NiaOutlinedButton(
                 modifier = Modifier.weight(1f),
                 onClick = onCancelButtonClicked
             ) {
                 Text(stringResource(R.string.cancel))
             }
-            Button(
+            NiaButton(
                 modifier = Modifier.weight(1f),
                 // the button is enabled when the user makes a selection
                 enabled = selectedValue.isNotEmpty(),
@@ -125,7 +131,7 @@ fun SelectOptionScreen(
 
 }
 
-@Preview
+@ThemePreviews
 @Composable
 fun SelectOptionPreview() {
     NiaTheme {
