@@ -27,7 +27,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +41,9 @@ import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.designsystem.component.NiaButton
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.navigation.AppRoute
+import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN
+import com.rasel.baseappcompose.ui.navigation.MainDestinations
 
 /**
  * Composable that allows the user to select the desired cupcake quantity and expects
@@ -52,9 +54,7 @@ import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 fun StartOrderScreen(
     quantityOptions: List<Pair<Int, Int>>,
     onNextButtonClicked: (Int) -> Unit,
-    onMovieDetailsClicked: (Int) -> Unit,
-    onJetSnakeClicked: () -> Unit,
-    onComponentClicked: () -> Unit,
+    navigateTo: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -80,18 +80,14 @@ fun StartOrderScreen(
             )
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
 
-            NiaButton(
-                onClick = { onMovieDetailsClicked(1) },
-            ) {
+            NiaButton( onClick = { navigateTo(AppRoute.MOVIE_DETAILS) }) {
                 Text(stringResource(R.string.movie_details))
             }
-            NiaButton(
-                onClick = { onJetSnakeClicked() },
-            ) {
+            NiaButton(onClick = { navigateTo(MainDestinations.HOME_ROUTE) }) {
                 Text("Jet Snake")
             }
             NiaButton(
-                onClick = { onComponentClicked() },
+                onClick = { navigateTo(LANDING_SCREEN) },
             ) {
                 Text("Component")
             }
@@ -139,12 +135,10 @@ fun StartOrderPreview() {
         StartOrderScreen(
             quantityOptions = DataSource.quantityOptions,
             onNextButtonClicked = {},
-            onMovieDetailsClicked = {},
+            navigateTo = {},
             modifier = Modifier
                 .fillMaxSize()
-                .padding(dimensionResource(R.dimen.padding_medium)),
-            onJetSnakeClicked = {},
-            onComponentClicked = {}
+                .padding(dimensionResource(R.dimen.padding_medium))
         )
     }
 }

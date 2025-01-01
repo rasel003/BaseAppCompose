@@ -41,17 +41,17 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.rasel.baseappcompose.domain.model.EpisodeInfo
-import com.rasel.baseappcompose.domain.model.PodcastCategoryFilterResult
-import com.rasel.baseappcompose.domain.model.PodcastInfo
-import com.rasel.baseappcompose.domain.player.model.PlayerEpisode
 import com.rasel.baseappcompose.designsystem.component.PodcastImage
+import com.rasel.baseappcompose.designsystem.component.ToggleFollowPodcastIconButton
 import com.rasel.baseappcompose.designsystem.theme.Keyline1
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.domain.PreviewEpisodes
 import com.rasel.baseappcompose.domain.PreviewPodcasts
+import com.rasel.baseappcompose.domain.model.EpisodeInfo
+import com.rasel.baseappcompose.domain.model.PodcastCategoryFilterResult
+import com.rasel.baseappcompose.domain.model.PodcastInfo
+import com.rasel.baseappcompose.domain.player.model.PlayerEpisode
 import com.rasel.baseappcompose.ui.shared.EpisodeListItem
-import com.rasel.baseappcompose.ui.utils.ToggleFollowPodcastIconButton
 import com.rasel.baseappcompose.ui.utils.fullWidthItem
 
 fun LazyListScope.podcastCategory(

@@ -42,24 +42,25 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.OrderUiState
+import com.rasel.baseappcompose.designsystem.component.PodcastImage
 import com.rasel.baseappcompose.designsystem.component.ReadMoreTextCompose
 import com.rasel.baseappcompose.designsystem.component.ViewCounter
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.navigation.AppRoute
 
 /**
  * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
- * lambda that triggers canceling the order and passes the final order to [onSendButtonClicked]
+ * lambda that triggers canceling the order and passes the final order to [openAnimationList]
  * lambda
  */
 @Composable
 fun MovieDetailsScreen(
     orderUiState: OrderUiState,
-    onCancelButtonClicked: () -> Unit,
-    onSendButtonClicked: (String, String) -> Unit,
+    navigateTo: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val resources = LocalContext.current.resources
@@ -123,12 +124,9 @@ fun MovieDetailsScreen(
         }
 
         Row {
-            Image(
-                painter = painterResource(R.drawable.avatar_1),
-                contentDescription = null,
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(80.dp)
+            PodcastImage(
+                podcastImageUrl = "",
+                contentDescription = ""
             )
             Image(
                 painter = painterResource(R.drawable.avatar_2),
@@ -181,21 +179,20 @@ fun MovieDetailsScreen(
         }
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { onSendButtonClicked(newOrder, orderSummary) }
+            onClick = { navigateTo(AppRoute.ANIMATION_LIST) }
         ) {
-            Text("Install")
+            Text(stringResource(R.string.animation_list))
         }
     }
 }
 
-@Preview
+@ThemePreviews
 @Composable
 fun MovieDetailsPreview() {
     NiaTheme {
         MovieDetailsScreen(
             orderUiState = OrderUiState(0, "Test", "Test", "$300.00"),
-            onSendButtonClicked = { subject: String, summary: String -> },
-            onCancelButtonClicked = {},
+            navigateTo = { },
             modifier = Modifier.fillMaxHeight()
         )
     }

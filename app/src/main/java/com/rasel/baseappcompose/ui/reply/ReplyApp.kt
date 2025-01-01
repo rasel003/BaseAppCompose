@@ -84,6 +84,7 @@ import com.rasel.baseappcompose.data.posts.impl.post3
 import com.rasel.baseappcompose.designsystem.component.*
 import com.rasel.baseappcompose.ui.JetnewsApplication.Companion.JETNEWS_APP_URI
 import com.rasel.baseappcompose.ui.cup_cake.MovieDetailsScreen
+import com.rasel.baseappcompose.ui.cup_cake.ViewShowHideAnimation
 import com.rasel.baseappcompose.ui.graphics.*
 import com.rasel.baseappcompose.ui.home.HomeRoute
 import com.rasel.baseappcompose.ui.home.HomeViewModel
@@ -99,6 +100,7 @@ import com.rasel.baseappcompose.ui.navigation.MainDestinations
 import com.rasel.baseappcompose.ui.navigation.AppNavigationActions
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationWrapper
 import com.rasel.baseappcompose.ui.navigation.AppRoute
+import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN
 import com.rasel.baseappcompose.ui.navigation.TopComponentsDestination
 import com.rasel.baseappcompose.ui.navigation.rememberJetsnackNavController
 import com.rasel.baseappcompose.ui.order.OrderSummaryScreen
@@ -300,15 +302,7 @@ private fun ReplyNavHost(
                                 viewModel.setQuantity(it)
                                 navigateTo(AppRoute.Flavor)
                             },
-                            onMovieDetailsClicked = {
-                                navigateTo(AppRoute.MOVIE_DETAILS)
-                            },
-                            onJetSnakeClicked = {
-                                navigateTo(MainDestinations.HOME_ROUTE)
-                            },
-                            onComponentClicked = {
-                                navigateTo("LandingScreen")
-                            },
+                            navigateTo = navigateTo,
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(dimensionResource(R.dimen.padding_medium))
@@ -370,17 +364,14 @@ private fun ReplyNavHost(
                         )
                     }
                     composable(route = AppRoute.MOVIE_DETAILS) {
-                        val context = LocalContext.current
                         MovieDetailsScreen(
                             orderUiState = uiState,
-                            onCancelButtonClicked = {
-                                cancelOrderAndNavigateToStart()
-                            },
-                            onSendButtonClicked = { subject: String, summary: String ->
-                                shareOrder(context, subject = subject, summary = summary)
-                            },
+                            navigateTo = navigateTo,
                             modifier = Modifier.fillMaxHeight()
                         )
+                    }
+                    composable(route = AppRoute.ANIMATION_LIST) {
+                        ViewShowHideAnimation()
                     }
                     composable(
                         route = AppRoute.JET_NEWS,
@@ -408,7 +399,7 @@ private fun ReplyNavHost(
                         )
                     }
 
-                    composable("LandingScreen") {
+                    composable(LANDING_SCREEN) {
                         LandingScreen { navigateTo(it.route) }
                     }
                     Destination.entries.forEach { destination ->

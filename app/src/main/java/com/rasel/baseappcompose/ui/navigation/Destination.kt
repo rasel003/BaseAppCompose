@@ -36,6 +36,8 @@ object AppRoute {
     const val Flavor = "Choose_Flavor"
     const val Pickup = "Choose_Pickup_Date"
     const val MOVIE_DETAILS = "Movie Details"
+    const val ANIMATION_LIST = "Animation List"
+    const val LANDING_SCREEN = "Landing Screen"
     const val Summary = "Order Summary"
     const val INBOX = "Inbox"
     const val ARTICLES = "Articles"

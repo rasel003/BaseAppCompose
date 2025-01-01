@@ -98,7 +98,7 @@ fun EpisodeListItem(
 }
 
 @Composable
-private fun EpisodeListItemFooter(
+fun EpisodeListItemFooter(
     episode: EpisodeInfo,
     podcast: PodcastInfo,
     onQueueEpisode: (PlayerEpisode) -> Unit,
