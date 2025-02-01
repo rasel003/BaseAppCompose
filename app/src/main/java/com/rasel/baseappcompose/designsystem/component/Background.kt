@@ -32,6 +32,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewDynamicColors
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.designsystem.theme.GradientColors
@@ -146,6 +151,12 @@ fun NiaGradientBackground(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light theme")
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark theme")
 annotation class ThemePreviews
+
+// build in theme preview
+/*@PreviewScreenSizes
+@PreviewFontScale
+@PreviewDynamicColors
+@PreviewLightDark*/
 
 @ThemePreviews
 @Composable
