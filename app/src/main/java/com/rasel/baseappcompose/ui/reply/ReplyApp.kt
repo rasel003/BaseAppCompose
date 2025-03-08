@@ -83,7 +83,9 @@ import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
 import com.rasel.baseappcompose.designsystem.component.*
 import com.rasel.baseappcompose.ui.JetnewsApplication.Companion.JETNEWS_APP_URI
+import com.rasel.baseappcompose.ui.cup_cake.AnimationList
 import com.rasel.baseappcompose.ui.cup_cake.MovieDetailsScreen
+import com.rasel.baseappcompose.ui.cup_cake.ValueBasedAnimation
 import com.rasel.baseappcompose.ui.cup_cake.ViewShowHideAnimation
 import com.rasel.baseappcompose.ui.graphics.*
 import com.rasel.baseappcompose.ui.home.HomeRoute
@@ -101,6 +103,9 @@ import com.rasel.baseappcompose.ui.navigation.AppNavigationActions
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationWrapper
 import com.rasel.baseappcompose.ui.navigation.AppRoute
 import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN
+import com.rasel.baseappcompose.ui.navigation.CupCake
+import com.rasel.baseappcompose.ui.navigation.Flavor
+import com.rasel.baseappcompose.ui.navigation.Inbox
 import com.rasel.baseappcompose.ui.navigation.TopComponentsDestination
 import com.rasel.baseappcompose.ui.navigation.rememberJetsnackNavController
 import com.rasel.baseappcompose.ui.order.OrderSummaryScreen
@@ -371,7 +376,13 @@ private fun ReplyNavHost(
                         )
                     }
                     composable(route = AppRoute.ANIMATION_LIST) {
+                        AnimationList(navigateTo = navigateTo)
+                    }
+                    composable(route = AppRoute.SHOW_HIDE_ANIMATION) {
                         ViewShowHideAnimation()
+                    }
+                    composable(route = AppRoute.VALUE_BASED_ANIMATION) {
+                        ValueBasedAnimation()
                     }
                     composable(
                         route = AppRoute.JET_NEWS,

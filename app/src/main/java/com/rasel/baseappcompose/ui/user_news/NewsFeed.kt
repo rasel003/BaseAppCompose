@@ -66,6 +66,8 @@ fun LazyStaggeredGridScope.newsFeed(
                 val analyticsHelper = LocalAnalyticsHelper.current
                 val backgroundColor = MaterialTheme.colorScheme.background.toArgb()
 
+                Modifier
+                    .padding(horizontal = 8.dp)
                 NewsResourceCardExpanded(
                     userNewsResource = userNewsResource,
                     isBookmarked = userNewsResource.isSaved,
@@ -87,8 +89,8 @@ fun LazyStaggeredGridScope.newsFeed(
                     },
                     onTopicClick = onTopicClick,
                     modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .animateItemPlacement(),
+                    .padding(horizontal = 8.dp)
+                    .animateItem(fadeInSpec = null, fadeOutSpec = null),
                 )
             }
         }

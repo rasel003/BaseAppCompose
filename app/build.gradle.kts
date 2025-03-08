@@ -5,18 +5,18 @@ plugins {
 //    id("kotlin-kapt")
     id("kotlinx-serialization")
     id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp") version "2.0.0-1.0.21"
+    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
     alias(libs.plugins.protobuf)
 
 }
 
 android {
     namespace = "com.rasel.baseappcompose"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.rasel.baseappcompose"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

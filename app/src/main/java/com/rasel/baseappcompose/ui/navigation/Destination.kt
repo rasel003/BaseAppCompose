@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.rasel.baseappcompose.R
+import kotlinx.serialization.Serializable
 
 data class AppTopLevelDestination(
     val route: String,
@@ -31,23 +32,75 @@ data class AppTopLevelDestination(
     val iconTextId: Int
 )
 
+@Serializable
+object Start
+
+@Serializable
+object Flavor
+
+@Serializable
+object Pickup
+
+@Serializable
+object MovieDetails
+
+@Serializable
+object AnimationList
+
+@Serializable
+object ShowHideAnimation
+
+@Serializable
+object ValueBasedAnimation
+
+@Serializable
+object LandingScreen
+
+@Serializable
+object Summary
+
+@Serializable
+object Inbox
+
+@Serializable
+object Articles
+
+@Serializable
+object Dm
+
+@Serializable
+object Groups
+
+@Serializable
+object JetNews
+
+@Serializable
+object CupCake
+
+@Serializable
+object Feed
+
+@Serializable
+object ArticleDetails
+
+@Serializable
+object HomeRoute
+
+
 object AppRoute {
     const val START = "BaseAppCompose"
     const val Flavor = "Choose_Flavor"
     const val Pickup = "Choose_Pickup_Date"
     const val MOVIE_DETAILS = "Movie Details"
     const val ANIMATION_LIST = "Animation List"
+    const val SHOW_HIDE_ANIMATION = "Show Hide Animation"
+    const val VALUE_BASED_ANIMATION = "Value Based Animation"
     const val LANDING_SCREEN = "Landing Screen"
     const val Summary = "Order Summary"
     const val INBOX = "Inbox"
     const val ARTICLES = "Articles"
-    const val DM = "DirectMessages"
-    const val GROUPS = "Groups"
     const val JET_NEWS = "jet_news"
     const val CUP_CAKE = "cup_cake"
-    const val Feed = "feed"
-    const val ArticleDetails = "ArticleDetails"
-    const val HOME_ROUTE = "home"
 }
 val TOP_LEVEL_DESTINATIONS = listOf(
     AppTopLevelDestination(

@@ -31,7 +31,7 @@ suspend fun Call.await(): Response = suspendCancellableCoroutine { continuation 
     enqueue(
         object : Callback {
             override fun onResponse(call: Call, response: Response) {
-                continuation.resume(response) {
+                continuation.resume(response) { _, _, _ ->
                     // If we have a response but we're cancelled while resuming, we need to
                     // close() the unused response
                     if (response.body != null) {

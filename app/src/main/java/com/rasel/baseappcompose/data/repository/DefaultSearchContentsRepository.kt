@@ -27,6 +27,7 @@ import com.rasel.baseappcompose.data.database.model.asExternalModel
 import com.rasel.baseappcompose.data.database.model.asFtsEntity
 import com.rasel.baseappcompose.data.model.SearchResult
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -58,6 +59,7 @@ internal class DefaultSearchContentsRepository @Inject constructor(
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun searchContents(searchQuery: String): Flow<SearchResult> {
         // Surround the query by asterisks to match the query when it's in the middle of
         // a word

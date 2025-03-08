@@ -18,6 +18,7 @@ package com.rasel.baseappcompose.data.repository
 
 import com.rasel.baseappcompose.data.model.UserNewsResource
 import com.rasel.baseappcompose.data.model.mapToUserNewsResources
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -49,6 +50,7 @@ class CompositeUserNewsResourceRepository @Inject constructor(
     /**
      * Returns available news resources (joined with user data) for the followed topics.
      */
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeAllForFollowedTopics(): Flow<List<UserNewsResource>> =
         userDataRepository.userData.map { it.followedTopics }.distinctUntilChanged()
             .flatMapLatest { followedTopics ->
@@ -58,6 +60,7 @@ class CompositeUserNewsResourceRepository @Inject constructor(
                 }
             }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeAllBookmarked(): Flow<List<UserNewsResource>> =
         userDataRepository.userData.map { it.bookmarkedNewsResources }.distinctUntilChanged()
             .flatMapLatest { bookmarkedNewsResources ->
