@@ -36,6 +36,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
@@ -46,12 +47,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.DisplayFeature
 import com.rasel.baseappcompose.designsystem.component.EmailDetailAppBar
 import com.rasel.baseappcompose.designsystem.component.ReplyDockedSearchBar
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 import com.google.accompanist.adaptive.TwoPane
+import com.google.accompanist.adaptive.calculateDisplayFeatures
+import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.local.LocalEmailsDataProvider
 import com.rasel.baseappcompose.data.model.Email
@@ -119,7 +123,7 @@ fun ReplyInboxScreen(
             )
             // When we have bottom navigation we show FAB at the bottom end.
             if (navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
-                LargeFloatingActionButton(
+                FloatingActionButton(
                     onClick = { /*TODO*/ },
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
@@ -238,10 +242,25 @@ fun ReplyEmailDetail(
     }
 }
 
-@Preview("default", "round")
-@Preview("dark theme", "round", uiMode = UI_MODE_NIGHT_YES)
+@PreviewLightDark
 @Composable
-private fun ButtonPreview2() {
+private fun ReplyInboxScreenPreview() {
+    NiaTheme {
+        ReplyInboxScreen(
+            contentType = ReplyContentType.SINGLE_PANE,
+            replyHomeUIState = ReplyHomeUIState(emails =  LocalEmailsDataProvider.allEmails),
+            navigationType = ReplyNavigationType.BOTTOM_NAVIGATION,
+            displayFeatures = emptyList(),
+            closeDetailScreen = {},
+            navigateToDetail = { _, _ ->},
+            toggleSelectedEmail = {},
+        )
+    }
+}
+
+@PreviewLightDark()
+@Composable
+private fun ReplyEmailListPreview() {
     NiaTheme {
         ReplyEmailList(
             emails = LocalEmailsDataProvider.allEmails,
@@ -253,11 +272,16 @@ private fun ButtonPreview2() {
         )
     }
 }
+
 @Preview("default", "round")
 @Preview("dark theme", "round", uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun ButtonPreview() {
+private fun ReplyEmailDetailPreview() {
     NiaTheme {
-        ReplyEmailDetail(email = LocalEmailsDataProvider.allEmails.first(), isFullScreen = false, onBackPressed = {})
+        ReplyEmailDetail(
+            email = LocalEmailsDataProvider.allEmails.first(),
+            isFullScreen = false,
+            onBackPressed = {})
     }
 }
+

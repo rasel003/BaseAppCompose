@@ -16,6 +16,7 @@
 
 package com.rasel.baseappcompose.designsystem.component
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,7 +36,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
+import com.rasel.baseappcompose.data.local.LocalEmailsDataProvider
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.reply.ReplyEmailDetail
 
 @Composable
 fun FloatingActionButtonExamples() {
@@ -103,3 +110,12 @@ fun LargeExample(onClick: () -> Unit) {
     }
 }
 // [END android_compose_components_largefab]
+
+
+@PreviewLightDark()
+@Composable
+private fun FabPreview() {
+    NiaTheme {
+        FloatingActionButtonExamples()
+    }
+}
