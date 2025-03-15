@@ -16,7 +16,9 @@
 
 package com.rasel.baseappcompose.data.repository
 
+import androidx.paging.PagingData
 import com.rasel.baseappcompose.data.model.NewsResource
+import com.rasel.baseappcompose.data.model.UnsplashPhoto
 import com.rasel.baseappcompose.data.util.Syncable
 import kotlinx.coroutines.flow.Flow
 
@@ -47,4 +49,7 @@ interface NewsRepository : Syncable {
             filterNewsIds = null,
         ),
     ): Flow<List<NewsResource>>
+
+
+    fun getNews(): Flow<PagingData<UnsplashPhoto>>
 }

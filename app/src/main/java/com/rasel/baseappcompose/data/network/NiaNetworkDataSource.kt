@@ -19,6 +19,7 @@ package com.rasel.baseappcompose.data.network
 import com.rasel.baseappcompose.data.model.NetworkChangeList
 import com.rasel.baseappcompose.data.model.NetworkNewsResource
 import com.rasel.baseappcompose.data.model.NetworkTopic
+import com.rasel.baseappcompose.data.model.UnsplashSearchResponse
 
 /**
  * Interface representing network calls to the NIA backend
@@ -31,4 +32,5 @@ interface NiaNetworkDataSource {
     suspend fun getTopicChangeList(after: Int? = null): List<NetworkChangeList>
 
     suspend fun getNewsResourceChangeList(after: Int? = null): List<NetworkChangeList>
+    suspend fun searchPhotos(): UnsplashSearchResponse
 }

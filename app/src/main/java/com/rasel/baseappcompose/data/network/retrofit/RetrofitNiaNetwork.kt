@@ -21,6 +21,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.rasel.baseappcompose.data.model.NetworkChangeList
 import com.rasel.baseappcompose.data.model.NetworkNewsResource
 import com.rasel.baseappcompose.data.model.NetworkTopic
+import com.rasel.baseappcompose.data.model.UnsplashSearchResponse
 import com.rasel.baseappcompose.data.network.NiaNetworkDataSource
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -55,6 +56,14 @@ private interface RetrofitNiaNetworkApi {
     suspend fun getNewsResourcesChangeList(
         @Query("after") after: Int?,
     ): List<NetworkChangeList>
+
+    @GET("https://api.unsplash.com/search/photos")
+    suspend fun searchPhotos(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("client_id") clientId: String = "6JqnhEzrMh2FIy9fPH-szdSeQRhs1AVTmSGIL-6LklM"
+    ): UnsplashSearchResponse
 }
 
 private const val NIA_BASE_URL = "http://example.com"
@@ -71,7 +80,7 @@ private data class NetworkResponse<T>(
  * [Retrofit] backed [NiaNetworkDataSource]
  */
 @Singleton
-internal class RetrofitNiaNetwork @Inject constructor(
+class RetrofitNiaNetwork @Inject constructor(
     networkJson: Json,
     okhttpCallFactory: dagger.Lazy<Call.Factory>,
 ) : NiaNetworkDataSource {
@@ -88,6 +97,9 @@ internal class RetrofitNiaNetwork @Inject constructor(
             .build()
             .create(RetrofitNiaNetworkApi::class.java)
     }
+
+    override suspend fun searchPhotos(): UnsplashSearchResponse =
+        networkApi.searchPhotos(query = "girl", page = 1, perPage = 20)
 
     override suspend fun getTopics(ids: List<String>?): List<NetworkTopic> =
         networkApi.getTopics(ids = ids).data

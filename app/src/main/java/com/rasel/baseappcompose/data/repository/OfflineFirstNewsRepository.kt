@@ -1,5 +1,7 @@
 package com.rasel.baseappcompose.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.google.samples.apps.nowinandroid.core.database.dao.TopicDao
 import com.rasel.baseappcompose.core.datastore.NiaPreferencesDataSource
 import com.rasel.baseappcompose.data.database.dao.NewsResourceDao
@@ -8,6 +10,8 @@ import com.rasel.baseappcompose.data.database.model.asExternalModel
 import com.rasel.baseappcompose.data.model.ChangeListVersions
 import com.rasel.baseappcompose.data.model.NetworkChangeList
 import com.rasel.baseappcompose.data.model.NewsResource
+import com.rasel.baseappcompose.data.network.NewsPagingSource
+import com.rasel.baseappcompose.data.network.NiaNetworkDataSource
 import com.rasel.baseappcompose.data.util.Synchronizer
 import com.rasel.baseappcompose.data.util.changeListSync
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +31,7 @@ internal class OfflineFirstNewsRepository @Inject constructor(
     private val niaPreferencesDataSource: NiaPreferencesDataSource,
     private val newsResourceDao: NewsResourceDao,
     private val topicDao: TopicDao,
-//    private val network: NiaNetworkDataSource,
+    private val network: NiaNetworkDataSource,
 //    private val notifier: Notifier,
 ) : NewsRepository {
 
@@ -122,4 +126,13 @@ internal class OfflineFirstNewsRepository @Inject constructor(
             },
         )
     }
+
+    override fun getNews() = Pager(
+        config = PagingConfig(
+            pageSize = 20,
+        ),
+        pagingSourceFactory = {
+            NewsPagingSource(network)
+        }
+    ).flow
 }

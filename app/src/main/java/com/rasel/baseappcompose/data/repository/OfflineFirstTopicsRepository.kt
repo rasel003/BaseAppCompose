@@ -36,7 +36,7 @@ import javax.inject.Inject
  */
 internal class OfflineFirstTopicsRepository @Inject constructor(
     private val topicDao: TopicDao,
-//    private val network: NiaNetworkDataSource,
+    private val network: NiaNetworkDataSource
 ) : TopicsRepository {
 
     override fun getTopics(): Flow<List<Topic>> =
@@ -46,8 +46,8 @@ internal class OfflineFirstTopicsRepository @Inject constructor(
     override fun getTopic(id: String): Flow<Topic> =
         topicDao.getTopicEntity(id).map { it.asExternalModel() }
 
-    override suspend fun syncWith(synchronizer: Synchronizer): Boolean = false
-        /*synchronizer.changeListSync(
+    override suspend fun syncWith(synchronizer: Synchronizer): Boolean =
+        synchronizer.changeListSync(
             versionReader = ChangeListVersions::topicVersion,
             changeListFetcher = { currentVersion ->
                 network.getTopicChangeList(after = currentVersion)
@@ -62,5 +62,5 @@ internal class OfflineFirstTopicsRepository @Inject constructor(
                     entities = networkTopics.map(NetworkTopic::asEntity),
                 )
             },
-        )*/
+        )
 }

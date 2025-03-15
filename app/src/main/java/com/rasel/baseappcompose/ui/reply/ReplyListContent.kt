@@ -36,6 +36,19 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Feedback
+import androidx.compose.material.icons.outlined.Send
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Help
+import androidx.compose.material.icons.automirrored.outlined.OpenInNew
+import androidx.compose.material.icons.automirrored.outlined.Send
+import androidx.compose.material.icons.automirrored.outlined.Help
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
@@ -43,6 +56,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -224,20 +241,70 @@ fun ReplyEmailDetail(
     isFullScreen: Boolean = true,
     onBackPressed: () -> Unit = {}
 ) {
-    LazyColumn(
-        modifier = modifier
-            .background(MaterialTheme.colorScheme.inverseOnSurface)
-    ) {
-        item {
-            EmailDetailAppBar(email, isFullScreen) {
-                onBackPressed()
+    var expanded by remember { mutableStateOf(false) }
+    Box {
+        LazyColumn(
+            modifier = modifier
+                .background(MaterialTheme.colorScheme.inverseOnSurface)
+        ) {
+            item {
+                EmailDetailAppBar(
+                    email,
+                    isFullScreen,
+                    onBackPressed = onBackPressed,
+                    onMenuPressed = {
+                        expanded = expanded.not()
+                    })
+            }
+            items(items = email.threads, key = { it.id }) { email ->
+                ReplyEmailThreadItem(email = email)
+            }
+            item {
+                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
             }
         }
-        items(items = email.threads, key = { it.id }) { email ->
-            ReplyEmailThreadItem(email = email)
-        }
-        item {
-            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
+
+        DropdownMenu(
+            modifier = Modifier.align(Alignment.TopEnd),
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            // First section
+            DropdownMenuItem(
+                text = { Text("Profile") },
+                leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = null) },
+                onClick = { /* Do something... */ }
+            )
+            DropdownMenuItem(
+                text = { Text("Settings") },
+                leadingIcon = { Icon(Icons.Outlined.Settings, contentDescription = null) },
+                onClick = { /* Do something... */ }
+            )
+
+            HorizontalDivider()
+
+            // Second section
+            DropdownMenuItem(
+                text = { Text("Send Feedback") },
+                leadingIcon = { Icon(Icons.Outlined.Feedback, contentDescription = null) },
+                trailingIcon = { Icon(Icons.AutoMirrored.Outlined.Send, contentDescription = null) },
+                onClick = { /* Do something... */ }
+            )
+
+            HorizontalDivider()
+
+            // Third section
+            DropdownMenuItem(
+                text = { Text("About") },
+                leadingIcon = { Icon(Icons.Outlined.Info, contentDescription = null) },
+                onClick = { /* Do something... */ }
+            )
+            DropdownMenuItem(
+                text = { Text("Help") },
+                leadingIcon = { Icon(Icons.AutoMirrored.Outlined.Help, contentDescription = null) },
+                trailingIcon = { Icon(Icons.AutoMirrored.Outlined.OpenInNew, contentDescription = null) },
+                onClick = { /* Do something... */ }
+            )
         }
     }
 }
@@ -248,11 +315,11 @@ private fun ReplyInboxScreenPreview() {
     NiaTheme {
         ReplyInboxScreen(
             contentType = ReplyContentType.SINGLE_PANE,
-            replyHomeUIState = ReplyHomeUIState(emails =  LocalEmailsDataProvider.allEmails),
+            replyHomeUIState = ReplyHomeUIState(emails = LocalEmailsDataProvider.allEmails),
             navigationType = ReplyNavigationType.BOTTOM_NAVIGATION,
             displayFeatures = emptyList(),
             closeDetailScreen = {},
-            navigateToDetail = { _, _ ->},
+            navigateToDetail = { _, _ -> },
             toggleSelectedEmail = {},
         )
     }

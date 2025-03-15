@@ -88,7 +88,7 @@ internal object NetworkModule {
             .build()
     }
 
-    /*@Provides
+   /* @Provides
     @Singleton
     fun provideImageLoader(
         @ApplicationContext context: Context

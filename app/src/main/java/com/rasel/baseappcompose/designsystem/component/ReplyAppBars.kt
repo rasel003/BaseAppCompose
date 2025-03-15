@@ -144,7 +144,8 @@ fun EmailDetailAppBar(
     email: Email,
     isFullScreen: Boolean,
     modifier: Modifier = Modifier,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onMenuPressed: () -> Unit
 ) {
     TopAppBar(
         modifier = modifier,
@@ -190,7 +191,7 @@ fun EmailDetailAppBar(
         },
         actions = {
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = onMenuPressed,
             ) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
@@ -219,7 +220,8 @@ fun PreviewEmailDetailAppBar() {
         EmailDetailAppBar(
             email = LocalEmailsDataProvider.allEmails.first(),
             isFullScreen = true,
-            onBackPressed = {}
+            onBackPressed = {},
+            onMenuPressed = {}
         )
     }
 }

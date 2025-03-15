@@ -108,6 +108,7 @@ import com.rasel.baseappcompose.ui.navigation.Flavor
 import com.rasel.baseappcompose.ui.navigation.Inbox
 import com.rasel.baseappcompose.ui.navigation.TopComponentsDestination
 import com.rasel.baseappcompose.ui.navigation.rememberJetsnackNavController
+import com.rasel.baseappcompose.ui.news.PagingListScreen
 import com.rasel.baseappcompose.ui.order.OrderSummaryScreen
 import com.rasel.baseappcompose.ui.order.OrderViewModel
 import com.rasel.baseappcompose.ui.order.SelectOptionScreen
@@ -368,11 +369,15 @@ private fun ReplyNavHost(
                             modifier = Modifier.fillMaxHeight()
                         )
                     }
-                    composable(route = AppRoute.MOVIE_DETAILS) {
+                    /*composable(route = AppRoute.MOVIE_DETAILS) {
                         MovieDetailsScreen(
                             orderUiState = uiState,
                             navigateTo = navigateTo,
                             modifier = Modifier.fillMaxHeight()
+                        )
+                    }*/
+                     composable(route = AppRoute.MOVIE_DETAILS) {
+                         PagingListScreen(
                         )
                     }
                     composable(route = AppRoute.ANIMATION_LIST) {

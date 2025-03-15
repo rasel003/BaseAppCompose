@@ -18,12 +18,16 @@ package com.rasel.baseappcompose.data.di
 
 import com.rasel.baseappcompose.data.Dispatcher
 import com.rasel.baseappcompose.data.NiaDispatchers
+import com.rasel.baseappcompose.data.network.NiaNetworkDataSource
+import com.rasel.baseappcompose.data.network.retrofit.RetrofitNiaNetwork
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.serialization.json.Json
+import okhttp3.Call
 import javax.inject.Singleton
 
 @Module
@@ -44,5 +48,12 @@ object DispatchersModule {
     @Dispatcher(NiaDispatchers.IO)
     @Singleton
     fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
+    @Singleton
+    fun provideRetrofitNiaNetwork(
+        networkJson: Json,
+        okhttpCallFactory: dagger.Lazy<Call.Factory>
+    ): NiaNetworkDataSource = RetrofitNiaNetwork(networkJson, okhttpCallFactory)
 
 }

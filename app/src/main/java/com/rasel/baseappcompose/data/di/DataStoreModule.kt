@@ -38,7 +38,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
 
-    /*@Provides
+    @Provides
     @Singleton
     internal fun providesUserPreferencesDataStore(
         @ApplicationContext context: Context,
@@ -55,5 +55,5 @@ object DataStoreModule {
             ),
         ) {
             context.dataStoreFile("user_preferences.pb")
-        }*/
+        }
 }
