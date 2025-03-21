@@ -14,7 +14,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -24,12 +23,12 @@ import androidx.metrics.performance.JankStats
 import androidx.tracing.trace
 import com.google.accompanist.adaptive.calculateDisplayFeatures
 import com.rasel.baseappcompose.core.analytics.AnalyticsHelper
+import com.rasel.baseappcompose.core.analytics.LocalAnalyticsHelper
 import com.rasel.baseappcompose.data.model.DarkThemeConfig
 import com.rasel.baseappcompose.data.repository.UserNewsResourceRepository
 import com.rasel.baseappcompose.data.util.NetworkMonitor
 import com.rasel.baseappcompose.data.util.TimeZoneMonitor
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
-import com.rasel.baseappcompose.core.analytics.LocalAnalyticsHelper
 import com.rasel.baseappcompose.ui.reply.ReplyApp
 import com.rasel.baseappcompose.ui.reply.ReplyHomeViewModel
 import com.rasel.baseappcompose.ui.utils.LocalTimeZone
@@ -170,8 +169,7 @@ class MainActivity : ComponentActivity() {
                         toggleSelectedEmail = { emailId ->
                             viewModel.toggleSelectedEmail(emailId)
                         },
-                        appContainer = appContainer,
-                        appState = appState
+                        appContainer = appContainer
                     )
                 }
             }

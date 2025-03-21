@@ -174,4 +174,5 @@ class InterestsViewModel  @Inject constructor(
             }
         }
     }
+
 }
