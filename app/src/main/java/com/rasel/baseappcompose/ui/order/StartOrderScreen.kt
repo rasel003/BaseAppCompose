@@ -36,10 +36,10 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.rasel.baseappcompose.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.designsystem.component.NiaButton
-import com.rasel.baseappcompose.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.navigation.AppRoute
 import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN
@@ -55,6 +55,7 @@ fun StartOrderScreen(
     quantityOptions: List<Pair<Int, Int>>,
     onNextButtonClicked: (Int) -> Unit,
     navigateTo: (String) -> Unit,
+    navigateToForYou: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -82,6 +83,12 @@ fun StartOrderScreen(
 
             NiaButton( onClick = { navigateTo(AppRoute.MOVIE_DETAILS) }) {
                 Text(stringResource(R.string.movie_details))
+            }
+            NiaButton( onClick = { navigateTo(AppRoute.MOVIE_DETAILS) }) {
+                Text("For You")
+            }
+            NiaButton( onClick = { navigateTo(AppRoute.PAGING_3) }) {
+                Text("Paging 3")
             }
             NiaButton(onClick = { navigateTo(MainDestinations.HOME_ROUTE) }) {
                 Text("Jet Snake")
@@ -136,6 +143,7 @@ fun StartOrderPreview() {
             quantityOptions = DataSource.quantityOptions,
             onNextButtonClicked = {},
             navigateTo = {},
+            navigateToForYou = {},
             modifier = Modifier
                 .fillMaxSize()
                 .padding(dimensionResource(R.dimen.padding_medium))

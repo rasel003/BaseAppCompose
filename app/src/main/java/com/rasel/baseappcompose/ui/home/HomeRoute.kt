@@ -25,7 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.jetnews.ui.interests.InterestsViewModel
+import com.rasel.baseappcompose.ui.interests.InterestsViewModel
 import com.rasel.baseappcompose.ui.article.ArticleScreen
 import com.rasel.baseappcompose.ui.home.HomeScreenType.ArticleDetails
 import com.rasel.baseappcompose.ui.home.HomeScreenType.Feed
@@ -177,11 +177,11 @@ fun HomeRoute(
             }
         }
         HomeScreenType.INTERESTS_SCREEN -> {
-            InterestsRoute(
+            /*InterestsRoute(
                 interestsViewModel = interestsViewModel,
                 isExpandedScreen = isExpandedScreen,
                 openDrawer = openInterestScreen
-            )
+            )*/
         }
     }
 }

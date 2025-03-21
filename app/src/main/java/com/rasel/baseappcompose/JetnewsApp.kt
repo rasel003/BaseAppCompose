@@ -22,16 +22,16 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import com.rasel.baseappcompose.data.AppContainer
 import com.rasel.baseappcompose.designsystem.component.AppNavRail
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.navigation.AppRoute
 import kotlinx.coroutines.launch
 
 @Composable
@@ -41,15 +41,12 @@ fun JetnewsApp(
 ) {
     NiaTheme {
         val navController = rememberNavController()
-        val navigationActions = remember(navController) {
-            JetnewsNavigationActions(navController)
-        }
 
         val coroutineScope = rememberCoroutineScope()
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute =
-            navBackStackEntry?.destination?.route ?: JetnewsDestinations.HOME_ROUTE
+            navBackStackEntry?.destination?.route ?: AppRoute.HOME_ROUTE
 
         val isExpandedScreen = widthSizeClass == WindowWidthSizeClass.Expanded
         val sizeAwareDrawerState = rememberSizeAwareDrawerState(isExpandedScreen)
@@ -64,8 +61,8 @@ fun JetnewsApp(
             drawerContent = {
                 AppDrawer(
                     currentRoute = currentRoute,
-                    navigateToHome = navigationActions.navigateToHome,
-                    navigateToInterests = navigationActions.navigateToInterests,
+                    navigateToHome = {}/*navigationActions.navigateToHome*/,
+                    navigateToInterests = {}/*navigationActions.navigateToInterests*/,
                     closeDrawer = { coroutineScope.launch { sizeAwareDrawerState.close() } }
                 )
             },
@@ -77,8 +74,8 @@ fun JetnewsApp(
                 if (isExpandedScreen) {
                     AppNavRail(
                         currentRoute = currentRoute,
-                        navigateToHome = navigationActions.navigateToHome,
-                        navigateToInterests = navigationActions.navigateToInterests,
+                        navigateToHome = {}/*navigationActions.navigateToHome*/,
+                        navigateToInterests = {}/*navigationActions.navigateToInterests*/,
                     )
                 }
                 JetnewsNavGraph(

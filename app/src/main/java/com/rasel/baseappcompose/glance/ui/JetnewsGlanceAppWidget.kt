@@ -52,7 +52,7 @@ import com.rasel.baseappcompose.data.successOr
 import com.rasel.baseappcompose.designsystem.component.Divider
 import com.rasel.baseappcompose.designsystem.theme.JetnewsGlanceColorScheme
 import com.rasel.baseappcompose.domain.model.Post
-import com.rasel.baseappcompose.ui.JetnewsApplication
+import com.rasel.baseappcompose.NiaApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -62,7 +62,7 @@ class JetnewsGlanceAppWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val application = context.applicationContext as JetnewsApplication
+        val application = context.applicationContext as NiaApplication
         val postsRepository = application.container.postsRepository
 
         // Load data needed to render the composable.

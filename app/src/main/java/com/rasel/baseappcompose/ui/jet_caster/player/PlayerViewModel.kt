@@ -27,7 +27,7 @@ import com.rasel.baseappcompose.data.repository.EpisodeStore
 import com.rasel.baseappcompose.domain.player.EpisodePlayer
 import com.rasel.baseappcompose.domain.player.EpisodePlayerState
 import com.rasel.baseappcompose.domain.player.model.toPlayerEpisode
-import com.rasel.baseappcompose.ui.jet_caster.Screen
+import com.rasel.baseappcompose.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapConcat

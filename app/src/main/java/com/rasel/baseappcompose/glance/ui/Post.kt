@@ -47,7 +47,7 @@ import com.rasel.baseappcompose.MainActivity
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.theme.JetnewsGlanceTextStyles
 import com.rasel.baseappcompose.domain.model.Post
-import com.rasel.baseappcompose.ui.JetnewsApplication.Companion.JETNEWS_APP_URI
+import com.rasel.baseappcompose.NiaApplication.Companion.JETNEWS_APP_URI
 
 enum class PostLayout { HORIZONTAL_SMALL, HORIZONTAL_LARGE, VERTICAL }
 

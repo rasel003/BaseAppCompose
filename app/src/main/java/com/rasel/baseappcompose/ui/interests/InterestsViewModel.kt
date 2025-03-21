@@ -14,23 +14,32 @@
  * limitations under the License.
  */
 
-package com.example.jetnews.ui.interests
+package com.rasel.baseappcompose.ui.interests
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.rasel.baseappcompose.data.interests.InterestSection
 import com.rasel.baseappcompose.data.interests.InterestsRepository
 import com.rasel.baseappcompose.data.interests.TopicSelection
+import com.rasel.baseappcompose.data.model.FollowableTopic
+import com.rasel.baseappcompose.data.repository.UserDataRepository
 import com.rasel.baseappcompose.data.successOr
+import com.rasel.baseappcompose.domain.usecase.GetFollowableTopicsUseCase
+import com.rasel.baseappcompose.domain.usecase.TopicSortField
+import com.rasel.baseappcompose.ui.interests.navigation.InterestsRoute
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * UI state for the Interests screen
@@ -42,13 +51,49 @@ data class InterestsUiState(
     val loading: Boolean = false,
 )
 
-class InterestsViewModel(
-    private val interestsRepository: InterestsRepository
+sealed interface InterestsUiState2 {
+    data object Loading : InterestsUiState2
+
+    data class Interests(
+        val selectedTopicId: String?,
+        val topics: List<FollowableTopic>,
+    ) : InterestsUiState2
+
+    data object Empty : InterestsUiState2
+}
+
+@HiltViewModel
+class InterestsViewModel  @Inject constructor(
+    private val interestsRepository: InterestsRepository,
+    private val savedStateHandle: SavedStateHandle,
+    val userDataRepository: UserDataRepository,
+    getFollowableTopics: GetFollowableTopicsUseCase,
 ) : ViewModel() {
+
+    // Key used to save and retrieve the currently selected topic id from saved state.
+    private val selectedTopicIdKey = "selectedTopicIdKey"
+
+    private val interestsRoute: InterestsRoute = savedStateHandle.toRoute()
+
+
+    private val selectedTopicId = savedStateHandle.getStateFlow(
+        key = selectedTopicIdKey,
+        initialValue = interestsRoute.initialTopicId,
+    )
 
     // UI state exposed to the UI
     private val _uiState = MutableStateFlow(InterestsUiState(loading = true))
     val uiState: StateFlow<InterestsUiState> = _uiState.asStateFlow()
+
+    val uiState2: StateFlow<InterestsUiState2> = combine(
+        selectedTopicId,
+        getFollowableTopics(sortBy = TopicSortField.NAME),
+        InterestsUiState2::Interests,
+    ).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = InterestsUiState2.Loading,
+    )
 
     val selectedTopics =
         interestsRepository.observeTopicsSelected().stateIn(
@@ -79,6 +124,15 @@ class InterestsViewModel(
         viewModelScope.launch {
             interestsRepository.toggleTopicSelection(topic)
         }
+    }
+
+    fun followTopic(followedTopicId: String, followed: Boolean) {
+        viewModelScope.launch {
+            userDataRepository.setTopicIdFollowed(followedTopicId, followed)
+        }
+    }
+    fun onTopicClick(topicId: String?) {
+        savedStateHandle[selectedTopicIdKey] = topicId
     }
 
     fun togglePersonSelected(person: String) {
@@ -117,20 +171,6 @@ class InterestsViewModel(
                     people = people,
                     publications = publications
                 )
-            }
-        }
-    }
-
-    /**
-     * Factory for InterestsViewModel that takes PostsRepository as a dependency
-     */
-    companion object {
-        fun provideFactory(
-            interestsRepository: InterestsRepository,
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return InterestsViewModel(interestsRepository) as T
             }
         }
     }

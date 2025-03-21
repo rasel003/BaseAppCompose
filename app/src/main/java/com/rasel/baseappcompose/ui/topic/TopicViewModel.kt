@@ -19,6 +19,7 @@ package com.rasel.baseappcompose.ui.topic
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.rasel.baseappcompose.data.asResult
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.model.FollowableTopic
@@ -28,7 +29,7 @@ import com.rasel.baseappcompose.data.repository.NewsResourceQuery
 import com.rasel.baseappcompose.data.repository.TopicsRepository
 import com.rasel.baseappcompose.data.repository.UserDataRepository
 import com.rasel.baseappcompose.data.repository.UserNewsResourceRepository
-import com.rasel.baseappcompose.ui.topic.navigation.TopicArgs
+import com.rasel.baseappcompose.ui.topic.navigation.TopicRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -47,12 +48,10 @@ class TopicViewModel @Inject constructor(
     userNewsResourceRepository: UserNewsResourceRepository,
 ) : ViewModel() {
 
-    private val topicArgs: TopicArgs = TopicArgs(savedStateHandle)
-
-    val topicId = topicArgs.topicId
+    val topicId = savedStateHandle.toRoute<TopicRoute>().id
 
     val topicUiState: StateFlow<TopicUiState> = topicUiState(
-        topicId = topicArgs.topicId,
+        topicId = topicId,
         userDataRepository = userDataRepository,
         topicsRepository = topicsRepository,
     )
@@ -63,7 +62,7 @@ class TopicViewModel @Inject constructor(
         )
 
     val newsUiState: StateFlow<NewsUiState> = newsUiState(
-        topicId = topicArgs.topicId,
+        topicId = topicId,
         userDataRepository = userDataRepository,
         userNewsResourceRepository = userNewsResourceRepository,
     )
@@ -75,7 +74,7 @@ class TopicViewModel @Inject constructor(
 
     fun followTopicToggle(followed: Boolean) {
         viewModelScope.launch {
-            userDataRepository.setTopicIdFollowed(topicArgs.topicId, followed)
+            userDataRepository.setTopicIdFollowed(topicId, followed)
         }
     }
 
