@@ -24,8 +24,6 @@ import androidx.work.ForegroundInfo
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkerParameters
-import com.google.samples.apps.nowinandroid.sync.workers.DelegatingWorker
-import com.google.samples.apps.nowinandroid.sync.workers.delegatedData
 import com.rasel.baseappcompose.core.analytics.AnalyticsHelper
 import com.rasel.baseappcompose.data.Dispatcher
 import com.rasel.baseappcompose.data.NiaDispatchers

@@ -215,7 +215,7 @@ fun ReplyApp(
         Surface {
             ReplyNavigationWrapper(
                 selectedDestination = selectedDestination,
-                navigateToTopLevelDestination = navigationActions::navigateTo
+                navigateToTopLevelDestination = {}/*navigationActions::navigateTo*/
             ) {
                 ReplyNavHost(
                     appContainer = appContainer,
@@ -230,8 +230,8 @@ fun ReplyApp(
                     showSettingsDialog = showSettingsDialog,
                     openSettingDialog = { showSettingsDialog = true },
                     onSettingsDismissed = { showSettingsDialog = false },
-                    navigateTo = { navigationActions.navigateTo(it) },
-                    cancelOrderAndNavigateToStart = { navigationActions.cancelOrderAndNavigateToStart() }
+                    navigateTo = { /*navigationActions.navigateTo(it)*/ },
+                    cancelOrderAndNavigateToStart = { /*navigationActions.cancelOrderAndNavigateToStart()*/ }
                 )
             }
         }

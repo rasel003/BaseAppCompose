@@ -51,7 +51,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

@@ -134,6 +134,7 @@
     <string name="updated_today">Updated today</string>
 
     <string name="episode_date_duration">%1$s &#8226; %2$d mins</string>
+    <string name="not_connected">⚠️ You aren’t connected to the internet</string>
 
     <string name="cd_account">Account</string>
     <string name="cd_add">Add</string>
@@ -158,6 +159,39 @@
     <string name="see_more">see more</string>
     <string name="search_for_a_podcast">Search for a podcast</string>
     <string name="an_error_has_occurred">An error has occurred.</string>
+
+    <string name="feature_foryou_title">For you</string>
+    <string name="feature_foryou_done">Done</string>
+    <string name="feature_foryou_loading">Loading for you…</string>
+    <string name="feature_foryou_navigate_up">Navigate up</string>
+    <string name="feature_foryou_onboarding_guidance_title">What are you interested in?</string>
+    <string name="feature_foryou_onboarding_guidance_subtitle">Updates from topics you follow will appear here. Follow some things to get started.</string>
+
+    <string name="feature_bookmarks_title">Saved</string>
+    <string name="feature_bookmarks_loading">Loading saved…</string>
+    <string name="feature_bookmarks_empty_error">No saved updates</string>
+    <string name="feature_bookmarks_empty_description">Updates you save will be stored here\nto read later</string>
+    <string name="feature_bookmarks_removed">Bookmark removed</string>
+    <string name="feature_bookmarks_undo">UNDO</string>
+
+
+    <string name="core_ui_feed_sharing">Feed sharing</string>
+    <string name="core_ui_feed_sharing_data">%1$s: %2$s</string>
+    <string name="feature_interests_title">Interests</string>
+    <string name="feature_interests_loading">Loading data</string>
+    <string name="feature_interests_empty_header">"No available data"</string>
+    <string name="feature_search_title">Search</string>
+    <string name="feature_search_clear_search_text_content_desc">Clear search text</string>
+    <string name="feature_search_result_not_found">Sorry, there is no content found for your search \"%1$s\"</string>
+    <string name="feature_search_not_ready">Sorry, we are still processing the search index. Please come back later</string>
+    <string name="feature_search_try_another_search">Try another search or explorer </string>
+    <string name="feature_search_interests">Interests</string>
+    <string name="feature_search_to_browse_topics"> to browse topics</string>
+    <string name="feature_search_topics">Topics</string>
+    <string name="feature_search_updates">Updates</string>
+    <string name="feature_search_recent_searches">Recent searches</string>
+    <string name="feature_search_clear_recent_searches_content_desc">Clear searches</string>
+
 
     <string name="feature_settings_top_app_bar_action_icon_description">Settings</string>
     <string name="feature_settings_top_app_bar_navigation_icon_description">Search</string>

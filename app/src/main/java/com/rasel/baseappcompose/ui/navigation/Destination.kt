@@ -92,6 +92,7 @@ object AppRoute {
     const val Flavor = "Choose_Flavor"
     const val Pickup = "Choose_Pickup_Date"
     const val MOVIE_DETAILS = "Movie Details"
+    const val PAGING_3 = "PAGING_3"
     const val ANIMATION_LIST = "Animation List"
     const val SHOW_HIDE_ANIMATION = "Show Hide Animation"
     const val VALUE_BASED_ANIMATION = "Value Based Animation"
@@ -101,6 +102,8 @@ object AppRoute {
     const val ARTICLES = "Articles"
     const val JET_NEWS = "jet_news"
     const val CUP_CAKE = "cup_cake"
+    const val HOME_ROUTE = "home"
+    const val INTERESTS_ROUTE = "interests"
 }
 val TOP_LEVEL_DESTINATIONS = listOf(
     AppTopLevelDestination(
@@ -160,3 +163,25 @@ enum class TopComponentsDestination(val route: String, val title: String) {
     DatePickerExamples("datePickerExamples", "Date Pickers"),
     CarouselExamples("carouselExamples", "Carousel")
 }
+
+/**
+ * List of screens for [JetcasterApp]
+ */
+sealed class Screen(val route: String) {
+    object Home : Screen("home")
+    object Player : Screen("player/{$ARG_EPISODE_URI}") {
+        fun createRoute(episodeUri: String) = "player/$episodeUri"
+    }
+
+    object PodcastDetails : Screen("podcast/{$ARG_PODCAST_URI}") {
+
+        val PODCAST_URI = "podcastUri"
+        fun createRoute(podcastUri: String) = "podcast/$podcastUri"
+    }
+
+    companion object {
+        val ARG_PODCAST_URI = "podcastUri"
+        val ARG_EPISODE_URI = "episodeUri"
+    }
+}
+

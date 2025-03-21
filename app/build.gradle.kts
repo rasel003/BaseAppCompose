@@ -145,6 +145,12 @@ dependencies {
     implementation (libs.androidx.paging.runtime)
     implementation (libs.androidx.paging.compose)
 
+    implementation(libs.androidx.core.splashscreen)
+
+    // Import the BoM for the Firebase platform
+//    implementation platform('com.google.firebase:firebase-bom:33.8.0')
+
+
 
     implementation(libs.androidx.tracing.ktx)
     implementation(libs.kotlinx.serialization.json)

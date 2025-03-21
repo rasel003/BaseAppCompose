@@ -19,10 +19,7 @@ package com.rasel.baseappcompose.designsystem.component
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.tooling.preview.Preview
-import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
-import com.rasel.baseappcompose.ui.snack_home.HomeSections
 
 /**
  * A simple grid which lays elements out vertically in evenly sized [columns].

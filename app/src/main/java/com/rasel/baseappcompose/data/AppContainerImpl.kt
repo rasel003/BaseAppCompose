@@ -21,6 +21,7 @@ import com.rasel.baseappcompose.data.interests.InterestsRepository
 import com.rasel.baseappcompose.data.interests.impl.FakeInterestsRepository
 import com.rasel.baseappcompose.data.posts.PostsRepository
 import com.rasel.baseappcompose.data.posts.impl.FakePostsRepository
+import com.rasel.baseappcompose.data.repository.UserDataRepository
 
 /**
  * Dependency Injection container at the application level.

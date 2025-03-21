@@ -42,6 +42,31 @@ fun FavoriteButton(onClick: () -> Unit) {
     }
 }
 
+/*@Composable
+fun BookmarkButton(
+    isBookmarked: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    NiaIconToggleButton(
+        checked = isBookmarked,
+        onCheckedChange = { onClick() },
+        modifier = modifier,
+        icon = {
+            Icon(
+                imageVector = NiaIcons.BookmarkBorder,
+                contentDescription = stringResource(R.string.core_ui_bookmark),
+            )
+        },
+        checkedIcon = {
+            Icon(
+                imageVector = NiaIcons.Bookmark,
+                contentDescription = stringResource(R.string.core_ui_unbookmark),
+            )
+        },
+    )
+}*/
+
 @Composable
 fun BookmarkButton(
     isBookmarked: Boolean,

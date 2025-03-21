@@ -39,8 +39,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.navigation.AppRoute
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppDrawer(
     currentRoute: String,
@@ -56,14 +56,14 @@ fun AppDrawer(
         NavigationDrawerItem(
             label = { Text(stringResource(id = R.string.home_title)) },
             icon = { Icon(Icons.Filled.Home, null) },
-            selected = currentRoute == JetnewsDestinations.HOME_ROUTE,
+            selected = currentRoute == AppRoute.HOME_ROUTE,
             onClick = { navigateToHome(); closeDrawer() },
             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
         )
         NavigationDrawerItem(
             label = { Text(stringResource(id = R.string.interests_title)) },
             icon = { Icon(Icons.AutoMirrored.Filled.ListAlt, null) },
-            selected = currentRoute == JetnewsDestinations.INTERESTS_ROUTE,
+            selected = currentRoute == AppRoute.INTERESTS_ROUTE,
             onClick = { navigateToInterests(); closeDrawer() },
             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
         )
@@ -93,7 +93,7 @@ private fun JetNewsLogo(modifier: Modifier = Modifier) {
 fun PreviewAppDrawer() {
     NiaTheme {
         AppDrawer(
-            currentRoute = JetnewsDestinations.HOME_ROUTE,
+            currentRoute = AppRoute.HOME_ROUTE,
             navigateToHome = {},
             navigateToInterests = {},
             closeDrawer = { }

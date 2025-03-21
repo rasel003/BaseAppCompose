@@ -17,6 +17,12 @@
 package com.rasel.baseappcompose.data.di
 
 import android.content.Context
+import com.example.jetcaster.core.data.repository.CategoryStore
+import com.example.jetcaster.core.data.repository.LocalCategoryStore
+import com.example.jetcaster.core.data.repository.LocalPodcastStore
+import com.example.jetcaster.core.data.repository.PodcastStore
+import com.rasel.baseappcompose.core.analytics.AnalyticsHelper
+import com.rasel.baseappcompose.core.analytics.StubAnalyticsHelper
 import com.rasel.baseappcompose.data.database.AppDatabase
 import com.rasel.baseappcompose.data.database.dao.CategoriesDao
 import com.rasel.baseappcompose.data.database.dao.EpisodesDao
@@ -24,22 +30,20 @@ import com.rasel.baseappcompose.data.database.dao.PodcastCategoryEntryDao
 import com.rasel.baseappcompose.data.database.dao.PodcastFollowedEntryDao
 import com.rasel.baseappcompose.data.database.dao.PodcastsDao
 import com.rasel.baseappcompose.data.database.dao.TransactionRunner
-import com.example.jetcaster.core.data.repository.CategoryStore
+import com.rasel.baseappcompose.data.interests.InterestsRepository
+import com.rasel.baseappcompose.data.interests.impl.FakeInterestsRepository
 import com.rasel.baseappcompose.data.repository.EpisodeStore
-import com.example.jetcaster.core.data.repository.LocalCategoryStore
 import com.rasel.baseappcompose.data.repository.LocalEpisodeStore
-import com.example.jetcaster.core.data.repository.LocalPodcastStore
-import com.example.jetcaster.core.data.repository.PodcastStore
 import com.rometools.rome.io.SyndFeedInput
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import java.io.File
-import javax.inject.Singleton
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import java.io.File
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -55,9 +59,6 @@ object DataDiModule {
 //            if (BuildConfig.DEBUG) eventListenerFactory(LoggingEventListener.Factory())
         }
         .build()
-
-
-
 
 
     @Provides
@@ -131,4 +132,13 @@ object DataDiModule {
         categoriesDao = categoriesDao,
         categoryEntryDao = podcastCategoryEntryDao,
     )
+
+    @Provides
+    @Singleton
+    fun provideStubAnalyticsHelper(): AnalyticsHelper = StubAnalyticsHelper()
+
+    @Provides
+    @Singleton
+    fun provideInterestsRepository(): InterestsRepository = FakeInterestsRepository()
+
 }

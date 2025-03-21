@@ -52,7 +52,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaBackground
+import com.rasel.baseappcompose.designsystem.component.NiaBackground
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.DraggableScrollbar
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.rememberDraggableScroller
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.scrollbarState
@@ -69,6 +69,31 @@ import com.rasel.baseappcompose.ui.user_news.UserNewsResourcePreviewParameterPro
 import com.rasel.baseappcompose.ui.user_news.userNewsResourceCardItems
 import com.rasel.baseappcompose.ui.utils.DevicePreviews
 import com.rasel.baseappcompose.ui.utils.TrackScreenViewEvent
+
+@Composable
+fun TopicScreen(
+    showBackButton: Boolean,
+    onBackClick: () -> Unit,
+    onTopicClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: TopicViewModel = hiltViewModel(),
+) {
+    val topicUiState: TopicUiState by viewModel.topicUiState.collectAsStateWithLifecycle()
+    val newsUiState: NewsUiState by viewModel.newsUiState.collectAsStateWithLifecycle()
+
+    TrackScreenViewEvent(screenName = "Topic: ${viewModel.topicId}")
+    TopicScreen(
+        topicUiState = topicUiState,
+        newsUiState = newsUiState,
+        modifier = modifier.testTag("topic:${viewModel.topicId}"),
+        showBackButton = showBackButton,
+        onBackClick = onBackClick,
+        onFollowClick = viewModel::followTopicToggle,
+        onBookmarkChanged = viewModel::bookmarkNews,
+        onNewsResourceViewed = { viewModel.setNewsResourceViewed(it, true) },
+        onTopicClick = onTopicClick,
+    )
+}
 
 @Composable
 internal fun TopicRoute(

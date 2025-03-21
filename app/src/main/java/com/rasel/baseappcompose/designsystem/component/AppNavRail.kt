@@ -33,9 +33,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.rasel.baseappcompose.JetnewsDestinations
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.navigation.AppRoute
 
 @Composable
 fun AppNavRail(
@@ -57,14 +57,14 @@ fun AppNavRail(
     ) {
         Spacer(Modifier.weight(1f))
         NavigationRailItem(
-            selected = currentRoute == JetnewsDestinations.HOME_ROUTE,
+            selected = currentRoute == AppRoute.HOME_ROUTE,
             onClick = navigateToHome,
             icon = { Icon(Icons.Filled.Home, stringResource(R.string.home_title)) },
             label = { Text(stringResource(R.string.home_title)) },
             alwaysShowLabel = false
         )
         NavigationRailItem(
-            selected = currentRoute == JetnewsDestinations.INTERESTS_ROUTE,
+            selected = currentRoute == AppRoute.INTERESTS_ROUTE,
             onClick = navigateToInterests,
             icon = { Icon(Icons.AutoMirrored.Filled.ListAlt, stringResource(R.string.interests_title)) },
             label = { Text(stringResource(R.string.interests_title)) },
@@ -80,7 +80,7 @@ fun AppNavRail(
 fun PreviewAppNavRail() {
     NiaTheme {
         AppNavRail(
-            currentRoute = JetnewsDestinations.HOME_ROUTE,
+            currentRoute = AppRoute.HOME_ROUTE,
             navigateToHome = {},
             navigateToInterests = {},
         )

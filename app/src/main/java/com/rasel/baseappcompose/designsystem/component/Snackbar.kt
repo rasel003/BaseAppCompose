@@ -16,7 +16,6 @@
 
 package com.rasel.baseappcompose.designsystem.component
 
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarData
@@ -24,12 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 
 import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
-import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 /**
  * An alternative to [androidx.compose.material3.Snackbar] utilizing

@@ -36,10 +36,10 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.designsystem.component.NiaButton
+import com.rasel.baseappcompose.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.navigation.AppRoute
 import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN

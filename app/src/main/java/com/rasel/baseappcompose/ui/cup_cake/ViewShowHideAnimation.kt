@@ -59,7 +59,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.example.compose.snippets.animations.colorBlue
-import com.google.samples.apps.nowinandroid.core.designsystem.component.ThemePreviews
+import com.rasel.baseappcompose.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.domain.PreviewEpisodes

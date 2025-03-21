@@ -18,18 +18,11 @@ package com.rasel.baseappcompose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navDeepLink
-import com.example.jetnews.ui.interests.InterestsViewModel
 import com.rasel.baseappcompose.data.AppContainer
-import com.rasel.baseappcompose.ui.JetnewsApplication.Companion.JETNEWS_APP_URI
-import com.rasel.baseappcompose.ui.home.HomeRoute
-import com.rasel.baseappcompose.ui.home.HomeViewModel
-import com.rasel.baseappcompose.ui.interests.InterestsRoute
+import com.rasel.baseappcompose.ui.navigation.AppRoute
 
 const val POST_ID = "postId"
 
@@ -40,47 +33,14 @@ fun JetnewsNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     openDrawer: () -> Unit = {},
-    startDestination: String = JetnewsDestinations.HOME_ROUTE,
+    startDestination: String = AppRoute.HOME_ROUTE
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination,
         modifier = modifier
     ) {
-        composable(
-            route = JetnewsDestinations.HOME_ROUTE,
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern =
-                        "$JETNEWS_APP_URI/${JetnewsDestinations.HOME_ROUTE}?$POST_ID={$POST_ID}"
-                }
-            )
-        ) { navBackStackEntry ->
-            val homeViewModel: HomeViewModel = viewModel(
-                factory = HomeViewModel.provideFactory(
-                    postsRepository = appContainer.postsRepository,
-                    preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
-                )
-            )
-            val interestsViewModel: InterestsViewModel = viewModel(
-                factory = InterestsViewModel.provideFactory(appContainer.interestsRepository)
-            )
-            HomeRoute(
-                homeViewModel = homeViewModel,
-                interestsViewModel = interestsViewModel,
-                isExpandedScreen = isExpandedScreen,
-                openSettingDialog = {}
-            )
-        }
-        composable(JetnewsDestinations.INTERESTS_ROUTE) {
-            val interestsViewModel: InterestsViewModel = viewModel(
-                factory = InterestsViewModel.provideFactory(appContainer.interestsRepository)
-            )
-            InterestsRoute(
-                interestsViewModel = interestsViewModel,
-                isExpandedScreen = isExpandedScreen,
-                openDrawer = openDrawer
-            )
-        }
+
+
     }
 }
