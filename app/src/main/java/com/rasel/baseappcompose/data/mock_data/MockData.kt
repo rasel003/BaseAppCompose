@@ -1,4 +1,4 @@
-package com.rasel.baseappcompose.data
+package com.rasel.baseappcompose.data.mock_data
 
 import com.rasel.baseappcompose.data.model.DarkThemeConfig
 import com.rasel.baseappcompose.data.model.NewsResource
