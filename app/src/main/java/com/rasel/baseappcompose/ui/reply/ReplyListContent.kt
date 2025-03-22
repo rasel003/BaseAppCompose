@@ -43,6 +43,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material.icons.automirrored.outlined.Help
+import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -84,6 +85,7 @@ fun ReplyInboxScreen(
     displayFeatures: List<DisplayFeature>,
     closeDetailScreen: () -> Unit,
     navigateToDetail: (Long, ReplyContentType) -> Unit,
+    navigateToPaging3: () -> Unit,
     toggleSelectedEmail: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -134,7 +136,7 @@ fun ReplyInboxScreen(
             // When we have bottom navigation we show FAB at the bottom end.
             if (navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
                 FloatingActionButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { navigateToPaging3() },
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(16.dp),
@@ -142,7 +144,7 @@ fun ReplyInboxScreen(
                     contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Edit,
+                        imageVector = Icons.Default.Photo,
                         contentDescription = stringResource(id = R.string.compose),
                         modifier = Modifier.size(28.dp)
                     )
@@ -314,6 +316,7 @@ private fun ReplyInboxScreenPreview() {
             closeDetailScreen = {},
             navigateToDetail = { _, _ -> },
             toggleSelectedEmail = {},
+            navigateToPaging3 = {},
         )
     }
 }

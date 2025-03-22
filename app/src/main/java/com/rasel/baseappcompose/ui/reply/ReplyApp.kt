@@ -317,7 +317,8 @@ private fun ReplyNavHost(
                             displayFeatures = displayFeatures,
                             closeDetailScreen = closeDetailScreen,
                             navigateToDetail = navigateToDetail,
-                            toggleSelectedEmail = toggleSelectedEmail
+                            toggleSelectedEmail = toggleSelectedEmail,
+                            navigateToPaging3 = {navigationActions.navigateTo(AppRoute.PAGING_3)}
                         )
                     }
                     composable(AppRoute.CUP_CAKE) {
@@ -397,8 +398,7 @@ private fun ReplyNavHost(
                         )
                     }
                     composable(route = AppRoute.PAGING_3) {
-                        PagingListScreen(
-                        )
+                        PagingListScreen()
                     }
                     composable(route = AppRoute.ANIMATION_LIST) {
                         AnimationList(navigateTo = navigationActions::navigateTo)

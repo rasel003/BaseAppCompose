@@ -87,9 +87,6 @@ fun StartOrderScreen(
             NiaButton( onClick = { navigateTo(AppRoute.MOVIE_DETAILS) }) {
                 Text("For You")
             }
-            NiaButton( onClick = { navigateTo(AppRoute.PAGING_3) }) {
-                Text("Paging 3")
-            }
             NiaButton(onClick = { navigateTo(AppRoute.HOME_ROUTE) }) {
                 Text("Jet Snake")
             }
