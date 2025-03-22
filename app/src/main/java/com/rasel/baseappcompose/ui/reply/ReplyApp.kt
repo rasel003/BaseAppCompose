@@ -34,7 +34,11 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.SnackbarDuration.Indefinite
+import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult.ActionPerformed
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -45,9 +49,11 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -57,9 +63,11 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -102,10 +110,13 @@ import com.rasel.baseappcompose.designsystem.component.SliderExamples
 import com.rasel.baseappcompose.designsystem.component.SwitchExamples
 import com.rasel.baseappcompose.designsystem.component.TimePickerExamples
 import com.rasel.baseappcompose.designsystem.component.rememberJetsnackScaffoldState
+import com.rasel.baseappcompose.ui.bookmarks.navigation.bookmarksScreen
 import com.rasel.baseappcompose.ui.cup_cake.AnimationList
 import com.rasel.baseappcompose.ui.cup_cake.MovieDetailsScreen
 import com.rasel.baseappcompose.ui.cup_cake.ValueBasedAnimation
 import com.rasel.baseappcompose.ui.cup_cake.ViewShowHideAnimation
+import com.rasel.baseappcompose.ui.foryou.navigation.forYouSection
+import com.rasel.baseappcompose.ui.foryou.navigation.navigateToForYou
 import com.rasel.baseappcompose.ui.graphics.ApplyPolygonAsClipImage
 import com.rasel.baseappcompose.ui.graphics.BitmapFromComposableFullSnippet
 import com.rasel.baseappcompose.ui.graphics.BrushExamplesScreen
@@ -113,6 +124,8 @@ import com.rasel.baseappcompose.ui.home.HomeRoute
 import com.rasel.baseappcompose.ui.home.HomeViewModel
 import com.rasel.baseappcompose.ui.images.ImageExamplesScreen
 import com.rasel.baseappcompose.ui.interests.InterestsViewModel
+import com.rasel.baseappcompose.ui.interests.navigation.navigateToInterests
+import com.rasel.baseappcompose.ui.interests2pane.interestsListDetailScreen
 import com.rasel.baseappcompose.ui.jet_caster.JetcasterAppState
 import com.rasel.baseappcompose.ui.jet_caster.Screen
 import com.rasel.baseappcompose.ui.jet_caster.home.MainScreen
@@ -131,6 +144,7 @@ import com.rasel.baseappcompose.ui.order.OrderSummaryScreen
 import com.rasel.baseappcompose.ui.order.OrderViewModel
 import com.rasel.baseappcompose.ui.order.SelectOptionScreen
 import com.rasel.baseappcompose.ui.order.StartOrderScreen
+import com.rasel.baseappcompose.ui.search.navigation.searchScreen
 import com.rasel.baseappcompose.ui.setting.SettingsDialog
 import com.rasel.baseappcompose.ui.snack_home.HomeSections
 import com.rasel.baseappcompose.ui.snack_home.addHomeGraph
@@ -138,10 +152,13 @@ import com.rasel.baseappcompose.ui.snack_home.composableWithCompositionLocal
 import com.rasel.baseappcompose.ui.snackdetail.SnackDetail
 import com.rasel.baseappcompose.ui.snackdetail.nonSpatialExpressiveSpring
 import com.rasel.baseappcompose.ui.snackdetail.spatialExpressiveSpring
+import com.rasel.baseappcompose.ui.topic.navigation.navigateToTopic
+import com.rasel.baseappcompose.ui.topic.navigation.topicScreen
 import com.rasel.baseappcompose.ui.utils.DevicePosture
 import com.rasel.baseappcompose.ui.utils.NiaAppState
 import com.rasel.baseappcompose.ui.utils.ReplyContentType
 import com.rasel.baseappcompose.ui.utils.ReplyNavigationType
+import com.rasel.baseappcompose.ui.utils.TopLevelDestination
 import com.rasel.baseappcompose.ui.utils.isBookPosture
 import com.rasel.baseappcompose.ui.utils.isSeparating
 import kotlinx.coroutines.launch
@@ -249,7 +266,15 @@ fun ReplyApp(
                     openSettingDialog = { showSettingsDialog = true },
                     onSettingsDismissed = { showSettingsDialog = false },
                     cancelOrderAndNavigateToStart = { navigationActions.cancelOrderAndNavigateToStart() },
-                    navigationActions = navigationActions
+                    navigationActions = navigationActions,
+                    onShowSnackbar = { message, action ->
+                        /*snackbarHostState.showSnackbar(
+                            message = message,
+                            actionLabel = action,
+                            duration = Short,
+                        ) == ActionPerformed*/
+                        false
+                    }
                 )
             }
         }
@@ -276,7 +301,8 @@ private fun ReplyNavHost(
     openSettingDialog: () -> Unit,
     onSettingsDismissed: () -> Unit,
     cancelOrderAndNavigateToStart: () -> Unit,
-    navigationActions : NiaAppState
+    navigationActions : NiaAppState,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
 
     val postsFeed = runBlocking {
@@ -329,7 +355,7 @@ private fun ReplyNavHost(
                                 navigationActions.navigateTo(AppRoute.Flavor)
                             },
                             navigateTo = navigationActions::navigateTo,
-                            navigateToForYou = {},
+                            navigateToForYou = {navigationActions.navController.navigateToForYou(NavOptions.Builder().build())},
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(dimensionResource(R.dimen.padding_medium))
@@ -350,6 +376,27 @@ private fun ReplyNavHost(
                             onBackPress = appState::navigateBack
                         )
                     }
+
+                    forYouSection(
+                        onTopicClick = navController::navigateToTopic,
+                    ) {
+                        topicScreen(
+                            showBackButton = true,
+                            onBackClick = navController::popBackStack,
+                            onTopicClick = navController::navigateToTopic,
+                        )
+                    }
+                    bookmarksScreen(
+                        onTopicClick = navController::navigateToInterests,
+                        onShowSnackbar = onShowSnackbar,
+                    )
+                    searchScreen(
+                        onBackClick = navController::popBackStack,
+                        onInterestsClick = { navigationActions.navigateToTopLevelDestination(
+                            TopLevelDestination.INTERESTS) },
+                        onTopicClick = navController::navigateToInterests,
+                    )
+                    interestsListDetailScreen()
 
                     composable(route = AppRoute.Flavor) {
                         val context = LocalContext.current

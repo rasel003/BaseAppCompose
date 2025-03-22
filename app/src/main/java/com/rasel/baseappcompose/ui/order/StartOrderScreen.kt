@@ -84,7 +84,7 @@ fun StartOrderScreen(
             NiaButton( onClick = { navigateTo(AppRoute.MOVIE_DETAILS) }) {
                 Text(stringResource(R.string.movie_details))
             }
-            NiaButton( onClick = { navigateTo(AppRoute.MOVIE_DETAILS) }) {
+            NiaButton( onClick = { navigateToForYou(AppRoute.MOVIE_DETAILS) }) {
                 Text("For You")
             }
             NiaButton(onClick = { navigateTo(AppRoute.HOME_ROUTE) }) {

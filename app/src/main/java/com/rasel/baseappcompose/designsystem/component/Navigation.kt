@@ -271,7 +271,6 @@ fun NiaNavigationSuiteScaffold(
 /**
  * A wrapper around [NavigationSuiteScope] to declare navigation items.
  */
-@OptIn(ExperimentalMaterial3AdaptiveNavigationSuiteApi::class)
 class NiaNavigationSuiteScope internal constructor(
     private val navigationSuiteScope: NavigationSuiteScope,
     private val navigationSuiteItemColors: NavigationSuiteItemColors,
