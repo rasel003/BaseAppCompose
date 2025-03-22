@@ -19,9 +19,9 @@
 package com.rasel.baseappcompose.ui.search
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.rasel.baseappcompose.data.mock_data.PreviewParameterData.newsResources
+import com.rasel.baseappcompose.data.mock_data.PreviewParameterData.topics
 import com.rasel.baseappcompose.data.model.FollowableTopic
-import com.rasel.baseappcompose.ui.utils.PreviewParameterData.newsResources
-import com.rasel.baseappcompose.ui.utils.PreviewParameterData.topics
 
 /**
  * This [PreviewParameterProvider](https://developer.android.com/reference/kotlin/androidx/compose/ui/tooling/preview/PreviewParameterProvider)

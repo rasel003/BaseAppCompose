@@ -86,7 +86,6 @@ object ArticleDetails
 @Serializable
 object HomeRoute
 
-
 object AppRoute {
     const val START = "BaseAppCompose"
     const val Flavor = "Choose_Flavor"
@@ -102,8 +101,11 @@ object AppRoute {
     const val ARTICLES = "Articles"
     const val JET_NEWS = "jet_news"
     const val CUP_CAKE = "cup_cake"
-    const val HOME_ROUTE = "home"
     const val INTERESTS_ROUTE = "interests"
+    const val HOME_ROUTE = "home"
+    const val SNACK_DETAIL_ROUTE = "snack"
+    const val SNACK_ID_KEY = "snackId"
+    const val ORIGIN = "origin"
 }
 val TOP_LEVEL_DESTINATIONS = listOf(
     AppTopLevelDestination(

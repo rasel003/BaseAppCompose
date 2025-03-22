@@ -18,9 +18,8 @@ package com.rasel.baseappcompose.ui.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.net.Uri
-import android.os.Build
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
@@ -36,6 +35,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavGraph
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -47,11 +47,9 @@ import com.rasel.baseappcompose.data.util.TimeZoneMonitor
 import com.rasel.baseappcompose.ui.bookmarks.navigation.navigateToBookmarks
 import com.rasel.baseappcompose.ui.foryou.navigation.navigateToForYou
 import com.rasel.baseappcompose.ui.interests.navigation.navigateToInterests
-import com.rasel.baseappcompose.ui.navigation.Screen
 import com.rasel.baseappcompose.ui.navigation.AppRoute
 import com.rasel.baseappcompose.ui.navigation.AppTopLevelDestination
-import com.rasel.baseappcompose.ui.navigation.MainDestinations
-import com.rasel.baseappcompose.ui.navigation.findStartDestination
+import com.rasel.baseappcompose.ui.navigation.Screen
 import com.rasel.baseappcompose.ui.search.navigation.navigateToSearch
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -162,14 +160,7 @@ class NiaAppState(
     @Suppress("DEPRECATION")
     private fun checkIfOnline(): Boolean {
         val cm = getSystemService(context, ConnectivityManager::class.java)
-
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val capabilities = cm?.getNetworkCapabilities(cm.activeNetwork) ?: return false
-            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
-                    capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
-        } else {
-            cm?.activeNetworkInfo?.isConnectedOrConnecting == true
-        }
+        return cm?.activeNetworkInfo?.isConnectedOrConnecting == true
     }
 
     /**
@@ -227,8 +218,14 @@ class NiaAppState(
 
             when (topLevelDestination) {
                 TopLevelDestination.FOR_YOU -> navController.navigateToForYou(topLevelNavOptions)
-                TopLevelDestination.BOOKMARKS -> navController.navigateToBookmarks(topLevelNavOptions)
-                TopLevelDestination.INTERESTS -> navController.navigateToInterests(null, topLevelNavOptions)
+                TopLevelDestination.BOOKMARKS -> navController.navigateToBookmarks(
+                    topLevelNavOptions
+                )
+
+                TopLevelDestination.INTERESTS -> navController.navigateToInterests(
+                    null,
+                    topLevelNavOptions
+                )
             }
         }
     }
@@ -275,10 +272,10 @@ class NiaAppState(
             restoreState = true
         }
     }
+
     fun navigateTo(destination: String) {
         navController.navigate(destination)
     }
-
 
 
     // ----------------------------------------------------------
@@ -288,6 +285,7 @@ class NiaAppState(
     fun upPress() {
         navController.navigateUp()
     }
+
     /**
      * Resets the [OrderUiState] and pops up to [CupcakeScreen.Start]
      */
@@ -313,7 +311,7 @@ class NiaAppState(
     fun navigateToSnackDetail(snackId: Long, origin: String, from: NavBackStackEntry) {
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.SNACK_DETAIL_ROUTE}/$snackId?origin=$origin")
+            navController.navigate("${AppRoute.SNACK_DETAIL_ROUTE}/$snackId?origin=$origin")
         }
     }
 }
@@ -343,3 +341,23 @@ private fun NavigationTrackingSideEffect(navController: NavHostController) {
  */
 private fun NavBackStackEntry.lifecycleIsResumed() =
     this.lifecycle.currentState == Lifecycle.State.RESUMED
+
+private fun NavigationSuiteType.toReplyNavType() = when (this) {
+    NavigationSuiteType.NavigationBar -> ReplyNavigationType.BOTTOM_NAVIGATION
+    NavigationSuiteType.NavigationRail -> ReplyNavigationType.NAVIGATION_RAIL
+    NavigationSuiteType.NavigationDrawer -> ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER
+    else -> ReplyNavigationType.BOTTOM_NAVIGATION
+}
+
+
+private val NavGraph.startDestination: NavDestination?
+    get() = findNode(startDestinationId)
+
+/**
+ * Copied from similar function in NavigationUI.kt
+ *
+ * https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:navigation/navigation-ui/src/main/java/androidx/navigation/ui/NavigationUI.kt
+ */
+tailrec fun findStartDestination(graph: NavDestination): NavDestination {
+    return if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph
+}

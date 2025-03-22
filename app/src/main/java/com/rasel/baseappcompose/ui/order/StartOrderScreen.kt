@@ -90,7 +90,7 @@ fun StartOrderScreen(
             NiaButton( onClick = { navigateTo(AppRoute.PAGING_3) }) {
                 Text("Paging 3")
             }
-            NiaButton(onClick = { navigateTo(MainDestinations.HOME_ROUTE) }) {
+            NiaButton(onClick = { navigateTo(AppRoute.HOME_ROUTE) }) {
                 Text("Jet Snake")
             }
             NiaButton(

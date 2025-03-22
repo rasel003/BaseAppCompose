@@ -170,7 +170,8 @@ class MainActivity : ComponentActivity() {
                         toggleSelectedEmail = { emailId ->
                             viewModel.toggleSelectedEmail(emailId)
                         },
-                        appContainer = appContainer
+                        appContainer = appContainer,
+                        navigationActions = appState
                     )
                 }
             }

@@ -48,7 +48,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -65,7 +64,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.window.layout.DisplayFeature
@@ -121,11 +119,9 @@ import com.rasel.baseappcompose.ui.jet_caster.home.MainScreen
 import com.rasel.baseappcompose.ui.jet_caster.player.PlayerScreen
 import com.rasel.baseappcompose.ui.jet_caster.rememberJetcasterAppState
 import com.rasel.baseappcompose.ui.landing.LandingScreen
-import com.rasel.baseappcompose.ui.navigation.AppNavigationActions
 import com.rasel.baseappcompose.ui.navigation.AppRoute
 import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN
 import com.rasel.baseappcompose.ui.navigation.Destination
-import com.rasel.baseappcompose.ui.navigation.MainDestinations
 import com.rasel.baseappcompose.ui.navigation.POST_ID
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationWrapper
 import com.rasel.baseappcompose.ui.navigation.TopComponentsDestination
@@ -143,6 +139,7 @@ import com.rasel.baseappcompose.ui.snackdetail.SnackDetail
 import com.rasel.baseappcompose.ui.snackdetail.nonSpatialExpressiveSpring
 import com.rasel.baseappcompose.ui.snackdetail.spatialExpressiveSpring
 import com.rasel.baseappcompose.ui.utils.DevicePosture
+import com.rasel.baseappcompose.ui.utils.NiaAppState
 import com.rasel.baseappcompose.ui.utils.ReplyContentType
 import com.rasel.baseappcompose.ui.utils.ReplyNavigationType
 import com.rasel.baseappcompose.ui.utils.isBookPosture
@@ -166,7 +163,8 @@ fun ReplyApp(
     closeDetailScreen: () -> Unit = {},
     navigateToDetail: (Long, ReplyContentType) -> Unit = { _, _ -> },
     toggleSelectedEmail: (Long) -> Unit = { },
-    context: Context = LocalContext.current
+    context: Context = LocalContext.current,
+    navigationActions : NiaAppState
 ) {
     /**
      * We are using display's folding features to map the device postures a fold is in.
@@ -197,10 +195,8 @@ fun ReplyApp(
         else -> ReplyContentType.SINGLE_PANE
     }
 
-    val navController = rememberNavController()
-    val navigationActions = remember(navController) {
-        AppNavigationActions(navController, context)
-    }
+    val navController = navigationActions.navController
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val selectedDestination =
         navBackStackEntry?.destination?.route ?: AppRoute.INBOX
@@ -225,8 +221,8 @@ fun ReplyApp(
         drawerContent = {
             AppDrawer(
                 currentRoute = currentRoute,
-                navigateToHome = { /*navigationActions.navigateToHome*/ },
-                navigateToInterests = { /*navigationActions.navigateToInterests*/ },
+                navigateToHome = { navigationActions.navigateToHome },
+                navigateToInterests = { navigationActions.navigateToInterests },
                 closeDrawer = { coroutineScope.launch { sizeAwareDrawerState.close() } }
             )
         },
@@ -252,8 +248,8 @@ fun ReplyApp(
                     showSettingsDialog = showSettingsDialog,
                     openSettingDialog = { showSettingsDialog = true },
                     onSettingsDismissed = { showSettingsDialog = false },
-                    navigateTo = { navigationActions.navigateTo(it) },
-                    cancelOrderAndNavigateToStart = { navigationActions.cancelOrderAndNavigateToStart() }
+                    cancelOrderAndNavigateToStart = { navigationActions.cancelOrderAndNavigateToStart() },
+                    navigationActions = navigationActions
                 )
             }
         }
@@ -279,8 +275,8 @@ private fun ReplyNavHost(
     showSettingsDialog: Boolean,
     openSettingDialog: () -> Unit,
     onSettingsDismissed: () -> Unit,
-    navigateTo: (String) -> Unit,
-    cancelOrderAndNavigateToStart: () -> Unit
+    cancelOrderAndNavigateToStart: () -> Unit,
+    navigationActions : NiaAppState
 ) {
 
     val postsFeed = runBlocking {
@@ -329,9 +325,9 @@ private fun ReplyNavHost(
                             quantityOptions = DataSource.quantityOptions,
                             onNextButtonClicked = {
                                 viewModel.setQuantity(it)
-                                navigateTo(AppRoute.Flavor)
+                                navigationActions.navigateTo(AppRoute.Flavor)
                             },
-                            navigateTo = navigateTo,
+                            navigateTo = navigationActions::navigateTo,
                             navigateToForYou = {},
                             modifier = Modifier
                                 .fillMaxSize()
@@ -358,7 +354,7 @@ private fun ReplyNavHost(
                         val context = LocalContext.current
                         SelectOptionScreen(
                             subtotal = uiState.price,
-                            onNextButtonClicked = { navigateTo(AppRoute.Pickup) },
+                            onNextButtonClicked = { navigationActions.navigateTo(AppRoute.Pickup) },
                             onCancelButtonClicked = {
                                 viewModel.resetOrder()
                                 cancelOrderAndNavigateToStart()
@@ -371,7 +367,7 @@ private fun ReplyNavHost(
                     composable(route = AppRoute.Pickup) {
                         SelectOptionScreen(
                             subtotal = uiState.price,
-                            onNextButtonClicked = { navigateTo(AppRoute.Summary) },
+                            onNextButtonClicked = { navigationActions.navigateTo(AppRoute.Summary) },
                             onCancelButtonClicked = {
                                 cancelOrderAndNavigateToStart()
                             },
@@ -396,7 +392,7 @@ private fun ReplyNavHost(
                     composable(route = AppRoute.MOVIE_DETAILS) {
                         MovieDetailsScreen(
                             orderUiState = uiState,
-                            navigateTo = navigateTo,
+                            navigateTo = navigationActions::navigateTo,
                             modifier = Modifier.fillMaxHeight()
                         )
                     }
@@ -405,7 +401,7 @@ private fun ReplyNavHost(
                         )
                     }
                     composable(route = AppRoute.ANIMATION_LIST) {
-                        AnimationList(navigateTo = navigateTo)
+                        AnimationList(navigateTo = navigationActions::navigateTo)
                     }
                     composable(route = AppRoute.SHOW_HIDE_ANIMATION) {
                         ViewShowHideAnimation()
@@ -437,7 +433,7 @@ private fun ReplyNavHost(
                     }
 
                     composable(LANDING_SCREEN) {
-                        LandingScreen { navigateTo(it.route) }
+                        LandingScreen { navigationActions.navigateTo(it.route) }
                     }
                     Destination.entries.forEach { destination ->
                         composable(destination.route) {
@@ -447,7 +443,7 @@ private fun ReplyNavHost(
                                 Destination.AnimationQuickGuideExamples -> AnimationExamplesScreen()
                                 Destination.ScreenshotExample -> BitmapFromComposableFullSnippet()
                                 Destination.ComponentsExamples -> ComponentsScreen {
-                                    navigateTo(
+                                    navigationActions.navigateTo(
                                         it.route
                                     )
                                 }
@@ -485,32 +481,32 @@ private fun ReplyNavHost(
                     }
 
                     composableWithCompositionLocal(
-                        route = MainDestinations.HOME_ROUTE
+                        route = AppRoute.HOME_ROUTE,
                     ) { backStackEntry ->
                         MainContainer(
                             onSnackSelected = { snackId: Long, origin: String, from: NavBackStackEntry ->
                                 // In order to discard duplicated navigation events, we check the Lifecycle
                                 if (from.lifecycleIsResumed()) {
-                                    navigateTo("${MainDestinations.SNACK_DETAIL_ROUTE}/$snackId?origin=$origin")
+                                    navigationActions.navigateTo("${AppRoute.SNACK_DETAIL_ROUTE}/$snackId?origin=$origin")
                                 }
                             }
                         )
                     }
 
                     composableWithCompositionLocal(
-                        "${MainDestinations.SNACK_DETAIL_ROUTE}/" +
-                                "{${MainDestinations.SNACK_ID_KEY}}" +
-                                "?origin={${MainDestinations.ORIGIN}}",
+                        "${AppRoute.SNACK_DETAIL_ROUTE}/" +
+                                "{${AppRoute.SNACK_ID_KEY}}" +
+                                "?origin={${AppRoute.ORIGIN}}",
                         arguments = listOf(
-                            navArgument(MainDestinations.SNACK_ID_KEY) {
+                            navArgument(AppRoute.SNACK_ID_KEY) {
                                 type = NavType.LongType
                             }
                         ),
 
                         ) { backStackEntry ->
                         val arguments = requireNotNull(backStackEntry.arguments)
-                        val snackId = arguments.getLong(MainDestinations.SNACK_ID_KEY)
-                        val origin = arguments.getString(MainDestinations.ORIGIN)
+                        val snackId = arguments.getLong(AppRoute.SNACK_ID_KEY)
+                        val origin = arguments.getString(AppRoute.ORIGIN)
                         SnackDetail(
                             snackId,
                             origin = origin ?: "",
