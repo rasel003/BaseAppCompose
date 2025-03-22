@@ -50,8 +50,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -94,22 +94,22 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.rasel.baseappcompose.domain.model.PostsFeed
-import com.rasel.baseappcompose.ui.article.postContentItems
-import com.rasel.baseappcompose.ui.article.sharePost
-import com.rasel.baseappcompose.designsystem.component.JetnewsSnackbarHost
 import com.example.jetnews.ui.modifiers.interceptKey
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.rasel.baseappcompose.R
-import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
-import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.data.Result
+import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
+import com.rasel.baseappcompose.designsystem.component.BookmarkButton
+import com.rasel.baseappcompose.designsystem.component.FavoriteButton
+import com.rasel.baseappcompose.designsystem.component.JetnewsSnackbarHost
+import com.rasel.baseappcompose.designsystem.component.ShareButton
+import com.rasel.baseappcompose.designsystem.component.TextSettingsButton
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
-import com.rasel.baseappcompose.ui.utils.BookmarkButton
-import com.rasel.baseappcompose.ui.utils.FavoriteButton
-import com.rasel.baseappcompose.ui.utils.ShareButton
-import com.rasel.baseappcompose.ui.utils.TextSettingsButton
+import com.rasel.baseappcompose.domain.model.Post
+import com.rasel.baseappcompose.domain.model.PostsFeed
+import com.rasel.baseappcompose.ui.article.postContentItems
+import com.rasel.baseappcompose.ui.article.sharePost
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
@@ -588,7 +588,7 @@ private fun PostListHistorySection(
  */
 @Composable
 private fun PostListDivider() {
-    Divider(
+    HorizontalDivider(
         modifier = Modifier.padding(horizontal = 14.dp),
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f)
     )
@@ -685,7 +685,6 @@ private fun HomeTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior? =
         TopAppBarDefaults.enterAlwaysScrollBehavior(topAppBarState)
 ) {
-    val context = LocalContext.current
     val title = stringResource(id = R.string.app_name)
     CenterAlignedTopAppBar(
         title = {

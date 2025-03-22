@@ -16,9 +16,9 @@
 
 package com.rasel.baseappcompose.ui.user_news
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.view.View
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -35,7 +35,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -50,6 +49,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -61,12 +61,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.rasel.baseappcompose.R
+import com.rasel.baseappcompose.data.mock_data.UserNewsResourcePreviewParameterProvider
 import com.rasel.baseappcompose.data.model.FollowableTopic
 import com.rasel.baseappcompose.data.model.UserNewsResource
-import com.rasel.baseappcompose.designsystem.component.NiaIconToggleButton
+import com.rasel.baseappcompose.designsystem.component.BookmarkButton
 import com.rasel.baseappcompose.designsystem.component.NiaTopicTag
-import com.rasel.baseappcompose.designsystem.icon.NiaIcons
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.utils.LocalTimeZone
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toJavaInstant
 import kotlinx.datetime.toJavaZoneId
@@ -78,6 +79,7 @@ import java.util.Locale
  * [NewsResource] card used on the following screens: For You, Saved
  */
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NewsResourceCardExpanded(
     userNewsResource: UserNewsResource,
@@ -89,15 +91,27 @@ fun NewsResourceCardExpanded(
     modifier: Modifier = Modifier,
 ) {
     val clickActionLabel = stringResource(R.string.core_ui_card_tap_action)
+    val sharingLabel = stringResource(R.string.core_ui_feed_sharing)
+    val sharingContent = stringResource(
+        R.string.core_ui_feed_sharing_data,
+        userNewsResource.title,
+        userNewsResource.url,
+    )
+
+    val dragAndDropFlags =
+        View.DRAG_FLAG_GLOBAL
+
     Card(
         onClick = onClick,
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         // Use custom label for accessibility services to communicate button's action to user.
         // Pass null for action to only override the label and not the actual action.
-        modifier = modifier.semantics {
-            onClick(label = clickActionLabel, action = null)
-        },
+        modifier = modifier
+            .semantics {
+                onClick(label = clickActionLabel, action = null)
+            }
+            .testTag("newsResourceCard:${userNewsResource.id}"),
     ) {
         Column {
             if (!userNewsResource.headerImageUrl.isNullOrEmpty()) {
@@ -113,7 +127,17 @@ fun NewsResourceCardExpanded(
                     Row {
                         NewsResourceTitle(
                             userNewsResource.title,
-                            modifier = Modifier.fillMaxWidth((.8f)),
+                            modifier = Modifier
+                                .fillMaxWidth((.8f))
+                            /* .dragAndDropSource { _ ->
+                                 DragAndDropTransferData(
+                                     ClipData.newPlainText(
+                                         sharingLabel,
+                                         sharingContent,
+                                     ),
+                                     flags = dragAndDropFlags,
+                                 )
+                             }*/,
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         BookmarkButton(isBookmarked, onToggleBookmark)
@@ -197,30 +221,7 @@ fun NewsResourceTitle(
     Text(newsResourceTitle, style = MaterialTheme.typography.headlineSmall, modifier = modifier)
 }
 
-@Composable
-fun BookmarkButton(
-    isBookmarked: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    NiaIconToggleButton(
-        checked = isBookmarked,
-        onCheckedChange = { onClick() },
-        modifier = modifier,
-        icon = {
-            Icon(
-                imageVector = NiaIcons.BookmarkBorder,
-                contentDescription = stringResource(R.string.core_ui_bookmark),
-            )
-        },
-        checkedIcon = {
-            Icon(
-                imageVector = NiaIcons.Bookmark,
-                contentDescription = stringResource(R.string.core_ui_unbookmark),
-            )
-        },
-    )
-}
+
 
 @Composable
 fun NotificationDot(
@@ -240,7 +241,6 @@ fun NotificationDot(
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun dateFormatted(publishDate: Instant): String = DateTimeFormatter
     .ofLocalizedDate(FormatStyle.MEDIUM)
@@ -283,7 +283,7 @@ fun NewsResourceTopics(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         for (followableTopic in topics) {
-            NiaTopicTag(
+            NiaTopicTag (
                 followed = followableTopic.isFollowed,
                 onClick = { onTopicClick(followableTopic.topic.id) },
                 text = {
@@ -300,9 +300,11 @@ fun NewsResourceTopics(
                     }
                     Text(
                         text = followableTopic.topic.name.uppercase(Locale.getDefault()),
-                        modifier = Modifier.semantics {
-                            this.contentDescription = contentDescription
-                        },
+                        modifier = Modifier
+                            .semantics {
+                                this.contentDescription = contentDescription
+                            }
+                            .testTag("topicTag:${followableTopic.topic.id}"),
                     )
                 },
             )

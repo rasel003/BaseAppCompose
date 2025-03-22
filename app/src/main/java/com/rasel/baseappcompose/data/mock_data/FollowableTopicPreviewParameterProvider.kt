@@ -16,7 +16,7 @@
 
 @file:Suppress("ktlint:standard:max-line-length")
 
-package com.rasel.baseappcompose.ui.utils
+package com.rasel.baseappcompose.data.mock_data
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.rasel.baseappcompose.data.model.FollowableTopic

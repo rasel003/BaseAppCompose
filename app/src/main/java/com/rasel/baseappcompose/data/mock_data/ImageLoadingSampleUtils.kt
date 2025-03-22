@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rasel.baseappcompose.ui.utils
+package com.rasel.baseappcompose.data.mock_data
 
 /*
 * Copyright 2023 The Android Open Source Project

@@ -64,19 +64,15 @@ import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollba
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.rememberDraggableScroller
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.scrollbarState
 import com.rasel.baseappcompose.R
+import com.rasel.baseappcompose.data.mock_data.UserNewsResourcePreviewParameterProvider
 import com.rasel.baseappcompose.data.model.UserNewsResource
 import com.rasel.baseappcompose.designsystem.component.NiaLoadingWheel
 import com.rasel.baseappcompose.designsystem.theme.LocalTintTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.user_news.NewsFeedUiState
-import com.rasel.baseappcompose.ui.user_news.NewsFeedUiState.*
 import com.rasel.baseappcompose.ui.user_news.newsFeed
-import com.rasel.baseappcompose.ui.utils.NewsFeedUiState.*
-import com.rasel.baseappcompose.ui.utils.NewsFeedUiState.Success
 import com.rasel.baseappcompose.ui.utils.TrackScreenViewEvent
 import com.rasel.baseappcompose.ui.utils.TrackScrollJank
-import com.rasel.baseappcompose.ui.utils.UserNewsResourcePreviewParameterProvider
-import com.rasel.baseappcompose.ui.utils.newsFeed
 
 @Composable
 internal fun BookmarksRoute(

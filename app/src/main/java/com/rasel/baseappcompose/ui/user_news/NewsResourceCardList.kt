@@ -16,13 +16,13 @@
 
 package com.rasel.baseappcompose.ui.user_news
 
-import android.net.Uri
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.net.toUri
 import com.rasel.baseappcompose.core.analytics.LocalAnalyticsHelper
 import com.rasel.baseappcompose.data.model.UserNewsResource
 import com.rasel.baseappcompose.ui.utils.logNewsResourceOpened
@@ -44,7 +44,7 @@ fun LazyListScope.userNewsResourceCardItems(
     items = items,
     key = { it.id },
     itemContent = { userNewsResource ->
-        val resourceUrl = Uri.parse(userNewsResource.url)
+        val resourceUrl = userNewsResource.url.toUri()
         val backgroundColor = MaterialTheme.colorScheme.background.toArgb()
         val context = LocalContext.current
         val analyticsHelper = LocalAnalyticsHelper.current

@@ -49,7 +49,6 @@ import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.domain.model.PostAuthor
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostCardPopular(
     post: Post,

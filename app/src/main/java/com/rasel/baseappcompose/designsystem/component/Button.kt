@@ -41,13 +41,18 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.ThumbUpOffAlt
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.ProvideTextStyle
@@ -64,6 +69,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.onClick
@@ -482,9 +488,90 @@ fun TextButtonExample(onClick: () -> Unit) {
 // [END android_compose_components_textbutton]
 
 
+@Composable
+fun FavoriteButton(onClick: () -> Unit) {
+    IconButton(onClick) {
+        Icon(
+            imageVector = Icons.Filled.ThumbUpOffAlt,
+            contentDescription = stringResource(R.string.cd_add_to_favorites)
+        )
+    }
+}
+
+/*@Composable
+fun BookmarkButton(
+    isBookmarked: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    NiaIconToggleButton(
+        checked = isBookmarked,
+        onCheckedChange = { onClick() },
+        modifier = modifier,
+        icon = {
+            Icon(
+                imageVector = NiaIcons.BookmarkBorder,
+                contentDescription = stringResource(R.string.core_ui_bookmark),
+            )
+        },
+        checkedIcon = {
+            Icon(
+                imageVector = NiaIcons.Bookmark,
+                contentDescription = stringResource(R.string.core_ui_unbookmark),
+            )
+        },
+    )
+}*/
 
 @Composable
+fun BookmarkButton(
+    isBookmarked: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val clickLabel = stringResource(
+        if (isBookmarked) R.string.unbookmark else R.string.bookmark
+    )
+    IconToggleButton(
+        checked = isBookmarked,
+        onCheckedChange = { onClick() },
+        modifier = modifier.semantics {
+            // Use a custom click label that accessibility services can communicate to the user.
+            // We only want to override the label, not the actual action, so for the action we pass null.
+            this.onClick(label = clickLabel, action = null)
+        }
+    ) {
+        Icon(
+            imageVector = if (isBookmarked) Icons.Filled.Bookmark else Icons.Filled.BookmarkBorder,
+            contentDescription = null // handled by click label of parent
+        )
+    }
+}
 
+@Composable
+fun ShareButton(onClick: () -> Unit) {
+    IconButton(onClick) {
+        Icon(
+            imageVector = Icons.Filled.Share,
+            contentDescription = stringResource(R.string.cd_share)
+        )
+    }
+}
+
+@Composable
+fun TextSettingsButton(onClick: () -> Unit) {
+    IconButton(onClick) {
+        Icon(
+            painter = painterResource(R.drawable.ic_text_settings),
+            contentDescription = stringResource(R.string.cd_text_settings)
+        )
+    }
+}
+
+
+
+
+@Composable
 fun JetsnackButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,

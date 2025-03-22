@@ -100,9 +100,9 @@ fun PostCardTopPreview() {
     }
 }
 
-/*
+/**
  * These previews will only show up on Android Studio Dolphin and later.
- * They showcase a feature called Multipreview Annotations.
+ * They showcase a feature called Multi preview Annotations.
  *
  * Read more in the [documentation](https://d.android.com/jetpack/compose/tooling#preview-multipreview)
 */

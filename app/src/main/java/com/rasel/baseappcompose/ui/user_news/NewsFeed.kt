@@ -21,7 +21,6 @@ import android.net.Uri
 import androidx.annotation.ColorInt
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
@@ -33,20 +32,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.core.analytics.LocalAnalyticsHelper
 import com.rasel.baseappcompose.data.model.UserNewsResource
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import androidx.core.net.toUri
+import com.rasel.baseappcompose.data.mock_data.UserNewsResourcePreviewParameterProvider
 import com.rasel.baseappcompose.ui.utils.logNewsResourceOpened
 
 /**
  * An extension on [LazyListScope] defining a feed with news resources.
  * Depending on the [feedState], this might emit no items.
  */
-@OptIn(ExperimentalFoundationApi::class)
 fun LazyStaggeredGridScope.newsFeed(
     feedState: NewsFeedUiState,
     onNewsResourcesCheckedChanged: (String, Boolean) -> Unit,
@@ -66,8 +65,6 @@ fun LazyStaggeredGridScope.newsFeed(
                 val analyticsHelper = LocalAnalyticsHelper.current
                 val backgroundColor = MaterialTheme.colorScheme.background.toArgb()
 
-                Modifier
-                    .padding(horizontal = 8.dp)
                 NewsResourceCardExpanded(
                     userNewsResource = userNewsResource,
                     isBookmarked = userNewsResource.isSaved,
@@ -76,7 +73,7 @@ fun LazyStaggeredGridScope.newsFeed(
                         analyticsHelper.logNewsResourceOpened(
                             newsResourceId = userNewsResource.id,
                         )
-                        launchCustomChromeTab(context, Uri.parse(userNewsResource.url), backgroundColor)
+                        launchCustomChromeTab(context, userNewsResource.url.toUri(), backgroundColor)
 
                         onNewsResourceViewed(userNewsResource.id)
                     },
@@ -89,8 +86,8 @@ fun LazyStaggeredGridScope.newsFeed(
                     },
                     onTopicClick = onTopicClick,
                     modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .animateItem(fadeInSpec = null, fadeOutSpec = null),
+                        .padding(horizontal = 8.dp)
+                        .animateItem(),
                 )
             }
         }
@@ -143,7 +140,7 @@ private fun NewsFeedLoadingPreview() {
 }
 
 @Preview
-@Preview(device = Devices.TABLET)
+@Preview(device = "spec:width=1280dp,height=800dp,dpi=240")
 @Composable
 private fun NewsFeedContentPreview(
     @PreviewParameter(UserNewsResourcePreviewParameterProvider::class)

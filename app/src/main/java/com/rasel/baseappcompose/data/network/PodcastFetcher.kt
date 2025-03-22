@@ -16,8 +16,6 @@
 
 package com.rasel.baseappcompose.data.network
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import coil.network.HttpException
 import com.example.jetcaster.core.data.database.model.Category
 import com.example.jetcaster.core.data.database.model.Episode
@@ -30,6 +28,7 @@ import com.rometools.rome.feed.synd.SyndEntry
 import com.rometools.rome.feed.synd.SyndFeed
 import com.rometools.rome.io.SyndFeedInput
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.catch
@@ -38,10 +37,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.time.Duration
 import java.time.Instant
 import java.time.ZoneOffset
-import okhttp3.Request
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -73,7 +72,7 @@ class PodcastsFetcher @Inject constructor(
      * The feeds are fetched concurrently, meaning that the resulting emission order may not
      * match the order of [feedUrls].
      */
-    @RequiresApi(Build.VERSION_CODES.O)
+    @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(feedUrls: List<String>): Flow<PodcastRssResponse> {
         // We use flatMapMerge here to achieve concurrent fetching/parsing of the feeds.
         return feedUrls.asFlow()
@@ -88,7 +87,6 @@ class PodcastsFetcher @Inject constructor(
             }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun fetchPodcast(url: String) : PodcastRssResponse {
         val request = Request.Builder()
             .url(url)
@@ -126,7 +124,6 @@ sealed class PodcastRssResponse {
 /**
  * Map a Rome [SyndFeed] instance to our own [Podcast] data class.
  */
-@RequiresApi(Build.VERSION_CODES.O)
 private fun SyndFeed.toPodcastResponse(feedUrl: String): PodcastRssResponse {
     val podcastUri = uri ?: feedUrl
     val episodes = entries.map { it.toEpisode(podcastUri) }
@@ -151,7 +148,6 @@ private fun SyndFeed.toPodcastResponse(feedUrl: String): PodcastRssResponse {
 /**
  * Map a Rome [SyndEntry] instance to our own [Episode] data class.
  */
-@RequiresApi(Build.VERSION_CODES.O)
 private fun SyndEntry.toEpisode(podcastUri: String): Episode {
     val entryInformation = getModule(PodcastModuleDtd) as? EntryInformation
     return Episode(

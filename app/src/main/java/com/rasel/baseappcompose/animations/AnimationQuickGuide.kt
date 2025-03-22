@@ -109,7 +109,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.compose.AsyncImage
-import com.rasel.baseappcompose.ui.utils.randomSampleImageUrl
+import com.rasel.baseappcompose.data.mock_data.randomSampleImageUrl
 import com.rasel.baseappcompose.R
 import java.net.URLDecoder
 import java.net.URLEncoder

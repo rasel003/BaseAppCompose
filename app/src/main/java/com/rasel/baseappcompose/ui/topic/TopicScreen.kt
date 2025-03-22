@@ -65,7 +65,7 @@ import com.rasel.baseappcompose.designsystem.component.NiaLoadingWheel
 import com.rasel.baseappcompose.designsystem.icon.NiaIcons
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.user_news.TrackScrollJank
-import com.rasel.baseappcompose.ui.user_news.UserNewsResourcePreviewParameterProvider
+import com.rasel.baseappcompose.data.mock_data.UserNewsResourcePreviewParameterProvider
 import com.rasel.baseappcompose.ui.user_news.userNewsResourceCardItems
 import com.rasel.baseappcompose.ui.utils.DevicePreviews
 import com.rasel.baseappcompose.ui.utils.TrackScreenViewEvent

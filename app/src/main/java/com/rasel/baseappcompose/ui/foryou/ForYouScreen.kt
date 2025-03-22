@@ -99,7 +99,7 @@ import com.rasel.baseappcompose.designsystem.icon.NiaIcons
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.user_news.NewsFeedUiState
 import com.rasel.baseappcompose.ui.user_news.TrackScrollJank
-import com.rasel.baseappcompose.ui.user_news.UserNewsResourcePreviewParameterProvider
+import com.rasel.baseappcompose.data.mock_data.UserNewsResourcePreviewParameterProvider
 import com.rasel.baseappcompose.ui.user_news.launchCustomChromeTab
 import com.rasel.baseappcompose.ui.user_news.newsFeed
 import com.rasel.baseappcompose.ui.utils.DevicePreviews

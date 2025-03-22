@@ -16,7 +16,7 @@
 
 @file:Suppress("ktlint:standard:max-line-length")
 
-package com.rasel.baseappcompose.ui.user_news
+package com.rasel.baseappcompose.data.mock_data
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.rasel.baseappcompose.data.model.DarkThemeConfig
@@ -25,7 +25,7 @@ import com.rasel.baseappcompose.data.model.ThemeBrand
 import com.rasel.baseappcompose.data.model.Topic
 import com.rasel.baseappcompose.data.model.UserData
 import com.rasel.baseappcompose.data.model.UserNewsResource
-import com.rasel.baseappcompose.ui.user_news.PreviewParameterData.newsResources
+import com.rasel.baseappcompose.data.mock_data.PreviewParameterData.newsResources
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone

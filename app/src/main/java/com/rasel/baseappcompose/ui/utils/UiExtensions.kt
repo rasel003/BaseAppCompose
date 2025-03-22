@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rasel.baseappcompose
+package com.rasel.baseappcompose.ui.utils
 
 import android.content.res.Configuration
 import androidx.activity.ComponentActivity

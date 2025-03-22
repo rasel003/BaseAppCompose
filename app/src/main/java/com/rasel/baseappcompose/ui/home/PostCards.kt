@@ -49,9 +49,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.posts.impl.post3
-import com.rasel.baseappcompose.domain.model.Post
+import com.rasel.baseappcompose.designsystem.component.BookmarkButton
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
-import com.rasel.baseappcompose.ui.utils.BookmarkButton
+import com.rasel.baseappcompose.domain.model.Post
 
 @Composable
 fun AuthorAndReadTime(
@@ -236,7 +236,7 @@ fun SimplePostPreview() {
 fun HistoryPostPreview() {
     NiaTheme {
         Surface {
-            PostCardHistory(post3, {})
+            PostCardHistory(post3) {}
         }
     }
 }

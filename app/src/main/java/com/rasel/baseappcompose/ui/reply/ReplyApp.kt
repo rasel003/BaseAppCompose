@@ -72,24 +72,48 @@ import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
 import com.example.compose.snippets.animations.AnimationExamplesScreen
 import com.rasel.baseappcompose.AppDrawer
-import com.rasel.baseappcompose.JetnewsDestinations
 import com.rasel.baseappcompose.NiaApplication.Companion.JETNEWS_APP_URI
-import com.rasel.baseappcompose.POST_ID
 import com.rasel.baseappcompose.R
-import com.rasel.baseappcompose.animations.sharedelement.*
+import com.rasel.baseappcompose.animations.sharedelement.LocalNavAnimatedVisibilityScope
+import com.rasel.baseappcompose.animations.sharedelement.LocalSharedTransitionScope
+import com.rasel.baseappcompose.animations.sharedelement.PlaceholderSizeAnimated_Demo
 import com.rasel.baseappcompose.data.AppContainer
 import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
-import com.rasel.baseappcompose.designsystem.component.*
+import com.rasel.baseappcompose.designsystem.component.AppBarExamples
+import com.rasel.baseappcompose.designsystem.component.BadgeExamples
+import com.rasel.baseappcompose.designsystem.component.ButtonExamples
+import com.rasel.baseappcompose.designsystem.component.CardExamples
+import com.rasel.baseappcompose.designsystem.component.CarouselExamples
+import com.rasel.baseappcompose.designsystem.component.CheckboxExamples
+import com.rasel.baseappcompose.designsystem.component.ChipExamples
+import com.rasel.baseappcompose.designsystem.component.ComponentsScreen
+import com.rasel.baseappcompose.designsystem.component.DatePickerExamples
+import com.rasel.baseappcompose.designsystem.component.DialogExamples
+import com.rasel.baseappcompose.designsystem.component.DividerExamples
+import com.rasel.baseappcompose.designsystem.component.FloatingActionButtonExamples
+import com.rasel.baseappcompose.designsystem.component.JetsnackBottomBar
+import com.rasel.baseappcompose.designsystem.component.JetsnackScaffold
+import com.rasel.baseappcompose.designsystem.component.JetsnackSnackbar
+import com.rasel.baseappcompose.designsystem.component.PartialBottomSheet
+import com.rasel.baseappcompose.designsystem.component.ProgressIndicatorExamples
+import com.rasel.baseappcompose.designsystem.component.ScaffoldExample
+import com.rasel.baseappcompose.designsystem.component.SliderExamples
+import com.rasel.baseappcompose.designsystem.component.SwitchExamples
+import com.rasel.baseappcompose.designsystem.component.TimePickerExamples
+import com.rasel.baseappcompose.designsystem.component.rememberJetsnackScaffoldState
 import com.rasel.baseappcompose.ui.cup_cake.AnimationList
+import com.rasel.baseappcompose.ui.cup_cake.MovieDetailsScreen
 import com.rasel.baseappcompose.ui.cup_cake.ValueBasedAnimation
 import com.rasel.baseappcompose.ui.cup_cake.ViewShowHideAnimation
-import com.rasel.baseappcompose.ui.graphics.*
+import com.rasel.baseappcompose.ui.graphics.ApplyPolygonAsClipImage
+import com.rasel.baseappcompose.ui.graphics.BitmapFromComposableFullSnippet
+import com.rasel.baseappcompose.ui.graphics.BrushExamplesScreen
 import com.rasel.baseappcompose.ui.home.HomeRoute
 import com.rasel.baseappcompose.ui.home.HomeViewModel
-import com.rasel.baseappcompose.ui.images.*
+import com.rasel.baseappcompose.ui.images.ImageExamplesScreen
 import com.rasel.baseappcompose.ui.interests.InterestsViewModel
 import com.rasel.baseappcompose.ui.jet_caster.JetcasterAppState
 import com.rasel.baseappcompose.ui.jet_caster.Screen
@@ -102,6 +126,7 @@ import com.rasel.baseappcompose.ui.navigation.AppRoute
 import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN
 import com.rasel.baseappcompose.ui.navigation.Destination
 import com.rasel.baseappcompose.ui.navigation.MainDestinations
+import com.rasel.baseappcompose.ui.navigation.POST_ID
 import com.rasel.baseappcompose.ui.navigation.ReplyNavigationWrapper
 import com.rasel.baseappcompose.ui.navigation.TopComponentsDestination
 import com.rasel.baseappcompose.ui.navigation.rememberJetsnackNavController
@@ -184,7 +209,7 @@ fun ReplyApp(
 
     val coroutineScope = rememberCoroutineScope()
 
-    val currentRoute = navBackStackEntry?.destination?.route ?: JetnewsDestinations.HOME_ROUTE
+    val currentRoute = navBackStackEntry?.destination?.route ?: AppRoute.HOME_ROUTE
 
     val isExpandedScreen = windowSize.widthSizeClass == WindowWidthSizeClass.Expanded
     val sizeAwareDrawerState = rememberSizeAwareDrawerState(isExpandedScreen)
@@ -368,14 +393,14 @@ private fun ReplyNavHost(
                             modifier = Modifier.fillMaxHeight()
                         )
                     }
-                    /*composable(route = AppRoute.MOVIE_DETAILS) {
+                    composable(route = AppRoute.MOVIE_DETAILS) {
                         MovieDetailsScreen(
                             orderUiState = uiState,
                             navigateTo = navigateTo,
                             modifier = Modifier.fillMaxHeight()
                         )
-                    }*/
-                    composable(route = AppRoute.MOVIE_DETAILS) {
+                    }
+                    composable(route = AppRoute.PAGING_3) {
                         PagingListScreen(
                         )
                     }
@@ -393,7 +418,7 @@ private fun ReplyNavHost(
                         deepLinks = listOf(
                             navDeepLink {
                                 uriPattern =
-                                    "$JETNEWS_APP_URI/${JetnewsDestinations.HOME_ROUTE}?$POST_ID={$POST_ID}"
+                                    "$JETNEWS_APP_URI/${AppRoute.HOME_ROUTE}?$POST_ID={$POST_ID}"
                             }
                         )
                     ) { navBackStackEntry ->

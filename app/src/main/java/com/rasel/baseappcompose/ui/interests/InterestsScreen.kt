@@ -32,7 +32,7 @@ import com.rasel.baseappcompose.data.model.FollowableTopic
 import com.rasel.baseappcompose.designsystem.component.NiaLoadingWheel
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.utils.DevicePreviews
-import com.rasel.baseappcompose.ui.utils.FollowableTopicPreviewParameterProvider
+import com.rasel.baseappcompose.data.mock_data.FollowableTopicPreviewParameterProvider
 import com.rasel.baseappcompose.ui.utils.TrackScreenViewEvent
 
 @Composable

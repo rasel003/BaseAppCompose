@@ -28,6 +28,7 @@ import com.rasel.baseappcompose.data.repository.UserDataRepository
 import com.rasel.baseappcompose.domain.usecase.GetRecentSearchQueriesUseCase
 import com.rasel.baseappcompose.domain.usecase.GetSearchContentsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -42,7 +43,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     getSearchContentsUseCase: GetSearchContentsUseCase,
     recentSearchQueriesUseCase: GetRecentSearchQueriesUseCase,
-    private val searchContentsRepository: SearchContentsRepository,
+    searchContentsRepository: SearchContentsRepository,
     private val recentSearchRepository: RecentSearchRepository,
     private val userDataRepository: UserDataRepository,
     private val savedStateHandle: SavedStateHandle,
@@ -51,6 +52,7 @@ class SearchViewModel @Inject constructor(
 
     val searchQuery = savedStateHandle.getStateFlow(key = SEARCH_QUERY, initialValue = "")
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     val searchResultUiState: StateFlow<SearchResultUiState> =
         searchContentsRepository.getSearchContentsCount()
             .flatMapLatest { totalCount ->

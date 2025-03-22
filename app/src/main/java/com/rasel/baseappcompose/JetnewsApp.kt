@@ -78,12 +78,6 @@ fun JetnewsApp(
                         navigateToInterests = {}/*navigationActions.navigateToInterests*/,
                     )
                 }
-                JetnewsNavGraph(
-                    appContainer = appContainer,
-                    isExpandedScreen = isExpandedScreen,
-                    navController = navController,
-                    openDrawer = { coroutineScope.launch { sizeAwareDrawerState.open() } },
-                )
             }
         }
     }

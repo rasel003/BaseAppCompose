@@ -65,12 +65,12 @@ import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
+import com.rasel.baseappcompose.designsystem.component.BookmarkButton
+import com.rasel.baseappcompose.designsystem.component.FavoriteButton
+import com.rasel.baseappcompose.designsystem.component.ShareButton
+import com.rasel.baseappcompose.designsystem.component.TextSettingsButton
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.domain.model.Post
-import com.rasel.baseappcompose.ui.utils.BookmarkButton
-import com.rasel.baseappcompose.ui.utils.FavoriteButton
-import com.rasel.baseappcompose.ui.utils.ShareButton
-import com.rasel.baseappcompose.ui.utils.TextSettingsButton
 import kotlinx.coroutines.runBlocking
 
 /**
