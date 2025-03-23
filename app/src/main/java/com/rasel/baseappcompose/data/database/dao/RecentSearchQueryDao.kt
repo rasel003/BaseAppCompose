@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.nowinandroid.core.database.dao
+package com.rasel.baseappcompose.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query

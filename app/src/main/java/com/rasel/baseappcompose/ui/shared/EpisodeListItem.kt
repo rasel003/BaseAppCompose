@@ -50,8 +50,8 @@ import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.component.HtmlTextContainer
 import com.rasel.baseappcompose.designsystem.component.PodcastImage
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
-import com.rasel.baseappcompose.domain.PreviewEpisodes
-import com.rasel.baseappcompose.domain.PreviewPodcasts
+import com.rasel.baseappcompose.data.mock_data.PreviewEpisodes
+import com.rasel.baseappcompose.data.mock_data.PreviewPodcasts
 import com.rasel.baseappcompose.domain.model.EpisodeInfo
 import com.rasel.baseappcompose.domain.model.PodcastInfo
 import com.rasel.baseappcompose.domain.player.model.PlayerEpisode

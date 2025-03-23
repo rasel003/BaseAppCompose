@@ -19,20 +19,9 @@ package com.rasel.baseappcompose.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
-import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-
-/**
- * Destinations used in the [JetsnackApp].
- */
-object MainDestinations {
-    const val HOME_ROUTE = "home"
-    const val SNACK_DETAIL_ROUTE = "snack"
-    const val SNACK_ID_KEY = "snackId"
-    const val ORIGIN = "origin"
-}
+import com.rasel.baseappcompose.ui.utils.findStartDestination
 
 /**
  * Remembers and creates an instance of [JetsnackNavController]
@@ -52,10 +41,6 @@ class JetsnackNavController(
     val navController: NavHostController,
 ) {
 
-    // ----------------------------------------------------------
-    // Navigation state source of truth
-    // ----------------------------------------------------------
-
     fun navigateToBottomBarRoute(route: String) {
         if (route != navController.currentDestination?.route) {
             navController.navigate(route) {
@@ -72,14 +57,4 @@ class JetsnackNavController(
 
 }
 
-private val NavGraph.startDestination: NavDestination?
-    get() = findNode(startDestinationId)
 
-/**
- * Copied from similar function in NavigationUI.kt
- *
- * https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:navigation/navigation-ui/src/main/java/androidx/navigation/ui/NavigationUI.kt
- */
-tailrec fun findStartDestination(graph: NavDestination): NavDestination {
-    return if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph
-}

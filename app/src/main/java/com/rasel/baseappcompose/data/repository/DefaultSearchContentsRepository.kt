@@ -16,9 +16,9 @@
 
 package com.rasel.baseappcompose.data.repository
 
-import com.google.samples.apps.nowinandroid.core.database.dao.NewsResourceFtsDao
-import com.google.samples.apps.nowinandroid.core.database.dao.TopicDao
-import com.google.samples.apps.nowinandroid.core.database.dao.TopicFtsDao
+import com.rasel.baseappcompose.data.database.dao.NewsResourceFtsDao
+import com.rasel.baseappcompose.data.database.dao.TopicDao
+import com.rasel.baseappcompose.data.database.dao.TopicFtsDao
 import com.rasel.baseappcompose.data.Dispatcher
 import com.rasel.baseappcompose.data.NiaDispatchers
 import com.rasel.baseappcompose.data.database.dao.NewsResourceDao

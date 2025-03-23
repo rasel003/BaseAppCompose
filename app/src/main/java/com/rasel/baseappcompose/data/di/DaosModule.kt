@@ -16,10 +16,10 @@
 
 package com.rasel.baseappcompose.data.di
 
-import com.google.samples.apps.nowinandroid.core.database.dao.NewsResourceFtsDao
-import com.google.samples.apps.nowinandroid.core.database.dao.RecentSearchQueryDao
-import com.google.samples.apps.nowinandroid.core.database.dao.TopicDao
-import com.google.samples.apps.nowinandroid.core.database.dao.TopicFtsDao
+import com.rasel.baseappcompose.data.database.dao.NewsResourceFtsDao
+import com.rasel.baseappcompose.data.database.dao.RecentSearchQueryDao
+import com.rasel.baseappcompose.data.database.dao.TopicDao
+import com.rasel.baseappcompose.data.database.dao.TopicFtsDao
 import com.rasel.baseappcompose.data.database.AppDatabase
 import com.rasel.baseappcompose.data.database.dao.NewsResourceDao
 import dagger.Module

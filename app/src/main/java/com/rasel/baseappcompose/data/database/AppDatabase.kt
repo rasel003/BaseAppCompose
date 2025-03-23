@@ -16,7 +16,6 @@
 
 package com.rasel.baseappcompose.data.database
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -31,10 +30,10 @@ import com.example.jetcaster.core.data.database.model.Episode
 import com.example.jetcaster.core.data.database.model.Podcast
 import com.example.jetcaster.core.data.database.model.PodcastCategoryEntry
 import com.example.jetcaster.core.data.database.model.PodcastFollowedEntry
-import com.google.samples.apps.nowinandroid.core.database.dao.NewsResourceFtsDao
-import com.google.samples.apps.nowinandroid.core.database.dao.RecentSearchQueryDao
-import com.google.samples.apps.nowinandroid.core.database.dao.TopicDao
-import com.google.samples.apps.nowinandroid.core.database.dao.TopicFtsDao
+import com.rasel.baseappcompose.data.database.dao.NewsResourceFtsDao
+import com.rasel.baseappcompose.data.database.dao.RecentSearchQueryDao
+import com.rasel.baseappcompose.data.database.dao.TopicDao
+import com.rasel.baseappcompose.data.database.dao.TopicFtsDao
 import com.rasel.baseappcompose.data.database.util.AppTypeConverters
 import com.rasel.baseappcompose.data.database.dao.NewsResourceDao
 import com.rasel.baseappcompose.data.database.model.NewsResourceEntity

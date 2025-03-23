@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rasel.baseappcompose.domain
+package com.rasel.baseappcompose.data.mock_data
 
 import com.rasel.baseappcompose.domain.model.CategoryInfo
 import com.rasel.baseappcompose.domain.model.EpisodeInfo

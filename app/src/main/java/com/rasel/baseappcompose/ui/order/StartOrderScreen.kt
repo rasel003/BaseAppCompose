@@ -43,7 +43,6 @@ import com.rasel.baseappcompose.designsystem.component.NiaButton
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.navigation.AppRoute
 import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN
-import com.rasel.baseappcompose.ui.navigation.MainDestinations
 
 /**
  * Composable that allows the user to select the desired cupcake quantity and expects

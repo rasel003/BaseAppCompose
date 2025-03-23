@@ -16,7 +16,7 @@
 
 package com.rasel.baseappcompose.data.repository
 
-import com.google.samples.apps.nowinandroid.core.database.dao.RecentSearchQueryDao
+import com.rasel.baseappcompose.data.database.dao.RecentSearchQueryDao
 import com.rasel.baseappcompose.data.database.model.RecentSearchQueryEntity
 import com.rasel.baseappcompose.data.model.RecentSearchQuery
 import com.rasel.baseappcompose.data.model.asExternalModel

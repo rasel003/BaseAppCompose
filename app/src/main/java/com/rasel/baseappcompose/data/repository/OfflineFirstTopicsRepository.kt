@@ -16,7 +16,7 @@
 
 package com.rasel.baseappcompose.data.repository
 
-import com.google.samples.apps.nowinandroid.core.database.dao.TopicDao
+import com.rasel.baseappcompose.data.database.dao.TopicDao
 import com.rasel.baseappcompose.data.database.model.TopicEntity
 import com.rasel.baseappcompose.data.database.model.asExternalModel
 import com.rasel.baseappcompose.data.model.ChangeListVersions

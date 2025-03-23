@@ -62,8 +62,8 @@ import com.example.compose.snippets.animations.colorBlue
 import com.rasel.baseappcompose.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
-import com.rasel.baseappcompose.domain.PreviewEpisodes
-import com.rasel.baseappcompose.domain.PreviewPodcasts
+import com.rasel.baseappcompose.data.mock_data.PreviewEpisodes
+import com.rasel.baseappcompose.data.mock_data.PreviewPodcasts
 import com.rasel.baseappcompose.ui.shared.EpisodeListItem
 
 @Composable

@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.example.jetnews.ui.modifiers
+package com.rasel.baseappcompose.ui.modifiers
 
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType.Companion.KeyUp
@@ -27,7 +26,6 @@ import androidx.compose.ui.input.key.type
 /**
  * Intercepts a key event rather than passing it on to children
  */
-@OptIn(ExperimentalComposeUiApi::class)
 fun Modifier.interceptKey(key: Key, onKeyEvent: () -> Unit): Modifier {
     return this.onPreviewKeyEvent {
         if (it.key == key && it.type == KeyUp) { // fire onKeyEvent on KeyUp to prevent duplicates

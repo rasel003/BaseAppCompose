@@ -45,8 +45,8 @@ import com.rasel.baseappcompose.designsystem.component.PodcastImage
 import com.rasel.baseappcompose.designsystem.component.ToggleFollowPodcastIconButton
 import com.rasel.baseappcompose.designsystem.theme.Keyline1
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
-import com.rasel.baseappcompose.domain.PreviewEpisodes
-import com.rasel.baseappcompose.domain.PreviewPodcasts
+import com.rasel.baseappcompose.data.mock_data.PreviewEpisodes
+import com.rasel.baseappcompose.data.mock_data.PreviewPodcasts
 import com.rasel.baseappcompose.domain.model.EpisodeInfo
 import com.rasel.baseappcompose.domain.model.PodcastCategoryFilterResult
 import com.rasel.baseappcompose.domain.model.PodcastInfo
