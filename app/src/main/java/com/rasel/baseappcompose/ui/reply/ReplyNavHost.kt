@@ -305,6 +305,36 @@ fun ReplyNavHost(
                             openSettingDialog = { openSettingDialog() }
                         )
                     }
+                    composable(
+                        route = AppRoute.HOME_ROUTE,
+                        deepLinks = listOf(
+                            navDeepLink {
+                                uriPattern =
+                                    "$JETNEWS_APP_URI/${AppRoute.HOME_ROUTE}?$POST_ID={$POST_ID}"
+                            }
+                        )
+                    ) { navBackStackEntry ->
+                        val homeViewModel: HomeViewModel = viewModel(
+                            factory = HomeViewModel.provideFactory(
+                                postsRepository = appContainer.postsRepository,
+                                preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
+                            )
+                        )
+                        HomeRoute(
+                            homeViewModel = homeViewModel,
+                            interestsViewModel = interestsViewModel,
+                            isExpandedScreen = isExpandedScreen,
+                            openDrawer = openDrawer,
+                            openSettingDialog = openSettingDialog,
+                        )
+                    }
+                    composable(AppRoute.INTERESTS_ROUTE) {
+                        InterestsRoute(
+                            interestsViewModel = interestsViewModel,
+                            isExpandedScreen = isExpandedScreen,
+                            openDrawer = openDrawer
+                        )
+                    }
 
                     composable(LANDING_SCREEN) {
                         LandingScreen { navigationActions.navigateTo(it.route) }
@@ -366,38 +396,6 @@ fun ReplyNavHost(
                             }
                         )
                     }
-
-                    composable(
-                        route = AppRoute.HOME_ROUTE,
-                        deepLinks = listOf(
-                            navDeepLink {
-                                uriPattern =
-                                    "$JETNEWS_APP_URI/${AppRoute.HOME_ROUTE}?$POST_ID={$POST_ID}"
-                            }
-                        )
-                    ) { navBackStackEntry ->
-                        val homeViewModel: HomeViewModel = viewModel(
-                            factory = HomeViewModel.provideFactory(
-                                postsRepository = appContainer.postsRepository,
-                                preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID)
-                            )
-                        )
-                        HomeRoute(
-                            homeViewModel = homeViewModel,
-                            interestsViewModel = interestsViewModel,
-                            isExpandedScreen = isExpandedScreen,
-                            openDrawer = openDrawer,
-                            openSettingDialog = openSettingDialog,
-                        )
-                    }
-                    composable(AppRoute.INTERESTS_ROUTE) {
-                        InterestsRoute(
-                            interestsViewModel = interestsViewModel,
-                            isExpandedScreen = isExpandedScreen,
-                            openDrawer = openDrawer
-                        )
-                    }
-
                     composableWithCompositionLocal(
                         "${AppRoute.SNACK_DETAIL_ROUTE}/" +
                                 "{${AppRoute.SNACK_ID_KEY}}" +
