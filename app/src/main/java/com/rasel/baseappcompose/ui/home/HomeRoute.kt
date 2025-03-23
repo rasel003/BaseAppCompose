@@ -47,6 +47,7 @@ fun HomeRoute(
     homeViewModel: HomeViewModel,
     interestsViewModel: InterestsViewModel,
     isExpandedScreen: Boolean,
+    openDrawer: () -> Unit,
     openSettingDialog: () -> Unit,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
@@ -64,6 +65,7 @@ fun HomeRoute(
         onInteractWithArticleDetails = { homeViewModel.interactedWithArticleDetails(it) },
         onSearchInputChanged = { homeViewModel.onSearchInputChanged(it) },
         openInterestScreen = {homeViewModel.openInterestScreen()},
+        openDrawer = openDrawer,
         openSettingDialog = openSettingDialog,
         snackbarHostState = snackbarHostState,
         interestsViewModel = interestsViewModel
@@ -99,6 +101,7 @@ fun HomeRoute(
     onInteractWithArticleDetails: (String) -> Unit,
     onSearchInputChanged: (String) -> Unit,
     openInterestScreen: () -> Unit,
+    openDrawer: () -> Unit,
     openSettingDialog: () -> Unit,
     snackbarHostState: SnackbarHostState,
     interestsViewModel: InterestsViewModel
@@ -129,7 +132,7 @@ fun HomeRoute(
                 onErrorDismiss = onErrorDismiss,
                 onInteractWithList = onInteractWithFeed,
                 onInteractWithDetail = onInteractWithArticleDetails,
-                openDrawer = openInterestScreen,
+                openDrawer = openDrawer,
                 openSettingDialog = openSettingDialog,
                 homeListLazyListState = homeListLazyListState,
                 articleDetailLazyListStates = articleDetailLazyListStates,
