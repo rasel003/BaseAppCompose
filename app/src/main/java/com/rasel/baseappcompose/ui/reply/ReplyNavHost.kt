@@ -27,7 +27,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.window.layout.DisplayFeature
-import com.example.compose.snippets.animations.AnimationExamplesScreen
+import com.rasel.baseappcompose.animations.AnimationExamplesScreen
 import com.rasel.baseappcompose.NiaApplication.Companion.JETNEWS_APP_URI
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.animations.sharedelement.LocalSharedTransitionScope

@@ -16,7 +16,7 @@
 
 @file:Suppress("DEPRECATION")
 
-package com.example.compose.snippets.animations
+package com.rasel.baseappcompose.animations
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope
