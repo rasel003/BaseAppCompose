@@ -1,10 +1,15 @@
 package com.rasel.baseappcompose.ui.paging_gallery
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.text.KeyboardActions
@@ -15,8 +20,12 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,19 +38,24 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.rasel.baseappcompose.data.mock_data.fakeUnsplashPhoto
 import com.rasel.baseappcompose.data.model.UnsplashPhoto
+import com.rasel.baseappcompose.designsystem.component.ThemePreviews
+import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.modifiers.interceptKey
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun GalleryScreen(
     modifier: Modifier = Modifier,
-    navigateToImageview: (String) -> Unit
+    navigateToImageview: (String) -> Unit,
+    viewModel: NewsViewModel = hiltViewModel()
 ) {
-    val viewModel: NewsViewModel = hiltViewModel()
     var query by rememberSaveable { mutableStateOf("beautiful girl") }
 
     val context = LocalContext.current
@@ -178,5 +192,23 @@ fun RepositoryItem(article: UnsplashPhoto, navigateToImageview: (String) -> Unit
             contentScale = ContentScale.Crop,
             contentDescription = ""
         )
+    }
+}
+
+@ThemePreviews()
+@Composable
+fun PreviewPhotosList() {
+    NiaTheme {
+        /**  * The preview function should be responsible for creating the fake data and passing it to the  * function that displays it.  */
+        // create list of fake data for preview
+
+        // create pagingData from a list of fake data
+         val pagingData = PagingData.from(fakeUnsplashPhoto)
+        // pass pagingData containing fake data to a MutableStateFlow
+        val fakeDataFlow = MutableStateFlow(pagingData)
+
+        val post = fakeDataFlow.collectAsLazyPagingItems()
+
+        PhotosList(pagingData = post, navigateToImageview =  {})
     }
 }

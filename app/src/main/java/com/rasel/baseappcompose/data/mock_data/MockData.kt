@@ -4,6 +4,9 @@ import com.rasel.baseappcompose.data.model.DarkThemeConfig
 import com.rasel.baseappcompose.data.model.NewsResource
 import com.rasel.baseappcompose.data.model.ThemeBrand
 import com.rasel.baseappcompose.data.model.Topic
+import com.rasel.baseappcompose.data.model.UnsplashPhoto
+import com.rasel.baseappcompose.data.model.UnsplashPhotoUrls
+import com.rasel.baseappcompose.data.model.UnsplashUser
 import com.rasel.baseappcompose.data.model.UserData
 import com.rasel.baseappcompose.data.model.UserNewsResource
 import kotlinx.datetime.Instant
@@ -116,5 +119,23 @@ val userNewsResourcesTestData: List<UserNewsResource> = UserData(
             ),
             userData = userData,
         ),
+    )
+}
+
+val fakeUnsplashPhoto = List(10) {
+    UnsplashPhoto(
+        id = FakeValueFactory.randomInt().toString(),
+        urls = UnsplashPhotoUrls(
+            raw = randomSampleImageUrl(),
+            full = randomSampleImageUrl(),
+            regular = randomSampleImageUrl(),
+            small = randomSampleImageUrl(),
+            thumb = randomSampleImageUrl(),
+            small_s3 = randomSampleImageUrl()
+        ),
+        user = UnsplashUser(
+            name = FakeValueFactory.randomString(),
+            username = FakeValueFactory.randomString()
+        )
     )
 }

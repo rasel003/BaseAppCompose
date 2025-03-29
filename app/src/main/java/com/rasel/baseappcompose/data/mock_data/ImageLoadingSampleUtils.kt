@@ -35,7 +35,7 @@ package com.rasel.baseappcompose.data.mock_data
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 
-private val rangeForRandom = (0..100000)
+ val rangeForRandom = (0..100000)
 
 fun randomSampleImageUrl(
     seed: Int = rangeForRandom.random(),
