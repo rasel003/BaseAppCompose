@@ -106,6 +106,7 @@ object AppRoute {
     const val SNACK_DETAIL_ROUTE = "snack"
     const val SNACK_ID_KEY = "snackId"
     const val ORIGIN = "origin"
+    const val IMAGE_VIEW = "image_view"
 }
 val TOP_LEVEL_DESTINATIONS = listOf(
     AppTopLevelDestination(

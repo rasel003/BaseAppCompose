@@ -32,5 +32,5 @@ interface NiaNetworkDataSource {
     suspend fun getTopicChangeList(after: Int? = null): List<NetworkChangeList>
 
     suspend fun getNewsResourceChangeList(after: Int? = null): List<NetworkChangeList>
-    suspend fun searchPhotos(): UnsplashSearchResponse
+    suspend fun searchPhotos(query: String, page: Int, perPage: Int): UnsplashSearchResponse
 }

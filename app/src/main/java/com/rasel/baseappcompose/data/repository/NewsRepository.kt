@@ -51,5 +51,5 @@ interface NewsRepository : Syncable {
     ): Flow<List<NewsResource>>
 
 
-    fun getNews(): Flow<PagingData<UnsplashPhoto>>
+    fun searchPhotos(query: String): Flow<PagingData<UnsplashPhoto>>
 }

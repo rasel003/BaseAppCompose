@@ -98,8 +98,12 @@ class RetrofitNiaNetwork @Inject constructor(
             .create(RetrofitNiaNetworkApi::class.java)
     }
 
-    override suspend fun searchPhotos(): UnsplashSearchResponse =
-        networkApi.searchPhotos(query = "girl", page = 1, perPage = 20)
+    override suspend fun searchPhotos(
+        query: String,
+        page: Int,
+        perPage: Int
+    ): UnsplashSearchResponse =
+        networkApi.searchPhotos(query = query, page = page, perPage = perPage)
 
     override suspend fun getTopics(ids: List<String>?): List<NetworkTopic> =
         networkApi.getTopics(ids = ids).data

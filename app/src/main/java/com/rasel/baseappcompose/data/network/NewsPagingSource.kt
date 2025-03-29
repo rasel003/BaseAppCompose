@@ -6,6 +6,7 @@ import com.rasel.baseappcompose.data.model.UnsplashPhoto
 
 class NewsPagingSource(
     private val newsApiService: NiaNetworkDataSource,
+   private val query: String,
 ): PagingSource<Int, UnsplashPhoto>() {
     override fun getRefreshKey(state: PagingState<Int, UnsplashPhoto>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -17,7 +18,7 @@ class NewsPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UnsplashPhoto> {
         return try {
             val page = params.key ?: 1
-            val response = newsApiService.searchPhotos()
+            val response = newsApiService.searchPhotos(query = query, page = page, perPage = params.loadSize)
 
             LoadResult.Page(
                 data = response.results,

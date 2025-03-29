@@ -597,7 +597,6 @@ private fun PostListDivider() {
 /**
  * Expanded search UI - includes support for enter-to-send on the search field
  */
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 private fun HomeSearch(
     modifier: Modifier = Modifier,

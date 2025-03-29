@@ -127,12 +127,12 @@ internal class OfflineFirstNewsRepository @Inject constructor(
         )
     }
 
-    override fun getNews() = Pager(
+    override fun searchPhotos(query: String) = Pager(
         config = PagingConfig(
             pageSize = 20,
         ),
         pagingSourceFactory = {
-            NewsPagingSource(network)
+            NewsPagingSource(newsApiService = network, query)
         }
     ).flow
 }

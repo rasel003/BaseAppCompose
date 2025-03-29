@@ -26,10 +26,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import androidx.navigation.toRoute
 import androidx.window.layout.DisplayFeature
-import com.rasel.baseappcompose.animations.AnimationExamplesScreen
 import com.rasel.baseappcompose.NiaApplication.Companion.JETNEWS_APP_URI
 import com.rasel.baseappcompose.R
+import com.rasel.baseappcompose.animations.AnimationExamplesScreen
 import com.rasel.baseappcompose.animations.sharedelement.LocalSharedTransitionScope
 import com.rasel.baseappcompose.animations.sharedelement.PlaceholderSizeAnimated_Demo
 import com.rasel.baseappcompose.data.AppContainer
@@ -68,6 +69,9 @@ import com.rasel.baseappcompose.ui.graphics.BrushExamplesScreen
 import com.rasel.baseappcompose.ui.home.HomeRoute
 import com.rasel.baseappcompose.ui.home.HomeViewModel
 import com.rasel.baseappcompose.ui.images.ImageExamplesScreen
+import com.rasel.baseappcompose.ui.images.ImageView
+import com.rasel.baseappcompose.ui.images.navigation.ImageviewRoute
+import com.rasel.baseappcompose.ui.images.navigation.navigateToImageview
 import com.rasel.baseappcompose.ui.interests.InterestsViewModel
 import com.rasel.baseappcompose.ui.interests.navigation.navigateToInterests
 import com.rasel.baseappcompose.ui.interests2pane.interestsListDetailScreen
@@ -81,11 +85,11 @@ import com.rasel.baseappcompose.ui.navigation.Destination
 import com.rasel.baseappcompose.ui.navigation.POST_ID
 import com.rasel.baseappcompose.ui.navigation.Screen
 import com.rasel.baseappcompose.ui.navigation.TopComponentsDestination
-import com.rasel.baseappcompose.ui.news.PagingListScreen
 import com.rasel.baseappcompose.ui.order.OrderSummaryScreen
 import com.rasel.baseappcompose.ui.order.OrderViewModel
 import com.rasel.baseappcompose.ui.order.SelectOptionScreen
 import com.rasel.baseappcompose.ui.order.StartOrderScreen
+import com.rasel.baseappcompose.ui.paging_gallery.GalleryScreen
 import com.rasel.baseappcompose.ui.search.navigation.searchScreen
 import com.rasel.baseappcompose.ui.setting.SettingsDialog
 import com.rasel.baseappcompose.ui.snack_home.composableWithCompositionLocal
@@ -125,7 +129,7 @@ fun ReplyNavHost(
     openSettingDialog: () -> Unit,
     onSettingsDismissed: () -> Unit,
     cancelOrderAndNavigateToStart: () -> Unit,
-    navigationActions : NiaAppState,
+    navigationActions: NiaAppState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     openDrawer: () -> Unit = {},
 ) {
@@ -169,7 +173,7 @@ fun ReplyNavHost(
                             closeDetailScreen = closeDetailScreen,
                             navigateToDetail = navigateToDetail,
                             toggleSelectedEmail = toggleSelectedEmail,
-                            navigateToPaging3 = {navigationActions.navigateTo(AppRoute.PAGING_3)}
+                            navigateToPaging3 = { navigationActions.navigateTo(AppRoute.PAGING_3) }
                         )
                     }
                     composable(AppRoute.CUP_CAKE) {
@@ -180,8 +184,11 @@ fun ReplyNavHost(
                                 navigationActions.navigateTo(AppRoute.Flavor)
                             },
                             navigateTo = navigationActions::navigateTo,
-                            navigateToForYou = {navigationActions.navController.navigateToForYou(
-                                NavOptions.Builder().build())},
+                            navigateToForYou = {
+                                navigationActions.navController.navigateToForYou(
+                                    NavOptions.Builder().build()
+                                )
+                            },
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(dimensionResource(R.dimen.padding_medium))
@@ -218,8 +225,11 @@ fun ReplyNavHost(
                     )
                     searchScreen(
                         onBackClick = navController::popBackStack,
-                        onInterestsClick = { navigationActions.navigateToTopLevelDestination(
-                            TopLevelDestination.INTERESTS) },
+                        onInterestsClick = {
+                            navigationActions.navigateToTopLevelDestination(
+                                TopLevelDestination.INTERESTS
+                            )
+                        },
                         onTopicClick = navController::navigateToInterests,
                     )
                     interestsListDetailScreen()
@@ -271,7 +281,13 @@ fun ReplyNavHost(
                         )
                     }
                     composable(route = AppRoute.PAGING_3) {
-                        PagingListScreen()
+                        GalleryScreen(navigateToImageview = navController::navigateToImageview)
+                    }
+                    composable<ImageviewRoute> { entry ->
+                        val imageviewRoute = entry.toRoute<ImageviewRoute>()
+                        ImageView(
+                            imageviewRoute.url,
+                            upPress = { navController.navigateUp() })
                     }
                     composable(route = AppRoute.ANIMATION_LIST) {
                         AnimationList(navigateTo = navigationActions::navigateTo)
