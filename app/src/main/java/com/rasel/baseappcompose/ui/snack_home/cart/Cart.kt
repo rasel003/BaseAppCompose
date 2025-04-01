@@ -16,7 +16,6 @@
 
 package com.rasel.baseappcompose.ui.snack_home.cart
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -56,15 +55,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.LastBaseline
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -73,7 +69,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.jetsnack.ui.home.cart.SwipeDismissItem
-import com.rasel.baseappcompose.ui.snack_home.DestinationBar
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.OrderLine
 import com.rasel.baseappcompose.data.model.SnackCollection
@@ -85,12 +80,11 @@ import com.rasel.baseappcompose.designsystem.component.JetsnackSurface
 import com.rasel.baseappcompose.designsystem.component.QuantitySelector
 import com.rasel.baseappcompose.designsystem.component.SnackCollection
 import com.rasel.baseappcompose.designsystem.component.SnackImage
+import com.rasel.baseappcompose.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.designsystem.theme.AlphaNearOpaque
-
 import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
-import com.rasel.baseappcompose.ui.landing.NavigationItem
-import com.rasel.baseappcompose.ui.navigation.Destination
+import com.rasel.baseappcompose.ui.snack_home.DestinationBar
 import com.rasel.baseappcompose.ui.snackdetail.nonSpatialExpressiveSpring
 import com.rasel.baseappcompose.ui.snackdetail.spatialExpressiveSpring
 import com.rasel.baseappcompose.ui.utils.formatPrice
@@ -252,7 +246,7 @@ private fun SwipeDismissItemBackground(progress: Float) {
                     .height(maxWidth)
                     .align(Alignment.Center),
                 shape = RoundedCornerShape(percent = ((1 - progress) * 100).roundToInt()),
-                color = Color.Green
+                color = MaterialTheme.colorScheme.onBackground
             ) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -353,7 +347,7 @@ fun CartItem(
         ) {
             Icon(
                 imageVector = Icons.Filled.Close,
-                tint = Color.Magenta,
+                tint = MaterialTheme.colorScheme.onBackground,
                 contentDescription = stringResource(R.string.label_remove)
             )
         }
@@ -432,6 +426,7 @@ fun SummaryItem(
             Text(
                 text = stringResource(R.string.cart_subtotal_label),
                 style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.inverseSurface,
                 modifier = Modifier
                     .weight(1f)
                     .wrapContentWidth(Alignment.Start)
@@ -440,6 +435,7 @@ fun SummaryItem(
             Text(
                 text = formatPrice(subtotal),
                 style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.inverseSurface,
                 modifier = Modifier.alignBy(LastBaseline)
             )
         }
@@ -447,6 +443,7 @@ fun SummaryItem(
             Text(
                 text = stringResource(R.string.cart_shipping_label),
                 style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.inverseSurface,
                 modifier = Modifier
                     .weight(1f)
                     .wrapContentWidth(Alignment.Start)
@@ -455,6 +452,7 @@ fun SummaryItem(
             Text(
                 text = formatPrice(shippingCosts),
                 style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.inverseSurface,
                 modifier = Modifier.alignBy(LastBaseline)
             )
         }
@@ -464,6 +462,7 @@ fun SummaryItem(
             Text(
                 text = stringResource(R.string.cart_total_label),
                 style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.inverseSurface,
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 16.dp)
@@ -473,6 +472,7 @@ fun SummaryItem(
             Text(
                 text = formatPrice(subtotal + shippingCosts),
                 style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.inverseSurface,
                 modifier = Modifier.alignBy(LastBaseline)
             )
         }
@@ -493,7 +493,7 @@ private fun CheckoutBar(modifier: Modifier = Modifier) {
             Spacer(Modifier.weight(1f))
             JetsnackButton(
                 onClick = { /* todo */ },
-                shape = RectangleShape,
+//                shape = RectangleShape,
                 modifier = Modifier
                     .padding(horizontal = 12.dp, vertical = 8.dp)
                     .weight(1f)
@@ -501,7 +501,7 @@ private fun CheckoutBar(modifier: Modifier = Modifier) {
                 Text(
                     text = stringResource(id = R.string.cart_checkout),
                     modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Left,
+                    textAlign = TextAlign.Center,
                     maxLines = 1
                 )
             }
@@ -509,8 +509,7 @@ private fun CheckoutBar(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
-@Preview("default")
+@ThemePreviews
 @Composable
 private fun CartContentPreview() {
     NiaTheme {
@@ -529,18 +528,15 @@ private fun CartContentPreview() {
     }
 }
 
-/*@Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
-@Preview("default")
+@ThemePreviews
 @Composable
 private fun CheckoutBarPreview() {
     NiaTheme {
         CheckoutBar()
     }
-}*/
+}
 
-@Preview("default")
-@Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@ThemePreviews
 @Composable
 private fun CartPreview() {
     NiaTheme {

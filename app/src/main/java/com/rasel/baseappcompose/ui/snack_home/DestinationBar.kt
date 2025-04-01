@@ -18,7 +18,6 @@
 
 package com.rasel.baseappcompose.ui.snack_home
 
-import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -37,11 +36,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.animations.sharedelement.LocalNavAnimatedVisibilityScope
 import com.rasel.baseappcompose.animations.sharedelement.LocalSharedTransitionScope
@@ -49,10 +47,9 @@ import com.rasel.baseappcompose.designsystem.component.JetsnackDivider
 import com.rasel.baseappcompose.designsystem.component.JetsnackPreviewWrapper
 import com.rasel.baseappcompose.designsystem.theme.AlphaNearOpaque
 import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
-
 import com.rasel.baseappcompose.ui.snackdetail.spatialExpressiveSpring
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun DestinationBar(modifier: Modifier = Modifier) {
     val sharedElementScope =
@@ -76,7 +73,7 @@ fun DestinationBar(modifier: Modifier = Modifier) {
                             Text(
                                 text = "Delivery to 1600 Amphitheater Way",
                                 style = MaterialTheme.typography.titleMedium,
-                                color =  Color.Magenta,
+                                color =  MaterialTheme.colorScheme.onBackground,
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
@@ -90,7 +87,7 @@ fun DestinationBar(modifier: Modifier = Modifier) {
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.ExpandMore,
-                                    tint = Color.Green,
+                                    tint =  MaterialTheme.colorScheme.onBackground,
                                     contentDescription =
                                     stringResource(R.string.label_select_delivery)
                                 )
@@ -100,7 +97,7 @@ fun DestinationBar(modifier: Modifier = Modifier) {
                     colors = TopAppBarDefaults.topAppBarColors().copy(
                         containerColor = LocalBackgroundTheme.current.color
                             .copy(alpha = AlphaNearOpaque),
-                        titleContentColor =  Color.Magenta
+                        titleContentColor =   MaterialTheme.colorScheme.onBackground
                     ),
                 )
                 JetsnackDivider()
@@ -109,9 +106,7 @@ fun DestinationBar(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@PreviewLightDark
 @Composable
 fun PreviewDestinationBar() {
     JetsnackPreviewWrapper {

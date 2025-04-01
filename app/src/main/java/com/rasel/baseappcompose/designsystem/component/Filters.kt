@@ -18,7 +18,6 @@
 
 package com.rasel.baseappcompose.designsystem.component
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -49,11 +48,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.Filter
-import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.utils.FilterSharedElementKey
 
@@ -110,16 +108,16 @@ fun FilterChip(
 ) {
     val (selected, setSelected) = filter.enabled
     val backgroundColor by animateColorAsState(
-        if (selected) Color.Green else LocalBackgroundTheme.current.color,
+        if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.tertiaryContainer,
         label = "background color"
     )
     val border = Modifier.fadeInDiagonalGradientBorder(
         showBorder = !selected,
-        colors = listOf(Color.Green, Color.Yellow),
+        colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.tertiary),
         shape = shape
     )
     val textColor by animateColorAsState(
-        if (selected) Color.Black else  Color.Magenta,
+        if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onTertiaryContainer,
         label = "text color"
     )
 
@@ -167,9 +165,7 @@ fun FilterChip(
     }
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@PreviewLightDark
 @Composable
 private fun FilterDisabledPreview() {
     NiaTheme {
@@ -177,9 +173,7 @@ private fun FilterDisabledPreview() {
     }
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@PreviewLightDark
 @Composable
 private fun FilterEnabledPreview() {
     NiaTheme {

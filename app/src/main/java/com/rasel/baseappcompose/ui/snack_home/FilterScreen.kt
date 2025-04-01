@@ -67,6 +67,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.ui.utils.FilterSharedElementKey
 import com.rasel.baseappcompose.R
@@ -130,7 +131,7 @@ fun FilterScreen(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
                     ) { }
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
+                    .background(MaterialTheme.colorScheme.surface)
                     .padding(horizontal = 24.dp, vertical = 16.dp)
                     .skipToLookaheadSize(),
             ) {
@@ -138,6 +139,7 @@ fun FilterScreen(
                     IconButton(onClick = onDismiss) {
                         Icon(
                             imageVector = Icons.Filled.Close,
+                            tint = MaterialTheme.colorScheme.onBackground,
                             contentDescription = stringResource(id = R.string.close)
                         )
                     }
@@ -148,6 +150,7 @@ fun FilterScreen(
                             .fillMaxHeight()
                             .padding(top = 8.dp, end = 48.dp),
                         textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.titleLarge
                     )
                     val resetEnabled = sortState != defaultFilter
@@ -258,7 +261,7 @@ fun MaxCalories(sliderPosition: Float, onValueChanged: (Float) -> Unit) {
         Text(
             text = stringResource(id = R.string.per_serving),
             style = MaterialTheme.typography.bodyMedium,
-            color = Color.Green,
+            color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(top = 5.dp, start = 10.dp)
         )
     }
@@ -272,9 +275,9 @@ fun MaxCalories(sliderPosition: Float, onValueChanged: (Float) -> Unit) {
         modifier = Modifier
             .fillMaxWidth(),
         colors = SliderDefaults.colors(
-            thumbColor = Color.Green,
-            activeTrackColor = Color.Green,
-            inactiveTrackColor = Color.Black
+            thumbColor = MaterialTheme.colorScheme.primary,
+            activeTrackColor =MaterialTheme.colorScheme.tertiary,
+            inactiveTrackColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.1f)
         )
     )
 }
@@ -284,7 +287,7 @@ fun FilterTitle(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.titleLarge,
-        color = MaterialTheme.colorScheme.onPrimaryContainer,
+        color = MaterialTheme.colorScheme.onBackground,
         modifier = Modifier.padding(bottom = 8.dp)
     )
 }
@@ -302,11 +305,12 @@ fun SortOption(
             .selectable(selected) { onClickOption() }
     ) {
         if (icon != null) {
-            Icon(imageVector = icon, contentDescription = null)
+            Icon(imageVector = icon, contentDescription = null,  tint = MaterialTheme.colorScheme.onBackground)
         }
         Text(
             text = text,
             style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier
                 .padding(start = 10.dp)
                 .weight(1f)
@@ -315,13 +319,13 @@ fun SortOption(
             Icon(
                 imageVector = Icons.Filled.Done,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSecondaryContainer
+                tint = MaterialTheme.colorScheme.onBackground
             )
         }
     }
 }
 
-@Preview("filter screen")
+@PreviewLightDark()
 @Composable
 fun FilterScreenPreview() {
     NiaTheme {

@@ -16,7 +16,6 @@
 
 package com.rasel.baseappcompose.ui.snack_home.search
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -49,10 +48,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.Filter
@@ -63,7 +61,6 @@ import com.rasel.baseappcompose.data.model.Snack
 import com.rasel.baseappcompose.data.model.SnackRepo
 import com.rasel.baseappcompose.designsystem.component.JetsnackDivider
 import com.rasel.baseappcompose.designsystem.component.JetsnackSurface
-
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
 @Composable
@@ -247,13 +244,11 @@ private fun SearchHint() {
         )
     }
 }
-
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+/*
+@PreviewLightDark
 @Composable
 private fun SearchBarPreview() {
-    NiaTheme() {
+    NiaTheme {
         JetsnackSurface {
             SearchBar(
                 query = TextFieldValue(""),
@@ -262,6 +257,17 @@ private fun SearchBarPreview() {
                 onSearchFocusChange = { },
                 onClearQuery = { },
                 searching = false
+            )
+        }
+    }
+}*/
+@PreviewLightDark
+@Composable
+private fun SearchPreview() {
+    NiaTheme {
+        JetsnackSurface {
+            Search(
+                onSnackClick = { _, _ ->}
             )
         }
     }

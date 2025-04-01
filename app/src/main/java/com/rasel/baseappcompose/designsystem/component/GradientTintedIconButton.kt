@@ -16,7 +16,6 @@
 
 package com.rasel.baseappcompose.designsystem.component
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -36,9 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
 import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 
@@ -48,7 +45,7 @@ fun JetsnackGradientTintedIconButton(
     onClick: () -> Unit,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    colors: List<Color> = listOf(Color.Green, Color.Yellow)
+    colors: List<Color> = listOf(MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.tertiaryContainer)
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -68,8 +65,8 @@ fun JetsnackGradientTintedIconButton(
     val modifierColor = if (pressed) {
         Modifier.diagonalGradientTint(
             colors = listOf(
-                MaterialTheme.colorScheme.onPrimary,
-                MaterialTheme.colorScheme.onSecondary
+                MaterialTheme.colorScheme.primary,
+                MaterialTheme.colorScheme.secondary
             ),
             blendMode = blendMode
         )
@@ -94,13 +91,13 @@ fun JetsnackGradientTintedIconButton(
         Icon(
             imageVector = imageVector,
             contentDescription = contentDescription,
-            modifier = modifierColor
+            modifier = modifierColor,
+            tint =  MaterialTheme.colorScheme.primary
         )
     }
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ThemePreviews()
 @Composable
 private fun GradientTintedIconButtonPreview() {
     NiaTheme {

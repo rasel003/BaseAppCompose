@@ -18,7 +18,6 @@
 
 package com.rasel.baseappcompose.ui.snackdetail
 
-import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.BoundsTransform
 import androidx.compose.animation.EnterExitState
@@ -89,7 +88,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewDynamicColors
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -109,7 +109,7 @@ import com.rasel.baseappcompose.designsystem.component.JetsnackSurface
 import com.rasel.baseappcompose.designsystem.component.QuantitySelector
 import com.rasel.baseappcompose.designsystem.component.SnackCollection
 import com.rasel.baseappcompose.designsystem.component.SnackImage
-
+import com.rasel.baseappcompose.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
 import com.rasel.baseappcompose.designsystem.theme.Neutral8
 import com.rasel.baseappcompose.ui.utils.SnackSharedElementKey
@@ -204,7 +204,7 @@ private fun Header(snackId: Long, origin: String) {
         ?: throw IllegalArgumentException("No Scope found")
 
     with(sharedTransitionScope) {
-        val brushColors = listOf(Color.Green, Color.Yellow)
+        val brushColors = listOf(MaterialTheme.colorScheme.tertiary, MaterialTheme.colorScheme.secondary)
 
         val infiniteTransition = rememberInfiniteTransition(label = "background")
         val targetOffset = with(LocalDensity.current) {
@@ -277,7 +277,7 @@ private fun SharedTransitionScope.Up(upPress: () -> Unit) {
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                tint = Color.Black,
+                tint = MaterialTheme.colorScheme.background,
                 contentDescription = stringResource(R.string.label_back),
             )
         }
@@ -315,7 +315,7 @@ private fun Body(
                         Text(
                             text = stringResource(R.string.detail_header),
                             style = MaterialTheme.typography.labelSmall,
-                            color = Color.Blue,
+                            color = MaterialTheme.colorScheme.onBackground,
                             modifier = HzPadding
                         )
                         Spacer(Modifier.height(16.dp))
@@ -324,7 +324,7 @@ private fun Body(
                             Text(
                                 text = stringResource(R.string.detail_placeholder),
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = Color.Blue,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 maxLines = if (seeMore) 5 else Int.MAX_VALUE,
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = HzPadding.skipToLookaheadSize()
@@ -356,14 +356,14 @@ private fun Body(
                         Text(
                             text = stringResource(R.string.ingredients),
                             style = MaterialTheme.typography.labelSmall,
-                            color = Color.Blue,
+                            color = MaterialTheme.colorScheme.onBackground,
                             modifier = HzPadding
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = stringResource(R.string.ingredients_list),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = Color.Blue,
+                            color = MaterialTheme.colorScheme.onBackground,
                             modifier = HzPadding
                         )
 
@@ -421,7 +421,7 @@ private fun Title(snack: Snack, origin: String, scrollProvider: () -> Int) {
                 text = snack.name,
                 fontStyle = FontStyle.Italic,
                 style = MaterialTheme.typography.headlineMedium,
-                color =  Color.Magenta,
+                color =  MaterialTheme.colorScheme.primary,
                 modifier = HzPadding
                     .sharedBounds(
                         rememberSharedContentState(
@@ -441,7 +441,7 @@ private fun Title(snack: Snack, origin: String, scrollProvider: () -> Int) {
                 fontStyle = FontStyle.Italic,
                 style = MaterialTheme.typography.titleSmall,
                 fontSize = 20.sp,
-                color = Color.Blue,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = HzPadding
                     .sharedBounds(
                         rememberSharedContentState(
@@ -461,7 +461,7 @@ private fun Title(snack: Snack, origin: String, scrollProvider: () -> Int) {
                 Text(
                     text = formatPrice(snack.price),
                     style = MaterialTheme.typography.titleLarge,
-                    color =  Color.Magenta,
+                    color =  MaterialTheme.colorScheme.primary,
                     modifier = HzPadding
                         .animateEnterExit(
                             enter = fadeIn() + slideInVertically { -it / 3 },
@@ -613,9 +613,7 @@ private fun CartBottomBar(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@PreviewLightDark
 @Composable
 private fun SnackDetailPreview() {
     JetsnackPreviewWrapper {

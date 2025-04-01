@@ -16,7 +16,6 @@
 
 package com.rasel.baseappcompose.ui.snack_home.search
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -39,14 +38,14 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
-import com.rasel.baseappcompose.designsystem.component.VerticalGrid
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.SearchCategory
 import com.rasel.baseappcompose.data.model.SearchCategoryCollection
 import com.rasel.baseappcompose.designsystem.component.SnackImage
+import com.rasel.baseappcompose.designsystem.component.VerticalGrid
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import kotlin.math.max
 
@@ -72,7 +71,7 @@ private fun SearchCategoryCollection(
         Text(
             text = collection.name,
             style = MaterialTheme.typography.titleLarge,
-            color =  MaterialTheme.colorScheme.primary,
+            color =  MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .heightIn(min = 56.dp)
                 .padding(horizontal = 24.dp, vertical = 4.dp)
@@ -80,7 +79,7 @@ private fun SearchCategoryCollection(
         )
         VerticalGrid(Modifier.padding(horizontal = 16.dp)) {
             val gradient = when (index % 2) {
-                0 -> listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.primaryContainer)
+                0 -> listOf(MaterialTheme.colorScheme.surface, MaterialTheme.colorScheme.tertiaryContainer)
                 else -> listOf(MaterialTheme.colorScheme.surface, MaterialTheme.colorScheme.secondaryContainer)
             }
             collection.categories.forEach { category ->
@@ -116,7 +115,7 @@ private fun SearchCategory(
             Text(
                 text = category.name,
                 style = MaterialTheme.typography.titleMedium,
-                color =  MaterialTheme.colorScheme.primary,
+                color =  MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .padding(4.dp)
                     .padding(start = 8.dp)
@@ -153,18 +152,16 @@ private fun SearchCategory(
     }
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@PreviewLightDark
 @Composable
 private fun SearchCategoryPreview() {
-    NiaTheme() {
+    NiaTheme {
         SearchCategory(
             category = SearchCategory(
                 name = "Desserts",
                 imageRes = R.drawable.desserts
             ),
-            gradient = listOf(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.surface)
+            gradient = listOf(MaterialTheme.colorScheme.surface, MaterialTheme.colorScheme.tertiaryContainer)
         )
     }
 }

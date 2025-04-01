@@ -122,7 +122,7 @@ fun HomeRoute(
 
     val homeScreenType = getHomeScreenType(isExpandedScreen, uiState)
     when (homeScreenType) {
-        HomeScreenType.FeedWithArticleDetails -> {
+        FeedWithArticleDetails -> {
             HomeFeedWithArticleDetailsScreen(
                 uiState = uiState,
                 showTopAppBar = !isExpandedScreen,
@@ -226,5 +226,5 @@ private fun getHomeScreenType(
             is HomeUiState.InterestScreen -> HomeScreenType.INTERESTS_SCREEN
         }
     }
-    true -> HomeScreenType.FeedWithArticleDetails
+    true -> FeedWithArticleDetails
 }

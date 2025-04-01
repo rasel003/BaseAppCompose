@@ -43,6 +43,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.Placeholder
 import com.rasel.baseappcompose.data.mock_data.fakeUnsplashPhoto
 import com.rasel.baseappcompose.data.model.UnsplashPhoto
 import com.rasel.baseappcompose.designsystem.component.ThemePreviews

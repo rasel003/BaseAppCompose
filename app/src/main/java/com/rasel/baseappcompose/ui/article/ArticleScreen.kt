@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -119,9 +120,8 @@ fun ArticleScreen(
             bottomBarContent = {
                 if (!isExpandedScreen) {
                     BottomAppBar(
-                        modifier = Modifier.height(40.dp),
+                        modifier = Modifier.wrapContentHeight(),
                         windowInsets = BottomAppBarDefaults.windowInsets.only(WindowInsetsSides.Horizontal),
-                        containerColor = Color.Cyan,
                         actions = {
                             FavoriteButton(onClick = { showUnimplementedActionDialog = true })
                             BookmarkButton(isBookmarked = isFavorite, onClick = onToggleFavorite)

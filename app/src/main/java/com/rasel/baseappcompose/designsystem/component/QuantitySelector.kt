@@ -54,7 +54,7 @@ fun QuantitySelector(
         Text(
             text = stringResource(R.string.quantity),
             style = MaterialTheme.typography.titleMedium,
-            color =  MaterialTheme.colorScheme.primary,
+            color =  MaterialTheme.colorScheme.secondary,
             fontWeight = FontWeight.Normal,
             modifier = Modifier
                 .padding(end = 18.dp)
@@ -75,7 +75,7 @@ fun QuantitySelector(
                 text = "$it",
                 style = MaterialTheme.typography.titleSmall,
                 fontSize = 18.sp,
-                color =  MaterialTheme.colorScheme.primary,
+                color =  MaterialTheme.colorScheme.secondary,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.widthIn(min = 24.dp)
             )
@@ -89,9 +89,7 @@ fun QuantitySelector(
     }
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@ThemePreviews()
 @Composable
 fun QuantitySelectorPreview() {
     NiaTheme {

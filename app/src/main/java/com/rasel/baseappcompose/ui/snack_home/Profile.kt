@@ -16,7 +16,6 @@
 
 package com.rasel.baseappcompose.ui.snack_home
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -33,7 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
@@ -57,6 +56,7 @@ fun Profile(
         Text(
             text = stringResource(R.string.work_in_progress),
             style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
@@ -65,14 +65,13 @@ fun Profile(
             text = stringResource(R.string.grab_beverage),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.fillMaxWidth()
         )
     }
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@PreviewLightDark
 @Composable
 fun ProfilePreview() {
     NiaTheme {

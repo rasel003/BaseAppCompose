@@ -18,7 +18,6 @@
 
 package com.rasel.baseappcompose.designsystem.component
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterExitState
@@ -67,7 +66,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -79,6 +78,7 @@ import com.rasel.baseappcompose.animations.sharedelement.LocalSharedTransitionSc
 import com.rasel.baseappcompose.data.model.CollectionType
 import com.rasel.baseappcompose.data.model.Snack
 import com.rasel.baseappcompose.data.model.SnackCollection
+import com.rasel.baseappcompose.data.model.SnackRepo
 import com.rasel.baseappcompose.data.model.snacks
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.snackdetail.nonSpatialExpressiveSpring
@@ -109,7 +109,7 @@ fun SnackCollection(
             Text(
                 text = snackCollection.name,
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.onBackground,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
@@ -122,7 +122,7 @@ fun SnackCollection(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                    tint = Color.Green,
+                    tint = MaterialTheme.colorScheme.onBackground,
                     contentDescription = null
                 )
             }
@@ -153,8 +153,8 @@ private fun HighlightedSnacks(
     }
 
     val gradient = when ((index / 2) % 2) {
-        0 -> listOf(Color.Green, Color.Yellow)
-        else -> listOf(Color.Green, Color.Yellow)
+        0 -> listOf(MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.colorScheme.secondary)
+        else -> listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.secondary)
     }
 
     LazyRow(
@@ -244,7 +244,7 @@ fun SnackItem(
                 Text(
                     text = snack.name,
                     style = MaterialTheme.typography.titleMedium,
-                    color =  Color.Magenta,
+                     color = MaterialTheme.colorScheme.inverseSurface,
                     modifier = Modifier
                         .padding(top = 8.dp)
                         .wrapContentWidth()
@@ -321,7 +321,7 @@ private fun HighlightSnackItem(
                 )
                 .border(
                     1.dp,
-                    Color.Black.copy(alpha = 0.12f),
+                    MaterialTheme.colorScheme.onBackground.copy(alpha = 0.12f),
                     RoundedCornerShape(roundedCornerAnimation)
                 )
 
@@ -403,7 +403,6 @@ private fun HighlightSnackItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.titleLarge,
-                    color =  MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .sharedBounds(
@@ -427,7 +426,6 @@ private fun HighlightSnackItem(
                 Text(
                     text = snack.tagline,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .sharedBounds(
@@ -486,9 +484,7 @@ fun SnackImage(
     }
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@PreviewLightDark
 @Composable
 fun SnackCardPreview() {
     val snack = snacks.first()
@@ -498,8 +494,29 @@ fun SnackCardPreview() {
             snack = snack,
             onSnackClick = { _, _ -> },
             index = 0,
-            gradient = listOf(Color.Green, Color.Yellow),
+            gradient = listOf(MaterialTheme.colorScheme.tertiary, MaterialTheme.colorScheme.secondary),
             scrollProvider = { 0f }
+        )
+    }
+}
+@PreviewLightDark
+@Composable
+fun SnackCollectionPreview() {
+    JetsnackPreviewWrapper {
+        SnackCollection(
+            snackCollection = SnackRepo.getSnacks().first(),
+            onSnackClick = { l: Long, s: String -> },
+        )
+    }
+}
+@PreviewLightDark
+@Composable
+fun SnacksPreview() {
+    JetsnackPreviewWrapper {
+        Snacks(
+            snackCollectionId = 1254,
+            onSnackClick = { l: Long, s: String -> },
+            snacks = snacks
         )
     }
 }

@@ -16,7 +16,6 @@
 
 package com.rasel.baseappcompose.ui.snack_home.search
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -39,11 +38,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -54,7 +52,6 @@ import com.rasel.baseappcompose.designsystem.component.JetsnackButton
 import com.rasel.baseappcompose.designsystem.component.JetsnackDivider
 import com.rasel.baseappcompose.designsystem.component.JetsnackSurface
 import com.rasel.baseappcompose.designsystem.component.SnackImage
-
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.utils.formatPrice
 
@@ -67,7 +64,7 @@ fun SearchResults(
         Text(
             text = stringResource(R.string.search_count, searchResults.size),
             style = MaterialTheme.typography.titleLarge,
-            color =  Color.Magenta,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp)
         )
         LazyColumn {
@@ -154,7 +151,7 @@ private fun SearchResult(
         Text(
             text = formatPrice(snack.price),
             style = MaterialTheme.typography.titleMedium,
-            color =  MaterialTheme.colorScheme.primary,
+            color =  MaterialTheme.colorScheme.tertiary,
             modifier = Modifier.constrainAs(price) {
                 linkTo(
                     start = image.end,
@@ -217,9 +214,7 @@ fun NoResults(
     }
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@PreviewLightDark
 @Composable
 private fun SearchResultPreview() {
     NiaTheme() {

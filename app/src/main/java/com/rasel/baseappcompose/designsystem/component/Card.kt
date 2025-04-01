@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.designsystem.theme.LocalBackgroundTheme
@@ -156,7 +157,7 @@ fun JetsnackCard(
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.medium,
     color: Color = LocalBackgroundTheme.current.color,
-    contentColor: Color =  MaterialTheme.colorScheme.primary,
+    contentColor: Color =  MaterialTheme.colorScheme.onBackground,
     border: BorderStroke? = null,
     elevation: Dp = 4.dp,
     content: @Composable () -> Unit
@@ -172,12 +173,10 @@ fun JetsnackCard(
     )
 }
 
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
+@PreviewLightDark
 @Composable
 private fun CardPreview() {
-    NiaTheme() {
+    NiaTheme {
         JetsnackCard {
             Text(text = "Demo", modifier = Modifier.padding(16.dp))
         }
