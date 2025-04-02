@@ -48,7 +48,8 @@ import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 @Composable
 fun ReplyEmailThreadItem(
     email: Email,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToChat: () -> Unit,
 ) {
     Card(
         modifier = modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -115,7 +116,7 @@ fun ReplyEmailThreadItem(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { navigateToChat() },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.surfaceBright
@@ -127,7 +128,7 @@ fun ReplyEmailThreadItem(
                     )
                 }
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { navigateToChat() },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.surfaceBright
@@ -148,7 +149,8 @@ fun ReplyEmailThreadItem(
 fun PreviewReplyEmailThreadItem() {
     NiaTheme {
         ReplyEmailThreadItem(
-            email = LocalEmailsDataProvider.allEmails.first()
+            email = LocalEmailsDataProvider.allEmails.first(),
+            navigateToChat = {}
         )
     }
 }

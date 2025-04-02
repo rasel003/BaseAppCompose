@@ -96,6 +96,7 @@ object AppRoute {
     const val SHOW_HIDE_ANIMATION = "Show Hide Animation"
     const val VALUE_BASED_ANIMATION = "Value Based Animation"
     const val LANDING_SCREEN = "Landing Screen"
+    const val CONVERSATION_SCREEN = "Conversation Screen"
     const val Summary = "Order Summary"
     const val INBOX = "Inbox"
     const val ARTICLES = "Articles"

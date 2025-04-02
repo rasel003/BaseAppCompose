@@ -314,6 +314,10 @@ class NiaAppState(
             navController.navigate("${AppRoute.SNACK_DETAIL_ROUTE}/$snackId?origin=$origin")
         }
     }
+
+    fun openDrawer() {
+        TODO("Not yet implemented")
+    }
 }
 
 /**

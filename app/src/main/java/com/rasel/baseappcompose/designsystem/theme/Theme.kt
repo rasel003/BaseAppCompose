@@ -357,6 +357,12 @@ object JetnewsGlanceColorScheme {
         night = DarkDefaultColorScheme.onSurface.copy(alpha = 0.1f)
     )
 }
+object JetchatGlanceColorScheme {
+    val colors = ColorProviders(
+        light = LightDefaultColorScheme,
+        dark = DarkDefaultColorScheme,
+    )
+}
 
 @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
 fun supportsDynamicTheming() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S

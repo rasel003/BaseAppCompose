@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,6 +25,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.findNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
@@ -36,6 +38,7 @@ import com.rasel.baseappcompose.animations.sharedelement.PlaceholderSizeAnimated
 import com.rasel.baseappcompose.data.AppContainer
 import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.data.Result
+import com.rasel.baseappcompose.data.mock_data.exampleUiState
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
 import com.rasel.baseappcompose.designsystem.component.AppBarExamples
@@ -57,6 +60,7 @@ import com.rasel.baseappcompose.designsystem.component.SliderExamples
 import com.rasel.baseappcompose.designsystem.component.SwitchExamples
 import com.rasel.baseappcompose.designsystem.component.TimePickerExamples
 import com.rasel.baseappcompose.ui.bookmarks.navigation.bookmarksScreen
+import com.rasel.baseappcompose.ui.conversation.ConversationContent
 import com.rasel.baseappcompose.ui.cup_cake.AnimationList
 import com.rasel.baseappcompose.ui.cup_cake.MovieDetailsScreen
 import com.rasel.baseappcompose.ui.cup_cake.ValueBasedAnimation
@@ -80,7 +84,9 @@ import com.rasel.baseappcompose.ui.jet_caster.player.PlayerScreen
 import com.rasel.baseappcompose.ui.jet_news.interests.InterestsRoute
 import com.rasel.baseappcompose.ui.landing.LandingScreen
 import com.rasel.baseappcompose.ui.navigation.AppRoute
+import com.rasel.baseappcompose.ui.navigation.AppRoute.CONVERSATION_SCREEN
 import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN
+import com.rasel.baseappcompose.ui.navigation.AppRoute.PAGING_3
 import com.rasel.baseappcompose.ui.navigation.Destination
 import com.rasel.baseappcompose.ui.navigation.POST_ID
 import com.rasel.baseappcompose.ui.navigation.Screen
@@ -173,7 +179,10 @@ fun ReplyNavHost(
                             closeDetailScreen = closeDetailScreen,
                             navigateToDetail = navigateToDetail,
                             toggleSelectedEmail = toggleSelectedEmail,
-                            navigateToPaging3 = { navigationActions.navigateTo(AppRoute.PAGING_3) }
+                            navigateToPaging3 = { navigationActions.navigateTo(PAGING_3) },
+                            navigateToChat = {
+                                navigationActions.navigateTo(CONVERSATION_SCREEN)
+                            }
                         )
                     }
                     composable(AppRoute.CUP_CAKE) {
@@ -430,6 +439,17 @@ fun ReplyNavHost(
                             snackId,
                             origin = origin ?: "",
                             upPress = { navController.navigateUp() }
+                        )
+                    }
+                    composable(CONVERSATION_SCREEN) {
+                        ConversationContent(
+                            uiState = exampleUiState,
+                            navigateToProfile = { user ->
+
+                            },
+                            onNavIconPressed = {
+                                navigationActions.openDrawer()
+                            }
                         )
                     }
                 }

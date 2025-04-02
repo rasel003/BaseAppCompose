@@ -185,3 +185,17 @@ internal val NiaTypography = Typography(
         ),
     ),
 )
+
+object JetChatGlanceTextStyles {
+
+    val titleMedium = androidx.glance.text.TextStyle(
+        fontSize = 16.sp,
+        color = JetchatGlanceColorScheme.colors.onSurfaceVariant,
+        fontWeight = androidx.glance.text.FontWeight.Bold
+    )
+    val bodyMedium = androidx.glance.text.TextStyle(
+        fontSize = 16.sp,
+        color = JetchatGlanceColorScheme.colors.onSurfaceVariant,
+        fontWeight = androidx.glance.text.FontWeight.Normal
+    )
+}
