@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,7 +24,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.findNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
@@ -38,6 +36,7 @@ import com.rasel.baseappcompose.animations.sharedelement.PlaceholderSizeAnimated
 import com.rasel.baseappcompose.data.AppContainer
 import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.data.Result
+import com.rasel.baseappcompose.data.mock_data.colleagueProfile
 import com.rasel.baseappcompose.data.mock_data.exampleUiState
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
@@ -84,6 +83,7 @@ import com.rasel.baseappcompose.ui.jet_caster.player.PlayerScreen
 import com.rasel.baseappcompose.ui.jet_news.interests.InterestsRoute
 import com.rasel.baseappcompose.ui.landing.LandingScreen
 import com.rasel.baseappcompose.ui.navigation.AppRoute
+import com.rasel.baseappcompose.ui.navigation.AppRoute.CONVERSATION_DETAILS_SCREEN
 import com.rasel.baseappcompose.ui.navigation.AppRoute.CONVERSATION_SCREEN
 import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN
 import com.rasel.baseappcompose.ui.navigation.AppRoute.PAGING_3
@@ -96,6 +96,7 @@ import com.rasel.baseappcompose.ui.order.OrderViewModel
 import com.rasel.baseappcompose.ui.order.SelectOptionScreen
 import com.rasel.baseappcompose.ui.order.StartOrderScreen
 import com.rasel.baseappcompose.ui.paging_gallery.GalleryScreen
+import com.rasel.baseappcompose.ui.profile.ProfileScreen
 import com.rasel.baseappcompose.ui.search.navigation.searchScreen
 import com.rasel.baseappcompose.ui.setting.SettingsDialog
 import com.rasel.baseappcompose.ui.snack_home.composableWithCompositionLocal
@@ -289,7 +290,7 @@ fun ReplyNavHost(
                             modifier = Modifier.fillMaxHeight()
                         )
                     }
-                    composable(route = AppRoute.PAGING_3) {
+                    composable(route = PAGING_3) {
                         GalleryScreen(navigateToImageview = navController::navigateToImageview)
                     }
                     composable<ImageviewRoute> { entry ->
@@ -444,13 +445,12 @@ fun ReplyNavHost(
                     composable(CONVERSATION_SCREEN) {
                         ConversationContent(
                             uiState = exampleUiState,
-                            navigateToProfile = { user ->
-
-                            },
-                            onNavIconPressed = {
-                                navigationActions.openDrawer()
-                            }
+                            navigateToProfile = { navigationActions.navigateTo(CONVERSATION_DETAILS_SCREEN) },
+                            onNavIconPressed = { navigationActions.openDrawer() }
                         )
+                    }
+                    composable(CONVERSATION_DETAILS_SCREEN) {
+                        ProfileScreen(userData = colleagueProfile)
                     }
                 }
             }

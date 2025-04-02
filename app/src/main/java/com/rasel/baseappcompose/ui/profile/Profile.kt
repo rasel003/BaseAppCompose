@@ -37,7 +37,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.material.icons.outlined.Create
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -51,7 +50,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -62,6 +60,7 @@ import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.rasel.baseappcompose.R
@@ -273,7 +272,7 @@ fun ProfileFab(
     }
 }
 
-@Preview(widthDp = 640, heightDp = 360)
+@PreviewLightDark
 @Composable
 fun ConvPreviewLandscapeMeDefault() {
     NiaTheme {
@@ -281,15 +280,7 @@ fun ConvPreviewLandscapeMeDefault() {
     }
 }
 
-@Preview(widthDp = 360, heightDp = 480)
-@Composable
-fun ConvPreviewPortraitMeDefault() {
-    NiaTheme {
-        ProfileScreen(meProfile)
-    }
-}
-
-@Preview(widthDp = 360, heightDp = 480)
+@PreviewLightDark
 @Composable
 fun ConvPreviewPortraitOtherDefault() {
     NiaTheme {
