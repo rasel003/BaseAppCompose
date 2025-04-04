@@ -19,7 +19,6 @@
 package com.rasel.baseappcompose.ui.setting
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -54,19 +53,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rasel.baseappcompose.ui.setting.SettingsUiState.Loading
-import com.rasel.baseappcompose.ui.setting.SettingsUiState.Success
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.model.DarkThemeConfig
 import com.rasel.baseappcompose.data.model.DarkThemeConfig.DARK
 import com.rasel.baseappcompose.data.model.DarkThemeConfig.FOLLOW_SYSTEM
 import com.rasel.baseappcompose.data.model.DarkThemeConfig.LIGHT
 import com.rasel.baseappcompose.data.model.ThemeBrand
-import com.rasel.baseappcompose.data.model.ThemeBrand.ANDROID
-import com.rasel.baseappcompose.data.model.ThemeBrand.DEFAULT
 import com.rasel.baseappcompose.designsystem.component.NiaTextButton
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.designsystem.theme.supportsDynamicTheming
+import com.rasel.baseappcompose.ui.setting.SettingsUiState.Loading
+import com.rasel.baseappcompose.ui.setting.SettingsUiState.Success
 import com.rasel.baseappcompose.ui.utils.TrackScreenViewEvent
 
 @Composable
@@ -139,14 +136,16 @@ fun SettingsDialog(
             TrackScreenViewEvent(screenName = "Settings")
         },
         confirmButton = {
-            Text(
-                text = stringResource(R.string.feature_settings_dismiss_dialog_button_text),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .clickable { onDismiss() },
-            )
+            NiaTextButton(
+                onClick = onDismiss,
+                modifier = Modifier.padding(horizontal = 8.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.feature_settings_dismiss_dialog_button_text),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
         },
     )
 }
@@ -164,16 +163,16 @@ private fun ColumnScope.SettingsPanel(
     Column(Modifier.selectableGroup()) {
         SettingsDialogThemeChooserRow(
             text = stringResource(R.string.feature_settings_brand_default),
-            selected = settings.brand == DEFAULT,
-            onClick = { onChangeThemeBrand(DEFAULT) },
+            selected = settings.brand == ThemeBrand.DEFAULT,
+            onClick = { onChangeThemeBrand(ThemeBrand.DEFAULT) },
         )
         SettingsDialogThemeChooserRow(
             text = stringResource(R.string.feature_settings_brand_android),
-            selected = settings.brand == ANDROID,
-            onClick = { onChangeThemeBrand(ANDROID) },
+            selected = settings.brand == ThemeBrand.ANDROID,
+            onClick = { onChangeThemeBrand(ThemeBrand.ANDROID) },
         )
     }
-    AnimatedVisibility(visible = settings.brand == DEFAULT && supportDynamicColor) {
+    AnimatedVisibility(visible = settings.brand == ThemeBrand.DEFAULT && supportDynamicColor) {
         Column {
             SettingsDialogSectionTitle(text = stringResource(R.string.feature_settings_dynamic_color_preference))
             Column(Modifier.selectableGroup()) {
@@ -290,7 +289,7 @@ private fun PreviewSettingsDialog() {
             onDismiss = {},
             settingsUiState = Success(
                 UserEditableSettings(
-                    brand = DEFAULT,
+                    brand = ThemeBrand.DEFAULT,
                     darkThemeConfig = FOLLOW_SYSTEM,
                     useDynamicColor = false,
                 ),

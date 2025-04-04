@@ -1,54 +1,19 @@
 package com.rasel.baseappcompose.core.datastore
 
-import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
-import androidx.datastore.core.DataStoreFactory
-import androidx.datastore.dataStore
-import androidx.datastore.dataStoreFile
-import com.rasel.baseappcompose.data.Dispatcher
-import com.rasel.baseappcompose.data.NiaDispatchers
-import com.rasel.baseappcompose.data.di.ApplicationScope
 import com.rasel.baseappcompose.data.model.ChangeListVersions
 import com.rasel.baseappcompose.data.model.DarkThemeConfig
 import com.rasel.baseappcompose.data.model.ThemeBrand
 import com.rasel.baseappcompose.data.model.UserData
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
-private const val DATA_STORE_FILE_NAME = "user_preferences.pb"
-
-private val Context.userPreferencesMe: DataStore<UserPreferences> by dataStore(
-    serializer = UserPreferencesSerializer(),
-    fileName = DATA_STORE_FILE_NAME
-)
-
-
 class NiaPreferencesDataSource @Inject constructor(
-//    private val userPreferences: DataStore<UserPreferences>,
-    @ApplicationContext context: Context,
-    @Dispatcher(NiaDispatchers.IO) ioDispatcher: CoroutineDispatcher,
-    @ApplicationScope scope: CoroutineScope,
-    userPreferencesSerializer: UserPreferencesSerializer,
+    private val userPreferences: DataStore<UserPreferences>,
 ) {
-    private val userPreferences = context.userPreferencesMe
-    /*val userData = listOf(
-        UserData(
-            bookmarkedNewsResources = setOf("1", "4"),
-            viewedNewsResources = setOf("1", "2", "4"),
-            followedTopics = emptySet(),
-            themeBrand = ThemeBrand.ANDROID,
-            darkThemeConfig = DarkThemeConfig.DARK,
-            shouldHideOnboarding = true,
-            useDynamicColor = false,
-        )
-    )*/
-
     val userData = userPreferences.data
         .map {
             UserData(
@@ -59,22 +24,15 @@ class NiaPreferencesDataSource @Inject constructor(
                     null,
                     ThemeBrandProto.THEME_BRAND_UNSPECIFIED,
                     ThemeBrandProto.UNRECOGNIZED,
-                    ThemeBrandProto.THEME_BRAND_DEFAULT,
-                    -> ThemeBrand.DEFAULT
-
+                    ThemeBrandProto.THEME_BRAND_DEFAULT, -> ThemeBrand.DEFAULT
                     ThemeBrandProto.THEME_BRAND_ANDROID -> ThemeBrand.ANDROID
                 },
                 darkThemeConfig = when (it.darkThemeConfig) {
                     null,
                     DarkThemeConfigProto.DARK_THEME_CONFIG_UNSPECIFIED,
                     DarkThemeConfigProto.UNRECOGNIZED,
-                    DarkThemeConfigProto.DARK_THEME_CONFIG_FOLLOW_SYSTEM,
-                    ->
-                        DarkThemeConfig.FOLLOW_SYSTEM
-
-                    DarkThemeConfigProto.DARK_THEME_CONFIG_LIGHT ->
-                        DarkThemeConfig.LIGHT
-
+                    DarkThemeConfigProto.DARK_THEME_CONFIG_FOLLOW_SYSTEM, -> DarkThemeConfig.FOLLOW_SYSTEM
+                    DarkThemeConfigProto.DARK_THEME_CONFIG_LIGHT -> DarkThemeConfig.LIGHT
                     DarkThemeConfigProto.DARK_THEME_CONFIG_DARK -> DarkThemeConfig.DARK
                 },
                 useDynamicColor = it.useDynamicColor,
@@ -134,9 +92,7 @@ class NiaPreferencesDataSource @Inject constructor(
         userPreferences.updateData {
             it.copy {
                 this.darkThemeConfig = when (darkThemeConfig) {
-                    DarkThemeConfig.FOLLOW_SYSTEM ->
-                        DarkThemeConfigProto.DARK_THEME_CONFIG_FOLLOW_SYSTEM
-
+                    DarkThemeConfig.FOLLOW_SYSTEM -> DarkThemeConfigProto.DARK_THEME_CONFIG_FOLLOW_SYSTEM
                     DarkThemeConfig.LIGHT -> DarkThemeConfigProto.DARK_THEME_CONFIG_LIGHT
                     DarkThemeConfig.DARK -> DarkThemeConfigProto.DARK_THEME_CONFIG_DARK
                 }
@@ -215,7 +171,6 @@ class NiaPreferencesDataSource @Inject constructor(
             it.copy { this.shouldHideOnboarding = shouldHideOnboarding }
         }
     }
-
 }
 
 private fun UserPreferencesKt.Dsl.updateShouldHideOnboardingIfNecessary() {
