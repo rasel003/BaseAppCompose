@@ -76,6 +76,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
@@ -113,7 +114,7 @@ internal fun ForYouScreen(
 ) {
     val onboardingUiState by viewModel.onboardingUiState.collectAsStateWithLifecycle()
     val feedState by viewModel.feedState.collectAsStateWithLifecycle()
-//    val isSyncing by viewModel.isSyncing.collectAsStateWithLifecycle()
+    val isSyncing by viewModel.isSyncing.collectAsStateWithLifecycle()
     val deepLinkedUserNewsResource by viewModel.deepLinkedNewsResource.collectAsStateWithLifecycle()
 
     ForYouScreen(
@@ -501,7 +502,7 @@ private fun feedItemsSize(
     return feedSize + onboardingSize
 }
 
-@DevicePreviews
+@PreviewLightDark
 @Composable
 fun ForYouScreenPopulatedFeed(
     @PreviewParameter(UserNewsResourcePreviewParameterProvider::class)
@@ -525,7 +526,7 @@ fun ForYouScreenPopulatedFeed(
     }
 }
 
-@DevicePreviews
+@PreviewLightDark
 @Composable
 fun ForYouScreenOfflinePopulatedFeed(
     @PreviewParameter(UserNewsResourcePreviewParameterProvider::class)
@@ -549,7 +550,7 @@ fun ForYouScreenOfflinePopulatedFeed(
     }
 }
 
-@DevicePreviews
+@PreviewLightDark
 @Composable
 fun ForYouScreenTopicSelection(
     @PreviewParameter(UserNewsResourcePreviewParameterProvider::class)
@@ -576,7 +577,7 @@ fun ForYouScreenTopicSelection(
     }
 }
 
-@DevicePreviews
+@PreviewLightDark
 @Composable
 fun ForYouScreenLoading() {
     NiaTheme {
@@ -595,7 +596,7 @@ fun ForYouScreenLoading() {
     }
 }
 
-@DevicePreviews
+@PreviewLightDark
 @Composable
 fun ForYouScreenPopulatedAndLoading(
     @PreviewParameter(UserNewsResourcePreviewParameterProvider::class)

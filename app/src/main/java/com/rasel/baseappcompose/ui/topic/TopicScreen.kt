@@ -47,27 +47,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rasel.baseappcompose.designsystem.component.NiaBackground
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.DraggableScrollbar
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.rememberDraggableScroller
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.scrollbarState
 import com.rasel.baseappcompose.R
+import com.rasel.baseappcompose.data.mock_data.UserNewsResourcePreviewParameterProvider
 import com.rasel.baseappcompose.data.model.FollowableTopic
 import com.rasel.baseappcompose.data.model.UserNewsResource
 import com.rasel.baseappcompose.designsystem.component.DynamicAsyncImage
+import com.rasel.baseappcompose.designsystem.component.NiaBackground
 import com.rasel.baseappcompose.designsystem.component.NiaFilterChip
 import com.rasel.baseappcompose.designsystem.component.NiaLoadingWheel
 import com.rasel.baseappcompose.designsystem.icon.NiaIcons
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
 import com.rasel.baseappcompose.ui.user_news.TrackScrollJank
-import com.rasel.baseappcompose.data.mock_data.UserNewsResourcePreviewParameterProvider
 import com.rasel.baseappcompose.ui.user_news.userNewsResourceCardItems
-import com.rasel.baseappcompose.ui.utils.DevicePreviews
 import com.rasel.baseappcompose.ui.utils.TrackScreenViewEvent
 
 @Composable
@@ -148,7 +147,7 @@ internal fun TopicScreen(
             when (topicUiState) {
                 TopicUiState.Loading -> item {
                     NiaLoadingWheel(
-                        modifier = modifier,
+                        modifier = modifier.align(Alignment.Center),
                         contentDesc = stringResource(id = R.string.feature_topic_loading),
                     )
                 }
@@ -279,7 +278,7 @@ private fun LazyListScope.userNewsResourceCards(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun TopicBodyPreview() {
     NiaTheme {
@@ -340,7 +339,7 @@ private fun TopicToolbar(
     }
 }
 
-@DevicePreviews
+@PreviewLightDark
 @Composable
 fun TopicScreenPopulated(
     @PreviewParameter(UserNewsResourcePreviewParameterProvider::class)
@@ -362,7 +361,7 @@ fun TopicScreenPopulated(
     }
 }
 
-@DevicePreviews
+@PreviewLightDark
 @Composable
 fun TopicScreenLoading() {
     NiaTheme {

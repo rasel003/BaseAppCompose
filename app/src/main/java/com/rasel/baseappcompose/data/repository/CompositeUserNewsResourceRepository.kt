@@ -16,6 +16,7 @@
 
 package com.rasel.baseappcompose.data.repository
 
+import com.rasel.baseappcompose.data.mock_data.userNewsResourcesTestData
 import com.rasel.baseappcompose.data.model.UserNewsResource
 import com.rasel.baseappcompose.data.model.mapToUserNewsResources
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -55,7 +56,8 @@ class CompositeUserNewsResourceRepository @Inject constructor(
         userDataRepository.userData.map { it.followedTopics }.distinctUntilChanged()
             .flatMapLatest { followedTopics ->
                 when {
-                    followedTopics.isEmpty() -> flowOf(emptyList())
+//                    followedTopics.isEmpty() -> flowOf(emptyList())
+                    followedTopics.isEmpty() -> flowOf(userNewsResourcesTestData)
                     else -> observeAll(NewsResourceQuery(filterTopicIds = followedTopics))
                 }
             }
