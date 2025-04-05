@@ -19,6 +19,7 @@ package com.rasel.baseappcompose.data.repository
 import com.rasel.baseappcompose.data.database.dao.TopicDao
 import com.rasel.baseappcompose.data.database.model.TopicEntity
 import com.rasel.baseappcompose.data.database.model.asExternalModel
+import com.rasel.baseappcompose.data.mock_data.topicsTestData
 import com.rasel.baseappcompose.data.model.ChangeListVersions
 import com.rasel.baseappcompose.data.model.NetworkTopic
 import com.rasel.baseappcompose.data.model.Topic
@@ -27,6 +28,7 @@ import com.rasel.baseappcompose.data.network.NiaNetworkDataSource
 import com.rasel.baseappcompose.data.util.Synchronizer
 import com.rasel.baseappcompose.data.util.changeListSync
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -39,9 +41,9 @@ internal class OfflineFirstTopicsRepository @Inject constructor(
     private val network: NiaNetworkDataSource
 ) : TopicsRepository {
 
-    override fun getTopics(): Flow<List<Topic>> =
-        topicDao.getTopicEntities()
-            .map { it.map(TopicEntity::asExternalModel) }
+    override fun getTopics(): Flow<List<Topic>> = flow { emit(topicsTestData) }
+        /*topicDao.getTopicEntities()
+            .map { it.map(TopicEntity::asExternalModel) }*/
 
     override fun getTopic(id: String): Flow<Topic> =
         topicDao.getTopicEntity(id).map { it.asExternalModel() }

@@ -16,12 +16,20 @@
 
 package com.rasel.baseappcompose.ui.foryou.navigation
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
+import com.rasel.baseappcompose.R
+import com.rasel.baseappcompose.designsystem.component.NiaTopAppBar
+import com.rasel.baseappcompose.designsystem.icon.NiaIcons
 import com.rasel.baseappcompose.notifications.DEEP_LINK_URI_PATTERN
 import com.rasel.baseappcompose.ui.foryou.ForYouScreen
 import kotlinx.serialization.Serializable
@@ -39,8 +47,11 @@ fun NavController.navigateToForYou(navOptions: NavOptions) = navigate(route = Fo
  *  @param onTopicClick - Called when a topic is clicked, contains the ID of the topic
  *  @param topicDestination - Destination for topic content
  */
+@OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.forYouSection(
     onTopicClick: (String) -> Unit,
+    navigateToSearch: () -> Unit,
+    onTopAppBarActionClick: () -> Unit,
     topicDestination: NavGraphBuilder.() -> Unit,
 ) {
     navigation<ForYouBaseRoute>(startDestination = ForYouRoute) {
@@ -58,7 +69,25 @@ fun NavGraphBuilder.forYouSection(
                 },
             ),
         ) {
-            ForYouScreen(onTopicClick)
+            Column {
+                NiaTopAppBar(
+                    titleRes = R.string.app_name,
+                    navigationIcon = NiaIcons.Search,
+                    navigationIconContentDescription = stringResource(
+                        id = R.string.feature_settings_top_app_bar_navigation_icon_description,
+                    ),
+                    actionIcon = NiaIcons.Bookmarks,
+                    actionIconContentDescription = stringResource(
+                        id = R.string.feature_settings_top_app_bar_action_icon_description,
+                    ),
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = Color.Transparent,
+                    ),
+                    onActionClick = { onTopAppBarActionClick() },
+                    onNavigationClick = { navigateToSearch() },
+                )
+                ForYouScreen(onTopicClick)
+            }
         }
         topicDestination()
     }

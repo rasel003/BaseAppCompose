@@ -22,6 +22,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.rasel.baseappcompose.data.asResult
 import com.rasel.baseappcompose.data.Result
+import com.rasel.baseappcompose.data.mock_data.PreviewParameterData.topics
 import com.rasel.baseappcompose.data.model.FollowableTopic
 import com.rasel.baseappcompose.data.model.Topic
 import com.rasel.baseappcompose.data.model.UserNewsResource
@@ -125,7 +126,13 @@ private fun topicUiState(
                 }
 
                 is Result.Loading -> TopicUiState.Loading
-                is Result.Error -> TopicUiState.Error
+//                is Result.Error -> TopicUiState.Error
+                is Result.Error -> TopicUiState.Success(
+                    followableTopic = FollowableTopic(
+                        topic = topics.first(),
+                        isFollowed = true,
+                    ),
+                )
             }
         }
 }

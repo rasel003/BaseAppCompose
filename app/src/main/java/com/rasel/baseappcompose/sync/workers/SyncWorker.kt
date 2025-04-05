@@ -86,15 +86,12 @@ internal class SyncWorker @AssistedInject constructor(
         }
     }
 
-    override suspend fun getChangeListVersions(): ChangeListVersions {
-       return niaPreferences.getChangeListVersions()
-    }
+    override suspend fun getChangeListVersions(): ChangeListVersions =
+        niaPreferences.getChangeListVersions()
 
     override suspend fun updateChangeListVersions(
         update: ChangeListVersions.() -> ChangeListVersions,
-    ) {
-        niaPreferences.updateChangeListVersion(update)
-    }
+    ) = niaPreferences.updateChangeListVersion(update)
 
     companion object {
         /**
@@ -107,3 +104,4 @@ internal class SyncWorker @AssistedInject constructor(
             .build()
     }
 }
+

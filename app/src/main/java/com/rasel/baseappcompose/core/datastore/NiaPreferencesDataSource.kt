@@ -36,7 +36,7 @@ class NiaPreferencesDataSource @Inject constructor(
                     DarkThemeConfigProto.DARK_THEME_CONFIG_DARK -> DarkThemeConfig.DARK
                 },
                 useDynamicColor = it.useDynamicColor,
-                shouldHideOnboarding = it.shouldHideOnboarding,
+                shouldHideOnboarding = false,
             )
         }
 

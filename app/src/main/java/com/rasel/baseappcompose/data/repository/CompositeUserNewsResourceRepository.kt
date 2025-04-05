@@ -16,6 +16,7 @@
 
 package com.rasel.baseappcompose.data.repository
 
+import com.rasel.baseappcompose.data.mock_data.PreviewParameterData.newsResources
 import com.rasel.baseappcompose.data.mock_data.userNewsResourcesTestData
 import com.rasel.baseappcompose.data.model.UserNewsResource
 import com.rasel.baseappcompose.data.model.mapToUserNewsResources
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -63,12 +65,12 @@ class CompositeUserNewsResourceRepository @Inject constructor(
             }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun observeAllBookmarked(): Flow<List<UserNewsResource>> =
-        userDataRepository.userData.map { it.bookmarkedNewsResources }.distinctUntilChanged()
+    override fun observeAllBookmarked(): Flow<List<UserNewsResource>> = flow { emit(newsResources) }
+      /*  userDataRepository.userData.map { it.bookmarkedNewsResources }.distinctUntilChanged()
             .flatMapLatest { bookmarkedNewsResources ->
                 when {
                     bookmarkedNewsResources.isEmpty() -> flowOf(emptyList())
                     else -> observeAll(NewsResourceQuery(filterNewsIds = bookmarkedNewsResources))
                 }
-            }
+            }*/
 }

@@ -24,6 +24,7 @@ import com.rasel.baseappcompose.ui.foryou.navigation.ForYouBaseRoute
 import com.rasel.baseappcompose.ui.foryou.navigation.forYouSection
 import com.rasel.baseappcompose.ui.interests.navigation.navigateToInterests
 import com.rasel.baseappcompose.ui.interests2pane.interestsListDetailScreen
+import com.rasel.baseappcompose.ui.search.navigation.navigateToSearch
 import com.rasel.baseappcompose.ui.search.navigation.searchScreen
 import com.rasel.baseappcompose.ui.topic.navigation.navigateToTopic
 import com.rasel.baseappcompose.ui.topic.navigation.topicScreen
@@ -49,6 +50,8 @@ fun NiaNavHost(
     ) {
         forYouSection(
             onTopicClick = navController::navigateToTopic,
+            navigateToSearch = { navController.navigateToSearch() },
+            onTopAppBarActionClick = {},
         ) {
             topicScreen(
                 showBackButton = true,

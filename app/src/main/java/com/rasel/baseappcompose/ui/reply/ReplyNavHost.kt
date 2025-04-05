@@ -59,6 +59,7 @@ import com.rasel.baseappcompose.designsystem.component.SliderExamples
 import com.rasel.baseappcompose.designsystem.component.SwitchExamples
 import com.rasel.baseappcompose.designsystem.component.TimePickerExamples
 import com.rasel.baseappcompose.ui.bookmarks.navigation.bookmarksScreen
+import com.rasel.baseappcompose.ui.bookmarks.navigation.navigateToBookmarks
 import com.rasel.baseappcompose.ui.conversation.ConversationContent
 import com.rasel.baseappcompose.ui.cup_cake.AnimationList
 import com.rasel.baseappcompose.ui.cup_cake.MovieDetailsScreen
@@ -97,6 +98,7 @@ import com.rasel.baseappcompose.ui.order.SelectOptionScreen
 import com.rasel.baseappcompose.ui.order.StartOrderScreen
 import com.rasel.baseappcompose.ui.paging_gallery.GalleryScreen
 import com.rasel.baseappcompose.ui.profile.ProfileScreen
+import com.rasel.baseappcompose.ui.search.navigation.navigateToSearch
 import com.rasel.baseappcompose.ui.search.navigation.searchScreen
 import com.rasel.baseappcompose.ui.setting.SettingsDialog
 import com.rasel.baseappcompose.ui.snack_home.composableWithCompositionLocal
@@ -222,6 +224,8 @@ fun ReplyNavHost(
 
                     forYouSection(
                         onTopicClick = navController::navigateToTopic,
+                        navigateToSearch = { navController.navigateToSearch() },
+                        onTopAppBarActionClick = {navController.navigateToBookmarks(NavOptions.Builder().build())},
                     ) {
                         topicScreen(
                             showBackButton = true,
