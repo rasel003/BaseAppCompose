@@ -25,8 +25,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import androidx.core.app.ActivityCompat.checkSelfPermission
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.InboxStyle
@@ -136,7 +134,6 @@ private fun Context.createNewsNotification(
  * Ensures that a notification channel is present if applicable
  */
 private fun Context.ensureNotificationChannelExists() {
-    if (VERSION.SDK_INT < VERSION_CODES.O) return
 
     val channel = NotificationChannel(
         NEWS_NOTIFICATION_CHANNEL_ID,

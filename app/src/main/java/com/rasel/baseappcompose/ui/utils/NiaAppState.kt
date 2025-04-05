@@ -231,6 +231,8 @@ class NiaAppState(
     }
 
     fun navigateToSearch() = navController.navigateToSearch()
+    fun navigateToHome() = navController.navigate(AppRoute.INBOX)
+    fun navigateToInterests() = navController.navigate(AppRoute.INTERESTS_ROUTE)
 
     val navigateToHome: () -> Unit = {
         navController.navigate(AppRoute.HOME_ROUTE) {
@@ -249,11 +251,11 @@ class NiaAppState(
     }
     val navigateToInterests: () -> Unit = {
         navController.navigate(AppRoute.INTERESTS_ROUTE) {
-            popUpTo(navController.graph.findStartDestination().id) {
+           /* popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
             launchSingleTop = true
-            restoreState = true
+            restoreState = true*/
         }
     }
 

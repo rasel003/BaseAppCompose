@@ -150,8 +150,8 @@ fun ReplyApp(
         drawerContent = {
             AppDrawer(
                 currentRoute = currentRoute,
-                navigateToHome = { navigationActions.navigateToHome },
-                navigateToInterests = { navigationActions.navigateToInterests },
+                navigateToHome = { navigationActions.navigateToHome() },
+                navigateToInterests = { navigationActions.navigateToInterests() },
                 closeDrawer = { coroutineScope.launch { sizeAwareDrawerState.close() } }
             )
         },
