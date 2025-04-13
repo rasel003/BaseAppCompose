@@ -130,6 +130,7 @@ dependencies {
     implementation(libs.androidx.animation.graphics.android)
     implementation(libs.androidx.graphics.shapes.android)
     implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.firebase.crashlytics.ktx)
 //    kapt(libs.hilt.android.compiler)
 //    ksp(libs.hilt.compiler)
     ksp(libs.hilt.android.compiler)
@@ -140,6 +141,8 @@ dependencies {
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.kotlinx.serialization.json)
+    implementation (libs.gson)
+
 
 
     implementation (libs.androidx.paging.runtime)

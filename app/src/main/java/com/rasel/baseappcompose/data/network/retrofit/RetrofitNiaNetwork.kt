@@ -18,7 +18,6 @@ package com.rasel.baseappcompose.data.network.retrofit
 
 import androidx.tracing.trace
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.rasel.baseappcompose.data.mock_data.topicsTestData
 import com.rasel.baseappcompose.data.model.NetworkChangeList
 import com.rasel.baseappcompose.data.model.NetworkNewsResource
 import com.rasel.baseappcompose.data.model.NetworkTopic
@@ -28,9 +27,12 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -84,7 +86,11 @@ private data class NetworkResponse<T>(
 class RetrofitNiaNetwork @Inject constructor(
     networkJson: Json,
     okhttpCallFactory: dagger.Lazy<Call.Factory>,
+    networkConnectionInterceptor: NetworkConnectionInterceptor,
+    authAuthenticator: AuthAuthenticator
 ) : NiaNetworkDataSource {
+
+    private val OK_HTTP_TIMEOUT = 60L
 
     private val networkApi = trace("RetrofitNiaNetwork") {
         Retrofit.Builder()
@@ -92,11 +98,42 @@ class RetrofitNiaNetwork @Inject constructor(
             // We use callFactory lambda here with dagger.Lazy<Call.Factory>
             // to prevent initializing OkHttp on the main thread.
             .callFactory { okhttpCallFactory.get().newCall(it) }
+            .client(
+                createOkHttpClient(
+//                    createLoggingInterceptor(BuildConfig.DEBUG),
+                    createLoggingInterceptor(true),
+                    networkConnectionInterceptor,
+                    authAuthenticator
+                )
+            )
             .addConverterFactory(
                 networkJson.asConverterFactory("application/json".toMediaType()),
             )
             .build()
             .create(RetrofitNiaNetworkApi::class.java)
+    }
+
+    private fun createOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        networkConnectionInterceptor: NetworkConnectionInterceptor,
+        authAuthenticator: AuthAuthenticator
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(networkConnectionInterceptor)
+            .addInterceptor(httpLoggingInterceptor)
+            .authenticator(authAuthenticator)
+            .connectTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
+            .build()
+    }
+    private fun createLoggingInterceptor(isDebug: Boolean): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = if (isDebug) {
+                HttpLoggingInterceptor.Level.BASIC
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
+        }
     }
 
     override suspend fun searchPhotos(

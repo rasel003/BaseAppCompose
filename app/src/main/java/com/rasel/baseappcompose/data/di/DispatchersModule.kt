@@ -19,6 +19,8 @@ package com.rasel.baseappcompose.data.di
 import com.rasel.baseappcompose.data.Dispatcher
 import com.rasel.baseappcompose.data.NiaDispatchers
 import com.rasel.baseappcompose.data.network.NiaNetworkDataSource
+import com.rasel.baseappcompose.data.network.retrofit.AuthAuthenticator
+import com.rasel.baseappcompose.data.network.retrofit.NetworkConnectionInterceptor
 import com.rasel.baseappcompose.data.network.retrofit.RetrofitNiaNetwork
 import dagger.Module
 import dagger.Provides
@@ -53,7 +55,9 @@ object DispatchersModule {
     @Singleton
     fun provideRetrofitNiaNetwork(
         networkJson: Json,
-        okhttpCallFactory: dagger.Lazy<Call.Factory>
-    ): NiaNetworkDataSource = RetrofitNiaNetwork(networkJson, okhttpCallFactory)
+        okhttpCallFactory: dagger.Lazy<Call.Factory>,
+        networkConnectionInterceptor: NetworkConnectionInterceptor,
+        authAuthenticator: AuthAuthenticator
+    ): NiaNetworkDataSource = RetrofitNiaNetwork(networkJson, okhttpCallFactory, networkConnectionInterceptor, authAuthenticator)
 
 }
