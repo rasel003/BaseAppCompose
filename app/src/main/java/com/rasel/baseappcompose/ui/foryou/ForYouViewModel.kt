@@ -29,6 +29,7 @@ import com.rasel.baseappcompose.domain.usecase.GetFollowableTopicsUseCase
 import com.rasel.baseappcompose.notifications.DEEP_LINK_NEWS_RESOURCE_ID_KEY
 import com.rasel.baseappcompose.ui.user_news.NewsFeedUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -53,6 +54,7 @@ class ForYouViewModel @Inject constructor(
     private val shouldShowOnboarding: Flow<Boolean> =
         userDataRepository.userData.map { !it.shouldHideOnboarding }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     val deepLinkedNewsResource = savedStateHandle.getStateFlow<String?>(
         key = DEEP_LINK_NEWS_RESOURCE_ID_KEY,
         null,

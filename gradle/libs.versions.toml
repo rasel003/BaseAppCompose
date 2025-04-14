@@ -16,6 +16,7 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 androidx-compose-latest = "1.7.8"
 composeBom = "2025.02.00"
+camerax = "1.5.0-alpha06"
 androidx-constraintlayout = "1.1.1"
 navigationRuntimeKtx = "2.8.8"
 glance = "1.1.1"
@@ -152,8 +153,20 @@ androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", versi
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
+
+# The helper library to grant the camera permission
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+
+# Contains the basic camera functionality such as SurfaceRequest
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "camerax" }
+# Contains the CameraXViewfinder composable
+androidx-camera-compose = { module = "androidx.camera:camera-compose", version.ref = "camerax" }
+# Allows us to bind the camera preview to our UI lifecycle
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
+# The specific camera implementation that renders the preview
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax" }
+
 
 
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }

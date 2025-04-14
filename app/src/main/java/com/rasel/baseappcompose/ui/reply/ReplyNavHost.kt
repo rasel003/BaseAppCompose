@@ -60,6 +60,7 @@ import com.rasel.baseappcompose.designsystem.component.SwitchExamples
 import com.rasel.baseappcompose.designsystem.component.TimePickerExamples
 import com.rasel.baseappcompose.ui.bookmarks.navigation.bookmarksScreen
 import com.rasel.baseappcompose.ui.bookmarks.navigation.navigateToBookmarks
+import com.rasel.baseappcompose.ui.camera_preview.CameraPreviewScreen
 import com.rasel.baseappcompose.ui.conversation.ConversationContent
 import com.rasel.baseappcompose.ui.cup_cake.AnimationList
 import com.rasel.baseappcompose.ui.cup_cake.MovieDetailsScreen
@@ -294,8 +295,11 @@ fun ReplyNavHost(
                             modifier = Modifier.fillMaxHeight()
                         )
                     }
-                    composable(route = PAGING_3) {
+                    /*composable(route = PAGING_3) {
                         GalleryScreen(navigateToImageview = navController::navigateToImageview)
+                    } */
+                    composable(route = PAGING_3) {
+                        CameraPreviewScreen()
                     }
                     composable<ImageviewRoute> { entry ->
                         val imageviewRoute = entry.toRoute<ImageviewRoute>()
