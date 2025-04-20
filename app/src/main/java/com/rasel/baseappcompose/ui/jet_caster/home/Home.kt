@@ -320,7 +320,8 @@ private fun HomeScreenReady(
     )
 
     Surface {
-        val podcastUri = navigator.currentDestination?.content
+//        val podcastUri = navigator.currentDestination?.content
+        val podcastUri = ""
         val showGrid = homeState.showGrid(navigator.scaffoldValue)
         if (podcastUri.isNullOrEmpty()) {
             HomeScreen(
