@@ -192,8 +192,7 @@ dependencies {
 
 
     implementation(libs.androidx.glance)
-    implementation(libs.accompanist.swiperefresh)
-    implementation(libs.accompanist.systemuicontroller)
+//    implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.glance.material3)

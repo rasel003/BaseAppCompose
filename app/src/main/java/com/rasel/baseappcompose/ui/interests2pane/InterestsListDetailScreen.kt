@@ -93,7 +93,7 @@ internal fun InterestsListDetailScreen(
         ),
     )
     BackHandler(listDetailNavigator.canNavigateBack()) {
-        listDetailNavigator.navigateBack()
+//        listDetailNavigator.navigateBack()
     }
 
     var nestedNavHostStartRoute by remember {
@@ -122,7 +122,7 @@ internal fun InterestsListDetailScreen(
             nestedNavHostStartRoute = TopicRoute(id = topicId)
             nestedNavKey = UUID.randomUUID()
         }
-        listDetailNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+//        listDetailNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
     ListDetailPaneScaffold(
@@ -146,7 +146,7 @@ internal fun InterestsListDetailScreen(
                     ) {
                         topicScreen(
                             showBackButton = !listDetailNavigator.isListPaneVisible(),
-                            onBackClick = listDetailNavigator::navigateBack,
+                            onBackClick = {},// listDetailNavigator::navigateBack,
                             onTopicClick = ::onTopicClickShowDetailPane,
                         )
                         composable<TopicPlaceholderRoute> {

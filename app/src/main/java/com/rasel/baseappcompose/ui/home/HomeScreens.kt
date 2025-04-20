@@ -65,6 +65,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -74,7 +76,6 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.ColorFilter
@@ -94,9 +95,6 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.rasel.baseappcompose.ui.modifiers.interceptKey
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
@@ -110,6 +108,7 @@ import com.rasel.baseappcompose.domain.model.Post
 import com.rasel.baseappcompose.domain.model.PostsFeed
 import com.rasel.baseappcompose.ui.article.postContentItems
 import com.rasel.baseappcompose.ui.article.sharePost
+import com.rasel.baseappcompose.ui.modifiers.interceptKey
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
@@ -389,6 +388,7 @@ private fun HomeScreenWithList(
  * @param onRefresh (event) event to request refresh
  * @param content (slot) the main content to show
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LoadingContent(
     empty: Boolean,
@@ -400,11 +400,22 @@ private fun LoadingContent(
     if (empty) {
         emptyContent()
     } else {
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(loading),
+        PullToRefreshBox(
+            state = rememberPullToRefreshState(),
             onRefresh = onRefresh,
-            content = content,
-        )
+            isRefreshing = loading,
+            /*indicator = {
+                Indicator(
+                    modifier = Modifier.align(Alignment.TopCenter),
+                    isRefreshing = isRefreshing,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    state = state
+                )
+            },*/
+        ){
+            content()
+        }
     }
 }
 

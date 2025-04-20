@@ -296,7 +296,7 @@ private fun HomeScreenReady(
         scaffoldDirective = calculateScaffoldDirective(currentWindowAdaptiveInfo())
     )
     BackHandler(enabled = navigator.canNavigateBack()) {
-        navigator.navigateBack()
+//        navigator.navigateBack()
     }
 
     val homeState = HomeState(
@@ -311,7 +311,7 @@ private fun HomeScreenReady(
         onCategorySelected = viewModel::onCategorySelected,
         onPodcastUnfollowed = viewModel::onPodcastUnfollowed,
         navigateToPodcastDetails = {
-            navigator.navigateTo(SupportingPaneScaffoldRole.Supporting, it.uri)
+//            navigator.navigateTo(SupportingPaneScaffoldRole.Supporting, it.uri)
         },
         navigateToPlayer = navigateToPlayer,
         onTogglePodcastFollowed = viewModel::onTogglePodcastFollowed,
@@ -345,7 +345,7 @@ private fun HomeScreenReady(
                         navigateToPlayer = navigateToPlayer,
                         navigateBack = {
                             if (navigator.canNavigateBack()) {
-                                navigator.navigateBack()
+//                                navigator.navigateBack()
                             }
                         },
                         showBackButton = navigator.isMainPaneHidden(),
