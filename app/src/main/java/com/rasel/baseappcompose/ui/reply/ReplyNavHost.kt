@@ -39,6 +39,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
 import androidx.window.layout.DisplayFeature
+import com.rasel.baseappcompose.DEEPLINK_DOMAIN
 import com.rasel.baseappcompose.NiaApplication.Companion.JETNEWS_APP_URI
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.animations.AnimationExamplesScreen
@@ -49,6 +50,7 @@ import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.data.Result
 import com.rasel.baseappcompose.data.mock_data.colleagueProfile
 import com.rasel.baseappcompose.data.mock_data.exampleUiState
+import com.rasel.baseappcompose.data.mock_data.randomSampleImageUrl
 import com.rasel.baseappcompose.data.posts.impl.BlockingFakePostsRepository
 import com.rasel.baseappcompose.data.posts.impl.post3
 import com.rasel.baseappcompose.designsystem.component.AppBarExamples
@@ -337,10 +339,16 @@ fun ReplyNavHost(
                     composable(route = PAGING_3) {
                         CameraPreviewScreen()
                     }
-                    composable<ImageviewRoute> { entry ->
+                    composable<ImageviewRoute>(
+                        deepLinks = listOf(
+                            navDeepLink<ImageviewRoute>(
+                                basePath = "https://$DEEPLINK_DOMAIN"
+                            )
+                        )
+                    ) { entry ->
                         val imageviewRoute = entry.toRoute<ImageviewRoute>()
                         ImageView(
-                            imageviewRoute.url,
+                            randomSampleImageUrl(),
                             upPress = { navController.navigateUp() })
                     }
                     composable(route = AppRoute.ANIMATION_LIST) {

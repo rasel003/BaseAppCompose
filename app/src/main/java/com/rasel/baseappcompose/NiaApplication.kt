@@ -36,7 +36,7 @@ import com.rasel.baseappcompose.sync.initializers.Sync
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
-const val DEEPLINK_DOMAIN = "pl-coding.com"
+const val DEEPLINK_DOMAIN = "rasel003.github.io"
 
 /**
  * [Application] class for NiA
@@ -69,6 +69,9 @@ class NiaApplication : Application(), ImageLoaderFactory {
         // Initialize Sync; the system responsible for keeping data in the app up to date.
         Sync.initialize(context = this)
 //        profileVerifierLogger()
+
+        createNotificationChannel()
+        showNotification()
     }
 
     override fun newImageLoader(): ImageLoader = imageLoader.get()
@@ -108,7 +111,7 @@ class NiaApplication : Application(), ImageLoaderFactory {
 
     private fun showNotification() {
         val activityIntent = Intent(this, MainActivity::class.java).apply {
-            data = "https://$DEEPLINK_DOMAIN/87".toUri()
+            data = "https://$DEEPLINK_DOMAIN/rasel".toUri()
         }
         val pendingIntent = TaskStackBuilder.create(this).run {
             addNextIntentWithParentStack(activityIntent)
