@@ -36,11 +36,13 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.rasel.baseappcompose.designsystem.component.ThemePreviews
 import com.rasel.baseappcompose.R
 import com.rasel.baseappcompose.data.DataSource
 import com.rasel.baseappcompose.designsystem.component.NiaButton
 import com.rasel.baseappcompose.designsystem.theme.NiaTheme
+import com.rasel.baseappcompose.ui.box_with_constraints.navigation.navigateToBoxWithConstraint
 import com.rasel.baseappcompose.ui.navigation.AppRoute
 import com.rasel.baseappcompose.ui.navigation.AppRoute.LANDING_SCREEN
 
@@ -55,7 +57,8 @@ fun StartOrderScreen(
     onNextButtonClicked: (Int) -> Unit,
     navigateTo: (String) -> Unit,
     navigateToForYou: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController?
 ) {
     Column(
         modifier = modifier.background(color = MaterialTheme.colorScheme.background),
@@ -93,6 +96,11 @@ fun StartOrderScreen(
                 onClick = { navigateTo(LANDING_SCREEN) },
             ) {
                 Text("Component")
+            }
+         NiaButton(
+                onClick = { navController?.navigateToBoxWithConstraint() },
+            ) {
+                Text("BoxWithConstraint")
             }
         }
         Column(
@@ -142,7 +150,8 @@ fun StartOrderPreview() {
             navigateToForYou = {},
             modifier = Modifier
                 .fillMaxSize()
-                .padding(dimensionResource(R.dimen.padding_medium))
+                .padding(dimensionResource(R.dimen.padding_medium)),
+            navController = null
         )
     }
 }

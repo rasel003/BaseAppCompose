@@ -25,7 +25,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable object BookmarksRoute
 
-fun NavController.navigateToBookmarks(navOptions: NavOptions) =
+fun NavController.navigateToBookmarks(navOptions: NavOptions = NavOptions.Builder().build()) =
     navigate(route = BookmarksRoute, navOptions)
 
 fun NavGraphBuilder.bookmarksScreen(

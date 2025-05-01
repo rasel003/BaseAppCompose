@@ -73,6 +73,7 @@ import com.rasel.baseappcompose.designsystem.component.SwitchExamples
 import com.rasel.baseappcompose.designsystem.component.TimePickerExamples
 import com.rasel.baseappcompose.ui.bookmarks.navigation.bookmarksScreen
 import com.rasel.baseappcompose.ui.bookmarks.navigation.navigateToBookmarks
+import com.rasel.baseappcompose.ui.box_with_constraints.navigation.boxWithConstraintScreen
 import com.rasel.baseappcompose.ui.camera_preview.CameraPreviewScreen
 import com.rasel.baseappcompose.ui.conversation.ConversationContent
 import com.rasel.baseappcompose.ui.cup_cake.AnimationList
@@ -89,7 +90,6 @@ import com.rasel.baseappcompose.ui.home.HomeViewModel
 import com.rasel.baseappcompose.ui.images.ImageExamplesScreen
 import com.rasel.baseappcompose.ui.images.ImageView
 import com.rasel.baseappcompose.ui.images.navigation.ImageviewRoute
-import com.rasel.baseappcompose.ui.images.navigation.navigateToImageview
 import com.rasel.baseappcompose.ui.interests.InterestsViewModel
 import com.rasel.baseappcompose.ui.interests.navigation.navigateToInterests
 import com.rasel.baseappcompose.ui.interests2pane.interestsListDetailScreen
@@ -110,7 +110,6 @@ import com.rasel.baseappcompose.ui.order.OrderSummaryScreen
 import com.rasel.baseappcompose.ui.order.OrderViewModel
 import com.rasel.baseappcompose.ui.order.SelectOptionScreen
 import com.rasel.baseappcompose.ui.order.StartOrderScreen
-import com.rasel.baseappcompose.ui.paging_gallery.GalleryScreen
 import com.rasel.baseappcompose.ui.profile.ProfileScreen
 import com.rasel.baseappcompose.ui.search.navigation.navigateToSearch
 import com.rasel.baseappcompose.ui.search.navigation.searchScreen
@@ -242,7 +241,8 @@ fun ReplyNavHost(
                             },
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(dimensionResource(R.dimen.padding_medium))
+                                .padding(dimensionResource(R.dimen.padding_medium)),
+                            navController
                         )
                     }
                     composable(AppRoute.ARTICLES) { backStackEntry ->
@@ -276,6 +276,7 @@ fun ReplyNavHost(
                         onTopicClick = navController::navigateToInterests,
                         onShowSnackbar = onShowSnackbar,
                     )
+                    boxWithConstraintScreen()
                     searchScreen(
                         onBackClick = navController::popBackStack,
                         onInterestsClick = {
@@ -288,7 +289,6 @@ fun ReplyNavHost(
                     interestsListDetailScreen()
 
                     composable(route = AppRoute.Flavor) {
-                        val context = LocalContext.current
                         SelectOptionScreen(
                             subtotal = uiState.price,
                             onNextButtonClicked = { navigationActions.navigateTo(AppRoute.Pickup) },
@@ -314,7 +314,6 @@ fun ReplyNavHost(
                         )
                     }
                     composable(route = AppRoute.Summary) {
-                        val context = LocalContext.current
                         OrderSummaryScreen(
                             orderUiState = uiState,
                             onCancelButtonClicked = {
