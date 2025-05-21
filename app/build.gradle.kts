@@ -167,6 +167,7 @@ dependencies {
 
     api(libs.androidx.dataStore)
     api(libs.androidx.dataStore.core)
+    implementation("androidx.datastore:datastore-preferences:1.1.7") // U
     api(libs.protobuf.kotlin.lite)
 
 

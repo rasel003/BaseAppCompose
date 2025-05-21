@@ -87,6 +87,7 @@ fun ReplyInboxScreen(
     navigateToDetail: (Long, ReplyContentType) -> Unit,
     navigateToPaging3: () -> Unit,
     navigateToChat: () -> Unit,
+    navigateToProfile: () -> Unit,
     toggleSelectedEmail: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -119,7 +120,8 @@ fun ReplyInboxScreen(
                 ReplyEmailDetail(
                     email = replyHomeUIState.openedEmail ?: replyHomeUIState.emails.first(),
                     isFullScreen = false,
-                    navigateToChat = navigateToChat
+                    navigateToChat = navigateToChat,
+                    navigateToProfile = navigateToProfile
                 )
             },
             strategy = HorizontalTwoPaneStrategy(splitFraction = 0.5f, gapWidth = 16.dp),
@@ -134,7 +136,8 @@ fun ReplyInboxScreen(
                 modifier = Modifier.fillMaxSize(),
                 closeDetailScreen = closeDetailScreen,
                 navigateToDetail = navigateToDetail,
-                navigateToChat = navigateToChat
+                navigateToChat = navigateToChat,
+                navigateToProfile = navigateToProfile
             )
             // When we have bottom navigation we show FAB at the bottom end.
             if (navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
@@ -166,12 +169,16 @@ fun ReplySinglePaneContent(
     closeDetailScreen: () -> Unit,
     navigateToDetail: (Long, ReplyContentType) -> Unit,
     navigateToChat: () -> Unit,
+    navigateToProfile: () -> Unit,
 ) {
     if (replyHomeUIState.openedEmail != null && replyHomeUIState.isDetailOnlyOpen) {
         BackHandler {
             closeDetailScreen()
         }
-        ReplyEmailDetail(email = replyHomeUIState.openedEmail, onBackPressed = closeDetailScreen, navigateToChat = navigateToChat)
+        ReplyEmailDetail(email = replyHomeUIState.openedEmail, onBackPressed = closeDetailScreen,
+            navigateToChat = navigateToChat,
+            navigateToProfile = navigateToProfile
+        )
     } else {
         ReplyEmailList(
             emails = replyHomeUIState.emails,
@@ -238,6 +245,7 @@ fun ReplyEmailDetail(
     isFullScreen: Boolean = true,
     onBackPressed: () -> Unit = {},
     navigateToChat: () -> Unit,
+    navigateToProfile: () -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box {
@@ -271,7 +279,7 @@ fun ReplyEmailDetail(
             DropdownMenuItem(
                 text = { Text("Profile") },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = null) },
-                onClick = { /* Do something... */ }
+                onClick = { navigateToProfile() }
             )
             DropdownMenuItem(
                 text = { Text("Settings") },
@@ -321,6 +329,7 @@ private fun ReplyInboxScreenPreview() {
             toggleSelectedEmail = {},
             navigateToPaging3 = {},
             navigateToChat = {},
+            navigateToProfile = {},
         )
     }
 }
@@ -349,6 +358,7 @@ private fun ReplyEmailDetailPreview() {
             email = LocalEmailsDataProvider.allEmails.first(),
             isFullScreen = false,
             onBackPressed = {},
+            navigateToProfile = {},
             navigateToChat = {}
         )
     }

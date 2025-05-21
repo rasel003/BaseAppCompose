@@ -111,6 +111,8 @@ import com.rasel.baseappcompose.ui.order.OrderViewModel
 import com.rasel.baseappcompose.ui.order.SelectOptionScreen
 import com.rasel.baseappcompose.ui.order.StartOrderScreen
 import com.rasel.baseappcompose.ui.profile.ProfileScreen
+import com.rasel.baseappcompose.ui.profile.navigation.collapsingAppBarScreen
+import com.rasel.baseappcompose.ui.profile.navigation.navigateToCollapsingAppBar
 import com.rasel.baseappcompose.ui.search.navigation.navigateToSearch
 import com.rasel.baseappcompose.ui.search.navigation.searchScreen
 import com.rasel.baseappcompose.ui.setting.SettingsDialog
@@ -221,6 +223,7 @@ fun ReplyNavHost(
                             navigateToDetail = navigateToDetail,
                             toggleSelectedEmail = toggleSelectedEmail,
                             navigateToPaging3 = { navigationActions.navigateTo(PAGING_3) },
+                            navigateToProfile = { navController.navigateToCollapsingAppBar() },
                             navigateToChat = {
                                 navigationActions.navigateTo(CONVERSATION_SCREEN)
                             }
@@ -277,6 +280,7 @@ fun ReplyNavHost(
                         onShowSnackbar = onShowSnackbar,
                     )
                     boxWithConstraintScreen()
+                    collapsingAppBarScreen()
                     searchScreen(
                         onBackClick = navController::popBackStack,
                         onInterestsClick = {
